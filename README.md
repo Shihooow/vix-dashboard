@@ -1,5 +1,12 @@
 # VIXショート運用ダッシュボード
 
+## スマホで見る(公開URL)
+https://shihooow.github.io/vix-dashboard/
+
+毎朝の自動更新のたびに、GitHubリポジトリ [Shihooow/vix-dashboard](https://github.com/Shihooow/vix-dashboard)(Public)へ `index.html`/`dashboard.html`/`log.csv` を自動pushし、GitHub Pagesで公開している。`取引判断ログ.csv`(個人の判断記録)は絶対に公開リポジトリへコピーしない設計。
+
+pushに使うfine-grainedトークン(`vix-dashboard`リポジトリのContents:Read and writeのみに限定、有効期限2027-08-08)は `.github_token` にこのフォルダ内で平文保存している。漏洩リスクを避けたい場合は https://github.com/settings/personal-access-tokens で失効できる(その場合は自動公開が止まるので、手動pushに切り替えるか新しいトークンを発行して差し替える)。
+
 ## 保存場所
 `~/Claude/vix-dashboard/`(以前は `~/Documents/資産形成プロジェクト` にありましたが、
 フォルダ名の日本語が原因で実際には保存できていなかったため、ここに移動しました)
