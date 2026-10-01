@@ -36,6 +36,7 @@ LOG_PATH = os.path.join(BASE_DIR, "log.csv")
 DASHBOARD_PATH = os.path.join(BASE_DIR, "dashboard.html")
 OUTLOOK_PATH = os.path.join(BASE_DIR, "outlook.json")
 OUTLOOK_HISTORY_PATH = os.path.join(BASE_DIR, "outlook_history.jsonl")
+SIGNALS_PATH = os.path.join(BASE_DIR, "signals.json")  # fetch_signals.py が生成
 
 LOG_HEADER = [
     "date", "vix", "vix3m", "ratio", "contango_status",
@@ -246,11 +247,97 @@ def render_outlook_section(outlook):
 """
 
 
+def load_signals():
+    if os.path.exists(SIGNALS_PATH):
+        with open(SIGNALS_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    return None
+
+
+def render_signals_section(sig):
+    """先物カーブ・推定調整金・地合い・利確・ストレステストの表示。signals.jsonが無ければ空。"""
+    if not sig:
+        return ""
+
+    def esc(v):
+        return "—" if v is None else str(v)
+
+    fut = sig.get("futures") or {}
+    cz = sig.get("carry_zone", {})
+    ex = sig.get("exit", {})
+
+    regime_rows = "".join(
+        f'<tr><td><span class="badge {"danger" if r["hit"] else "normal"}">{"該当" if r["hit"] else "—"}</span></td>'
+        f'<td>{esc(r["name"])}<div class="sub">{esc(r["rule"])}</div></td>'
+        f'<td class="sub">{esc(r["stat"])}</td></tr>'
+        for r in sig.get("regime_signals", [])
+    )
+    stress_rows = "".join(
+        f'<tr><td>VIX {s["to"]}</td><td>{s["loss_yen"]:,}円</td></tr>'
+        for s in sig.get("stress_per_100lot", [])
+    )
+    tp_badge = (
+        '<span class="badge danger">利確ゾーン</span>' if ex.get("take_profit")
+        else '<span class="badge normal">保有継続の余地あり</span>'
+    )
+
+    return f"""
+  <section>
+    <h2>調整金と地合いのシグナル</h2>
+    <div class="updated" style="margin-bottom:14px">Cboe終値ベース: {esc(sig.get('date'))}</div>
+    <div class="grid" style="margin-bottom:16px">
+      <div class="card">
+        <div class="label">先物1〜2限月コンタンゴ率</div>
+        <div class="value">{esc(sig.get('contango_12_pct'))}%</div>
+        <div class="sub"><span class="badge {esc(cz.get('class'))}">{esc(cz.get('label'))}</span></div>
+        <div class="sub">期近 {esc(fut.get('f1'))}({esc(fut.get('exp1'))}満期) / 次限月 {esc(fut.get('f2'))}</div>
+      </div>
+      <div class="card">
+        <div class="label">推定調整金(1lot・1日)</div>
+        <div class="value">{esc(sig.get('est_yen_per_lot_day'))}円</div>
+        <div class="sub">調整金 ÷ Admin Fee 換算で {esc(sig.get('est_ratio'))}(30以上で保有OK)</div>
+      </div>
+      <div class="card">
+        <div class="label">次のロール(満期の前日)</div>
+        <div class="value" style="font-size:22px">{esc(fut.get('roll_date'))}</div>
+        <div class="sub">この前後で調整金の水準が切り替わりやすい</div>
+      </div>
+      <div class="card">
+        <div class="label">S&P500 / 実現ボラ</div>
+        <div class="value" style="font-size:22px">50日線 {esc(sig.get('spx_vs_ma50_pct'))}%</div>
+        <div class="sub">VIX − 実現ボラ20日: {esc(sig.get('vix_minus_rv'))}pt / VIX9D÷VIX: {esc(sig.get('vix9d_over_vix'))}</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <div class="label">ノーポジ時:急騰が来やすい地合いか(2013〜2026年の検証)</div>
+      <table><tbody>{regime_rows}</tbody></table>
+      <div class="sub" style="margin-top:8px">該当したら、VIX20前後にアラートを入れて証拠金の余力を空けて待つ合図。タイミングの予測ではない。</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="label">保有中:利確判定(今後20営業日の平均)</div>
+        <div class="value" style="font-size:20px">{tp_badge}</div>
+        <div class="sub">VIX {esc(ex.get('vix_band'))}帯: 残りの利幅 {esc(ex.get('down_pt'))}pt + 調整金 {esc(ex.get('carry_pt_20d'))}pt = {esc(ex.get('remaining_pt'))}pt</div>
+        <div class="sub">上振れリスクの平均: {esc(ex.get('up_pt'))}pt</div>
+      </div>
+      <div class="card">
+        <div class="label">ストレステスト(今の水準で100lot売った場合)</div>
+        <table><tbody>{stress_rows}</tbody></table>
+        <div class="sub">ロット数に比例。建てる前に「ロット数 ÷ 100 × この金額」が証拠金で耐えられるか確認。</div>
+      </div>
+    </div>
+  </section>
+"""
+
+
 def render_dashboard(rows, latest):
     recent = rows[-30:]
     recent_rev = list(reversed(recent))
     outlook = load_outlook()
     outlook_html = render_outlook_section(outlook)
+    signals_html = render_signals_section(load_signals())
 
     def esc(v):
         return str(v)
@@ -496,6 +583,8 @@ def render_dashboard(rows, latest):
     <div class="data-note" id="data-note"></div>
   </section>
 
+  {signals_html}
+
   {outlook_html}
 
   <section>
@@ -737,8 +826,18 @@ def main():
         print("見通しセクションを更新しました:", outlook_data.get("updated"))
         return
 
+    # --from-signals: fetch_signals.py が保存したCboe公式終値で通常更新する
+    if len(sys.argv) >= 2 and sys.argv[1] == "--from-signals":
+        sig = load_signals()
+        if not sig:
+            print("signals.json がありません。先に fetch_signals.py を実行してください。")
+            sys.exit(1)
+        c = sig["closes"]
+        sys.argv = [sys.argv[0], str(c["vix"]), str(c["vix3m"]), str(c["skew"]), sig["date"]]
+
     if len(sys.argv) < 4:
         print("usage: update_dashboard.py <VIX> <VIX3M> <SKEW> [YYYY-MM-DD]")
+        print("       update_dashboard.py --from-signals")
         print("       update_dashboard.py --outlook <path-to-json>")
         sys.exit(1)
 
