@@ -254,24 +254,98 @@ def load_signals():
     return None
 
 
-def render_signals_section(sig):
-    """先物カーブ・推定調整金・地合い・利確・ストレステストの表示。signals.jsonが無ければ空。"""
-    if not sig:
-        return ""
+def render_signals_parts(sig, latest):
+    """signals.json から各セクションの部品HTMLを作る。sigが無ければ従来表示にフォールバック。"""
 
     def esc(v):
         return "—" if v is None else str(v)
 
+    # --- 結論カード: VIX ---
+    vix = float(latest["vix"])
+    if vix >= 20:
+        vix_badge = '<span class="badge danger">仕込みゾーン(20以上)</span>'
+    else:
+        vix_badge = f'<span class="badge normal">仕込み目安20まで あと +{20 - vix:.2f}</span>'
+    card_vix = f"""
+    <div class="card">
+      <div class="label">VIX</div>
+      <div class="value">{latest['vix']}</div>
+      <div class="sub">{vix_badge}</div>
+      <div class="sub muted">参考: VIX3M {latest['vix3m']} / 比率 {latest['ratio']}</div>
+    </div>"""
+
+    if not sig:
+        contango_class = "normal" if "コンタンゴ" in latest["contango_status"] else "danger"
+        card_carry = f"""
+    <div class="card">
+      <div class="label">調整金ゾーン</div>
+      <div class="value" style="font-size:20px"><span class="badge {contango_class}">{latest['contango_status']}</span></div>
+      <div class="sub muted">先物データ未取得のため VIX3M÷VIX で暫定判定</div>
+    </div>"""
+        return {"card_vix": card_vix, "card_carry": card_carry, "card_regime": "",
+                "regime_section": "", "roll_card": "", "holding_section": "", "basis": ""}
+
     fut = sig.get("futures") or {}
     cz = sig.get("carry_zone", {})
     ex = sig.get("exit", {})
+    regs = sig.get("regime_signals", [])
+    hits = [r for r in regs if r.get("hit")]
 
+    # --- 結論カード: 調整金 ---
+    card_carry = f"""
+    <div class="card">
+      <div class="label">調整金ゾーン(先物1〜2限月コンタンゴ率)</div>
+      <div class="value">{esc(sig.get('contango_12_pct'))}%</div>
+      <div class="sub"><span class="badge {esc(cz.get('class'))}">{esc(cz.get('label'))}</span></div>
+      <div class="sub muted">推定調整金 {esc(sig.get('est_yen_per_lot_day'))}円/lot/日(Admin Fee比 {esc(sig.get('est_ratio'))}、30以上で保有OK)</div>
+    </div>"""
+
+    # --- 結論カード: 地合い ---
+    n = len(hits)
+    rclass = "normal" if n == 0 else ("warn" if n == 1 else "danger")
+    rlabel = "該当なし" if n == 0 else ("急騰に備える地合い" if n >= 2 else "やや警戒")
+    hit_names = " / ".join(r["name"] for r in hits) if hits else "4条件とも非該当"
+    card_regime = f"""
+    <div class="card">
+      <div class="label">地合い(急騰が来やすいか)</div>
+      <div class="value">{n}<span style="font-size:16px;color:var(--muted)"> / {len(regs)} 該当</span></div>
+      <div class="sub"><span class="badge {rclass}">{rlabel}</span></div>
+      <div class="sub muted">{esc(hit_names)}</div>
+    </div>"""
+
+    # --- 地合いシグナル表(該当を上に) ---
+    ordered = hits + [r for r in regs if not r.get("hit")]
     regime_rows = "".join(
-        f'<tr><td><span class="badge {"danger" if r["hit"] else "normal"}">{"該当" if r["hit"] else "—"}</span></td>'
-        f'<td>{esc(r["name"])}<div class="sub">{esc(r["rule"])}</div></td>'
-        f'<td class="sub">{esc(r["stat"])}</td></tr>'
-        for r in sig.get("regime_signals", [])
+        f'<tr class="{"hit-row" if r["hit"] else ""}"><td style="width:64px"><span class="badge {"danger" if r["hit"] else "normal"}">{"該当" if r["hit"] else "—"}</span></td>'
+        f'<td>{esc(r["name"])}<div class="sub muted">{esc(r["rule"])}</div></td>'
+        f'<td class="muted">{esc(r["stat"])}</td></tr>'
+        for r in ordered
     )
+    regime_section = f"""
+  <section>
+    <h2>地合いシグナル(ノーポジ時・2013〜2026年の検証)</h2>
+    <table class="regime"><tbody>{regime_rows}</tbody></table>
+    <div class="sub muted" style="margin-top:8px">根拠: S&amp;P500 50日線乖離 {esc(sig.get('spx_vs_ma50_pct'))}% / VIX − 実現ボラ20日 {esc(sig.get('vix_minus_rv'))}pt / VIX9D÷VIX {esc(sig.get('vix9d_over_vix'))} / 期近 {esc(fut.get('f1'))}({esc(fut.get('exp1'))}満期)・次限月 {esc(fut.get('f2'))}</div>
+    <div class="sub muted">該当したら、VIX20前後にアラートを入れて証拠金の余力を空けて待つ合図。タイミングの予測ではない。</div>
+  </section>"""
+
+    # --- 日程: 次のロール ---
+    roll_days = ""
+    try:
+        rd = datetime.strptime(fut.get("roll_date"), "%Y-%m-%d").date()
+        base = datetime.strptime(latest["date"], "%Y-%m-%d").date()
+        roll_days = f"{(rd - base).days}日"
+    except Exception:
+        pass
+    roll_card = f"""
+    <div class="card">
+      <div class="label">次のロール(満期の前日)</div>
+      <div class="value">{roll_days or esc(fut.get('roll_date'))}</div>
+      <div class="sub">{esc(fut.get('roll_date'))}</div>
+      <div class="sub muted">この前後で調整金の水準が切り替わりやすい</div>
+    </div>"""
+
+    # --- 建てる前・保有中 ---
     stress_rows = "".join(
         f'<tr><td>VIX {s["to"]}</td><td>{s["loss_yen"]:,}円</td></tr>'
         for s in sig.get("stress_per_100lot", [])
@@ -280,56 +354,28 @@ def render_signals_section(sig):
         '<span class="badge danger">利確ゾーン</span>' if ex.get("take_profit")
         else '<span class="badge normal">保有継続の余地あり</span>'
     )
-
-    return f"""
+    holding_section = f"""
   <section>
-    <h2>調整金と地合いのシグナル</h2>
-    <div class="updated" style="margin-bottom:14px">Cboe終値ベース: {esc(sig.get('date'))}</div>
-    <div class="grid" style="margin-bottom:16px">
-      <div class="card">
-        <div class="label">先物1〜2限月コンタンゴ率</div>
-        <div class="value">{esc(sig.get('contango_12_pct'))}%</div>
-        <div class="sub"><span class="badge {esc(cz.get('class'))}">{esc(cz.get('label'))}</span></div>
-        <div class="sub">期近 {esc(fut.get('f1'))}({esc(fut.get('exp1'))}満期) / 次限月 {esc(fut.get('f2'))}</div>
-      </div>
-      <div class="card">
-        <div class="label">推定調整金(1lot・1日)</div>
-        <div class="value">{esc(sig.get('est_yen_per_lot_day'))}円</div>
-        <div class="sub">調整金 ÷ Admin Fee 換算で {esc(sig.get('est_ratio'))}(30以上で保有OK)</div>
-      </div>
-      <div class="card">
-        <div class="label">次のロール(満期の前日)</div>
-        <div class="value" style="font-size:22px">{esc(fut.get('roll_date'))}</div>
-        <div class="sub">この前後で調整金の水準が切り替わりやすい</div>
-      </div>
-      <div class="card">
-        <div class="label">S&P500 / 実現ボラ</div>
-        <div class="value" style="font-size:22px">50日線 {esc(sig.get('spx_vs_ma50_pct'))}%</div>
-        <div class="sub">VIX − 実現ボラ20日: {esc(sig.get('vix_minus_rv'))}pt / VIX9D÷VIX: {esc(sig.get('vix9d_over_vix'))}</div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:12px">
-      <div class="label">ノーポジ時:急騰が来やすい地合いか(2013〜2026年の検証)</div>
-      <table><tbody>{regime_rows}</tbody></table>
-      <div class="sub" style="margin-top:8px">該当したら、VIX20前後にアラートを入れて証拠金の余力を空けて待つ合図。タイミングの予測ではない。</div>
-    </div>
-
+    <h2>建てる前・保有中に見るもの</h2>
     <div class="grid">
-      <div class="card">
-        <div class="label">保有中:利確判定(今後20営業日の平均)</div>
-        <div class="value" style="font-size:20px">{tp_badge}</div>
-        <div class="sub">VIX {esc(ex.get('vix_band'))}帯: 残りの利幅 {esc(ex.get('down_pt'))}pt + 調整金 {esc(ex.get('carry_pt_20d'))}pt = {esc(ex.get('remaining_pt'))}pt</div>
-        <div class="sub">上振れリスクの平均: {esc(ex.get('up_pt'))}pt</div>
-      </div>
       <div class="card">
         <div class="label">ストレステスト(今の水準で100lot売った場合)</div>
         <table><tbody>{stress_rows}</tbody></table>
-        <div class="sub">ロット数に比例。建てる前に「ロット数 ÷ 100 × この金額」が証拠金で耐えられるか確認。</div>
+        <div class="sub muted">ロット数に比例。建てる前に「ロット数 ÷ 100 × この金額」が証拠金で耐えられるか確認。</div>
+      </div>
+      <div class="card">
+        <div class="label">保有中の利確判定(今後20営業日の平均)</div>
+        <div class="value" style="font-size:20px">{tp_badge}</div>
+        <div class="sub">VIX {esc(ex.get('vix_band'))}帯: 残りの利幅 {esc(ex.get('down_pt'))}pt + 調整金 {esc(ex.get('carry_pt_20d'))}pt = {esc(ex.get('remaining_pt'))}pt</div>
+        <div class="sub muted">上振れリスクの平均: {esc(ex.get('up_pt'))}pt</div>
       </div>
     </div>
-  </section>
-"""
+  </section>"""
+
+    return {"card_vix": card_vix, "card_carry": card_carry, "card_regime": card_regime,
+            "regime_section": regime_section, "roll_card": roll_card,
+            "holding_section": holding_section,
+            "basis": f" / Cboe終値ベース: {esc(sig.get('date'))}"}
 
 
 def render_dashboard(rows, latest):
@@ -337,7 +383,7 @@ def render_dashboard(rows, latest):
     recent_rev = list(reversed(recent))
     outlook = load_outlook()
     outlook_html = render_outlook_section(outlook)
-    signals_html = render_signals_section(load_signals())
+    parts = render_signals_parts(load_signals(), latest)
 
     def esc(v):
         return str(v)
@@ -530,37 +576,56 @@ def render_dashboard(rows, latest):
   .legend i {{ width: 10px; height: 10px; border-radius: 50%; display: inline-block; }}
   .outlook-text {{ font-size: 14px; line-height: 1.8; color: var(--text); }}
   .outlook-sources {{ font-size: 12px; margin-top: 10px; }}
+  .muted {{ color: var(--muted); }}
+  .badge {{ white-space: nowrap; }}
+  section > .sub {{ font-size: 12px; margin-top: 6px; line-height: 1.6; }}
+  .card .sub.muted {{ font-size: 12px; }}
+  table.regime td {{ text-align: left; vertical-align: top; }}
+  table.regime td:last-child {{ text-align: right; font-size: 12px; white-space: nowrap; }}
+  tr.hit-row td {{ background: rgba(185,28,28,0.06); }}
+  @media (max-width: 640px) {{ body {{ padding: 16px; }} table.regime td:last-child {{ white-space: normal; }} }}
   .changes-card {{ border-left: 4px solid var(--accent); background: rgba(15,118,110,0.08); }}
 </style>
 </head>
 <body>
   <h1>VIXショート運用ダッシュボード</h1>
-  <div class="updated">最終更新: {latest['date']}</div>
+  <div class="updated">最終更新: {latest['date']}{parts['basis']}</div>
 
-  <div class="grid">
-    <div class="card">
-      <div class="label">VIX (Spot)</div>
-      <div class="value">{latest['vix']}</div>
-      <div class="sub">VIX3M: {latest['vix3m']} / 比率: {latest['ratio']}</div>
-    </div>
-    <div class="card">
-      <div class="label">コンタンゴ/バックワーデーション判定</div>
-      <div class="value" style="font-size:20px">
-        <span class="badge {contango_class}">{latest['contango_status']}</span>
-      </div>
-      <div class="sub">VIX3M ÷ VIX の比率で判定(1超=コンタンゴ)</div>
-    </div>
+  <section>
+    <h2>今日の結論</h2>
+    <div class="grid">
+      {parts['card_vix']}
+      {parts['card_carry']}
+      {parts['card_regime']}
     <div class="card">
       <div class="label">SKEW指数</div>
       <div class="value">{latest['skew']}</div>
       <div class="sub"><span class="badge {skew_class}">{latest['skew_alert']}</span></div>
+      <div class="sub muted">注意140 / 警戒144</div>
     </div>
+    </div>
+  </section>
+
+  {parts['regime_section']}
+
+  <section>
+    <h2>日程</h2>
+    <div class="grid">
     <div class="card">
       <div class="label">次回価格調整日(毎月第2水曜)</div>
       <div class="value">{latest['days_to_adjustment']}日</div>
       <div class="sub">{latest['next_adjustment_date']}</div>
     </div>
-  </div>
+      {parts['roll_card']}
+    <div class="card" id="next-high-card">
+      <div class="label">次の最重要指標(FOMC・CPI・雇用統計)</div>
+      <div class="value" id="nh-days">—</div>
+      <div class="sub" id="nh-name"></div>
+    </div>
+    </div>
+  </section>
+
+  {parts['holding_section']}
 
   <section>
     <h2>推移グラフ</h2>
@@ -582,8 +647,6 @@ def render_dashboard(rows, latest):
     </div>
     <div class="data-note" id="data-note"></div>
   </section>
-
-  {signals_html}
 
   {outlook_html}
 
@@ -798,6 +861,18 @@ def render_dashboard(rows, latest):
     }}
 
     renderEconCalendar();
+
+    (function() {{
+      const nh = econEvents
+        .map(function(e) {{ return Object.assign({{}}, e, {{ days: daysUntil(e.date) }}); }})
+        .filter(function(e) {{ return e.days >= 0 && e.importance === 'high'; }})
+        .sort(function(a, b) {{ return a.date < b.date ? -1 : 1; }})[0];
+      if (nh) {{
+        document.getElementById('nh-days').textContent = nh.days === 0 ? '本日' : (nh.days + '日');
+        document.getElementById('nh-name').textContent = nh.date + ' ' + nh.name;
+        if (nh.days <= 3) document.getElementById('next-high-card').style.borderLeft = '4px solid var(--danger)';
+      }}
+    }})();
   </script>
 
 </body>

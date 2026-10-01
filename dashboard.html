@@ -157,37 +157,102 @@
   .legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
   .outlook-text { font-size: 14px; line-height: 1.8; color: var(--text); }
   .outlook-sources { font-size: 12px; margin-top: 10px; }
+  .muted { color: var(--muted); }
+  .badge { white-space: nowrap; }
+  section > .sub { font-size: 12px; margin-top: 6px; line-height: 1.6; }
+  .card .sub.muted { font-size: 12px; }
+  table.regime td { text-align: left; vertical-align: top; }
+  table.regime td:last-child { text-align: right; font-size: 12px; white-space: nowrap; }
+  tr.hit-row td { background: rgba(185,28,28,0.06); }
+  @media (max-width: 640px) { body { padding: 16px; } table.regime td:last-child { white-space: normal; } }
   .changes-card { border-left: 4px solid var(--accent); background: rgba(15,118,110,0.08); }
 </style>
 </head>
 <body>
   <h1>VIXショート運用ダッシュボード</h1>
-  <div class="updated">最終更新: 2026-09-30</div>
+  <div class="updated">最終更新: 2026-09-30 / Cboe終値ベース: 2026-09-30</div>
 
-  <div class="grid">
+  <section>
+    <h2>今日の結論</h2>
+    <div class="grid">
+      
     <div class="card">
-      <div class="label">VIX (Spot)</div>
+      <div class="label">VIX</div>
       <div class="value">16.34</div>
-      <div class="sub">VIX3M: 18.37 / 比率: 1.124</div>
+      <div class="sub"><span class="badge normal">仕込み目安20まで あと +3.66</span></div>
+      <div class="sub muted">参考: VIX3M 18.37 / 比率 1.124</div>
     </div>
+      
     <div class="card">
-      <div class="label">コンタンゴ/バックワーデーション判定</div>
-      <div class="value" style="font-size:20px">
-        <span class="badge normal">コンタンゴ(順鞘)</span>
-      </div>
-      <div class="sub">VIX3M ÷ VIX の比率で判定(1超=コンタンゴ)</div>
+      <div class="label">調整金ゾーン(先物1〜2限月コンタンゴ率)</div>
+      <div class="value">3.27%</div>
+      <div class="sub"><span class="badge danger">新規・積み増し見送り(5.6%未満)</span></div>
+      <div class="sub muted">推定調整金 2.62円/lot/日(Admin Fee比 11.9、30以上で保有OK)</div>
+    </div>
+      
+    <div class="card">
+      <div class="label">地合い(急騰が来やすいか)</div>
+      <div class="value">1<span style="font-size:16px;color:var(--muted)"> / 4 該当</span></div>
+      <div class="sub"><span class="badge warn">やや警戒</span></div>
+      <div class="sub muted">カーブが平らでVIXも低め</div>
     </div>
     <div class="card">
       <div class="label">SKEW指数</div>
       <div class="value">141.92</div>
       <div class="sub"><span class="badge warn">注意(140超)</span></div>
+      <div class="sub muted">注意140 / 警戒144</div>
     </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <h2>地合いシグナル(ノーポジ時・2013〜2026年の検証)</h2>
+    <table class="regime"><tbody><tr class="hit-row"><td style="width:64px"><span class="badge danger">該当</span></td><td>カーブが平らでVIXも低め<div class="sub muted">コンタンゴ5%未満、VIX17未満</div></td><td class="muted">20営業日以内にVIX20超え 35%(平時28%)</td></tr><tr class=""><td style="width:64px"><span class="badge normal">—</span></td><td>株は好調なのにカーブが平ら<div class="sub muted">S&P500が50日線+2%超、コンタンゴ5%未満、VIX18未満</div></td><td class="muted">20営業日以内にVIX20超え 48%(平時32%)</td></tr><tr class=""><td style="width:64px"><span class="badge normal">—</span></td><td>VIXが低いのにオプションが割高<div class="sub muted">VIX15未満、VIX − 実現ボラ20日 > 6pt</div></td><td class="muted">2週間以内に+30% 30%(平時18%)</td></tr><tr class=""><td style="width:64px"><span class="badge normal">—</span></td><td>静けさが極端(参考・該当日少)<div class="sub muted">VIX15未満、SKEW145超、VIX9D÷VIX 0.86未満</div></td><td class="muted">20営業日以内にVIX20超え 41%</td></tr></tbody></table>
+    <div class="sub muted" style="margin-top:8px">根拠: S&amp;P500 50日線乖離 0.05% / VIX − 実現ボラ20日 5.55pt / VIX9D÷VIX 0.869 / 期近 17.8681(2026-10-21満期)・次限月 18.4532</div>
+    <div class="sub muted">該当したら、VIX20前後にアラートを入れて証拠金の余力を空けて待つ合図。タイミングの予測ではない。</div>
+  </section>
+
+  <section>
+    <h2>日程</h2>
+    <div class="grid">
     <div class="card">
       <div class="label">次回価格調整日(毎月第2水曜)</div>
       <div class="value">14日</div>
       <div class="sub">2026-10-14</div>
     </div>
-  </div>
+      
+    <div class="card">
+      <div class="label">次のロール(満期の前日)</div>
+      <div class="value">20日</div>
+      <div class="sub">2026-10-20</div>
+      <div class="sub muted">この前後で調整金の水準が切り替わりやすい</div>
+    </div>
+    <div class="card" id="next-high-card">
+      <div class="label">次の最重要指標(FOMC・CPI・雇用統計)</div>
+      <div class="value" id="nh-days">—</div>
+      <div class="sub" id="nh-name"></div>
+    </div>
+    </div>
+  </section>
+
+  
+  <section>
+    <h2>建てる前・保有中に見るもの</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="label">ストレステスト(今の水準で100lot売った場合)</div>
+        <table><tbody><tr><td>VIX 20</td><td>-56,730円</td></tr><tr><td>VIX 25</td><td>-134,230円</td></tr><tr><td>VIX 30</td><td>-211,730円</td></tr><tr><td>VIX 35</td><td>-289,230円</td></tr><tr><td>VIX 40</td><td>-366,730円</td></tr></tbody></table>
+        <div class="sub muted">ロット数に比例。建てる前に「ロット数 ÷ 100 × この金額」が証拠金で耐えられるか確認。</div>
+      </div>
+      <div class="card">
+        <div class="label">保有中の利確判定(今後20営業日の平均)</div>
+        <div class="value" style="font-size:20px"><span class="badge danger">利確ゾーン</span></div>
+        <div class="sub">VIX 15〜17帯: 残りの利幅 1.9pt + 調整金 0.47pt = 2.37pt</div>
+        <div class="sub muted">上振れリスクの平均: 4.7pt</div>
+      </div>
+    </div>
+  </section>
 
   <section>
     <h2>推移グラフ</h2>
@@ -209,56 +274,6 @@
     </div>
     <div class="data-note" id="data-note"></div>
   </section>
-
-  
-  <section>
-    <h2>調整金と地合いのシグナル</h2>
-    <div class="updated" style="margin-bottom:14px">Cboe終値ベース: 2026-09-30</div>
-    <div class="grid" style="margin-bottom:16px">
-      <div class="card">
-        <div class="label">先物1〜2限月コンタンゴ率</div>
-        <div class="value">3.27%</div>
-        <div class="sub"><span class="badge danger">新規・積み増し見送り(5.6%未満)</span></div>
-        <div class="sub">期近 17.8681(2026-10-21満期) / 次限月 18.4532</div>
-      </div>
-      <div class="card">
-        <div class="label">推定調整金(1lot・1日)</div>
-        <div class="value">2.62円</div>
-        <div class="sub">調整金 ÷ Admin Fee 換算で 11.9(30以上で保有OK)</div>
-      </div>
-      <div class="card">
-        <div class="label">次のロール(満期の前日)</div>
-        <div class="value" style="font-size:22px">2026-10-20</div>
-        <div class="sub">この前後で調整金の水準が切り替わりやすい</div>
-      </div>
-      <div class="card">
-        <div class="label">S&P500 / 実現ボラ</div>
-        <div class="value" style="font-size:22px">50日線 0.05%</div>
-        <div class="sub">VIX − 実現ボラ20日: 5.55pt / VIX9D÷VIX: 0.869</div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-bottom:12px">
-      <div class="label">ノーポジ時:急騰が来やすい地合いか(2013〜2026年の検証)</div>
-      <table><tbody><tr><td><span class="badge normal">—</span></td><td>株は好調なのにカーブが平ら<div class="sub">S&P500が50日線+2%超、コンタンゴ5%未満、VIX18未満</div></td><td class="sub">20営業日以内にVIX20超え 48%(平時32%)</td></tr><tr><td><span class="badge normal">—</span></td><td>VIXが低いのにオプションが割高<div class="sub">VIX15未満、VIX − 実現ボラ20日 > 6pt</div></td><td class="sub">2週間以内に+30% 30%(平時18%)</td></tr><tr><td><span class="badge normal">—</span></td><td>静けさが極端(参考・該当日少)<div class="sub">VIX15未満、SKEW145超、VIX9D÷VIX 0.86未満</div></td><td class="sub">20営業日以内にVIX20超え 41%</td></tr><tr><td><span class="badge danger">該当</span></td><td>カーブが平らでVIXも低め<div class="sub">コンタンゴ5%未満、VIX17未満</div></td><td class="sub">20営業日以内にVIX20超え 35%(平時28%)</td></tr></tbody></table>
-      <div class="sub" style="margin-top:8px">該当したら、VIX20前後にアラートを入れて証拠金の余力を空けて待つ合図。タイミングの予測ではない。</div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="label">保有中:利確判定(今後20営業日の平均)</div>
-        <div class="value" style="font-size:20px"><span class="badge danger">利確ゾーン</span></div>
-        <div class="sub">VIX 15〜17帯: 残りの利幅 1.9pt + 調整金 0.47pt = 2.37pt</div>
-        <div class="sub">上振れリスクの平均: 4.7pt</div>
-      </div>
-      <div class="card">
-        <div class="label">ストレステスト(今の水準で100lot売った場合)</div>
-        <table><tbody><tr><td>VIX 20</td><td>-56,730円</td></tr><tr><td>VIX 25</td><td>-134,230円</td></tr><tr><td>VIX 30</td><td>-211,730円</td></tr><tr><td>VIX 35</td><td>-289,230円</td></tr><tr><td>VIX 40</td><td>-366,730円</td></tr></tbody></table>
-        <div class="sub">ロット数に比例。建てる前に「ロット数 ÷ 100 × この金額」が証拠金で耐えられるか確認。</div>
-      </div>
-    </div>
-  </section>
-
 
   
   <section>
@@ -541,6 +556,18 @@
     }
 
     renderEconCalendar();
+
+    (function() {
+      const nh = econEvents
+        .map(function(e) { return Object.assign({}, e, { days: daysUntil(e.date) }); })
+        .filter(function(e) { return e.days >= 0 && e.importance === 'high'; })
+        .sort(function(a, b) { return a.date < b.date ? -1 : 1; })[0];
+      if (nh) {
+        document.getElementById('nh-days').textContent = nh.days === 0 ? '本日' : (nh.days + '日');
+        document.getElementById('nh-name').textContent = nh.date + ' ' + nh.name;
+        if (nh.days <= 3) document.getElementById('next-high-card').style.borderLeft = '4px solid var(--danger)';
+      }
+    })();
   </script>
 
 </body>
