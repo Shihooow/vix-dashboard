@@ -340,10 +340,12 @@ def render_signals_parts(sig, latest):
     )
     regime_section = f"""
   <section>
-    <h2>地合いシグナル(ノーポジ時・2013〜2026年の検証)</h2>
+    <h2>地合いシグナル(2013〜2026年の検証)</h2>
     <table class="regime"><tbody>{regime_rows}</tbody></table>
     <div class="sub muted" style="margin-top:8px">根拠: S&amp;P500 50日線乖離 {esc(sig.get('spx_vs_ma50_pct'))}% / VIX − 実現ボラ20日 {esc(sig.get('vix_minus_rv'))}pt / VIX9D÷VIX {esc(sig.get('vix9d_over_vix'))} / 期近 {esc(fut.get('f1'))}({esc(fut.get('exp1'))}満期)・次限月 {esc(fut.get('f2'))}</div>
-    <div class="sub muted">該当したら、VIX20前後にアラートを入れて証拠金の余力を空けて待つ合図。タイミングの予測ではない。</div>
+    <div class="sub" style="margin-top:10px"><b>ノーポジ時に該当したら</b>: VIX20前後にアラートを入れて、証拠金の余力を空けて待つ。</div>
+    <div class="sub"><b>保有中に該当したら</b>: 積み増しは止める。2つ以上該当したら、下のストレステストの金額とロット数を見比べて縮小を検討する。</div>
+    <div class="sub muted">急騰が来やすい地合いかどうかの目安で、タイミングの予測ではない。</div>
   </section>"""
 
     # --- 日程: 次のロール ---
