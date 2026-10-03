@@ -115,14 +115,29 @@ def load_vx_contracts(today, n_months=4, fetch=http_get):
 
 
 def front_two(contracts, t):
-    """満期の前日に次の限月へ切り替える(IGの調整金と最もよく一致した設定)。"""
+    """満期の前日に次の限月へ切り替える(IGの調整金と最もよく一致した設定)。
+    先物の清算値CSVは指数より1日遅れて反映されることがあるため、t当日が無ければ
+    t以前で2限月とも揃っている直近の日の値を使う(戻り値の "date" で何日分か分かる)。"""
     live = [c for c in contracts if (c[0] - t).days > 1]
     if len(live) < 2:
         return None
     (e1, s1), (e2, s2) = live[0], live[1]
-    if t in s1 and t in s2:
-        return {"exp1": e1, "f1": s1[t], "exp2": e2, "f2": s2[t]}
-    return None
+    both = sorted(d for d in set(s1) & set(s2) if d <= t)
+    if not both:
+        return None
+    d = both[-1]
+    if (t - d).days > 7:
+        return None
+    return {"exp1": e1, "f1": s1[d], "exp2": e2, "f2": s2[d], "date": d}
+
+
+def last_on_or_before(series, t):
+    """series({date: value})のうち t 以前で最新の (日付, 値)。無ければ (None, None)。"""
+    ds = [d for d in series if d <= t]
+    if not ds:
+        return None, None
+    d = max(ds)
+    return d, series[d]
 
 
 def realized_vol(closes, n=20):
@@ -142,8 +157,14 @@ def build_signals(fetch=http_get, today=None):
     skew = load_index("SKEW", fetch)
     spx = load_index("SPX", fetch)
 
-    common = sorted(set(vix) & set(vix3m) & set(skew) & set(spx))
+    # 基準日 = VIXとVIX3Mが両方そろっている最新日。
+    # SKEW・SPX・VIX9Dの反映が遅れている日は、t以前の直近値で代用して stale に記録する
+    # (以前は4指数すべてそろう日に合わせていたため、1つでも遅れると全体が前日のままになっていた)。
+    common = sorted(set(vix) & set(vix3m))
     t = common[-1]
+    skew_d, skew_v = last_on_or_before(skew, t)
+    spx_d, spx_v = last_on_or_before(spx, t)
+    vix9d_d, vix9d_v = last_on_or_before(vix9d, t)
     spx_dates = [d for d in sorted(spx) if d <= t]
     spx_closes = [spx[d] for d in spx_dates]
 
@@ -158,9 +179,16 @@ def build_signals(fetch=http_get, today=None):
     est_ratio = 0.53 + 3.48 * c12 if c12 is not None else None
     est_yen = est_ratio * ADMIN_YEN_PER_LOT if est_ratio is not None else None
 
-    x50 = (spx[t] / ma50 - 1) * 100
+    x50 = (spx_v / ma50 - 1) * 100
     vrp = v - rv20 if rv20 is not None else None
-    n9 = vix9d[t] / v if t in vix9d else None
+    n9 = vix9d_v / v if vix9d_v is not None and vix9d_d == t else None
+
+    stale = {}
+    for name, d in (("SKEW", skew_d), ("S&P500", spx_d), ("VIX9D", vix9d_d)):
+        if d is not None and d < t:
+            stale[name] = d.isoformat()
+    if ft and ft["date"] < t:
+        stale["VIX先物"] = ft["date"].isoformat()
 
     # 調整金ゾーン
     if c12 is None:
@@ -191,7 +219,7 @@ def build_signals(fetch=http_get, today=None):
         {
             "name": "静けさが極端(参考・該当日少)",
             "rule": "VIX15未満、SKEW145超、VIX9D÷VIX 0.86未満",
-            "hit": bool(n9 is not None and v < 15 and skew[t] > 145 and n9 < 0.86),
+            "hit": bool(n9 is not None and v < 15 and skew_v > 145 and n9 < 0.86),
             "stat": "20営業日以内にVIX20超え 41%",
         },
         {
@@ -232,16 +260,18 @@ def build_signals(fetch=http_get, today=None):
         "closes": {
             "vix": v,
             "vix3m": vix3m[t],
-            "vix9d": vix9d.get(t),
-            "skew": skew[t],
-            "spx": spx[t],
+            "vix9d": vix9d_v,
+            "skew": skew_v,
+            "spx": spx_v,
         },
+        "stale": stale,
         "futures": None if not ft else {
             "exp1": ft["exp1"].isoformat(),
             "f1": ft["f1"],
             "exp2": ft["exp2"].isoformat(),
             "f2": ft["f2"],
             "roll_date": (ft["exp1"] - timedelta(days=1)).isoformat(),
+            "date": ft["date"].isoformat(),
         },
         "contango_12_pct": r(c12),
         "est_ratio": r(est_ratio, 1),
@@ -267,6 +297,8 @@ def main():
         print(line)
     else:
         print(f"signals.json を更新しました({sig['date']})")
+        if sig.get("stale"):
+            print("一部は前日以前の値で代用: " + " / ".join(f"{k} {v}" for k, v in sig["stale"].items()))
         print(f"コンタンゴ1-2限月: {sig['contango_12_pct']}% / 推定調整金: {sig['est_yen_per_lot_day']}円/lot/日")
         print(f"update_dashboard.py 用の終値: {line}")
 

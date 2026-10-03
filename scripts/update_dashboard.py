@@ -30,6 +30,23 @@ import csv
 import json
 import os
 from datetime import date, datetime
+from zoneinfo import ZoneInfo
+
+JST = ZoneInfo("Asia/Tokyo")
+WEEKDAYS_JA = "月火水木金土日"
+
+# 米国市場(NYSE)の休場日。データ遅延バッジの判定に使う(年末に翌年分を追記)
+US_MARKET_HOLIDAYS = [
+    "2026-01-01", "2026-01-19", "2026-02-16", "2026-04-03", "2026-05-25",
+    "2026-06-19", "2026-07-03", "2026-09-07", "2026-11-26", "2026-12-25",
+    "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26", "2027-05-31",
+    "2027-06-18", "2027-07-05", "2027-09-06", "2027-11-25", "2027-12-24",
+]
+
+
+def md_wd(d):
+    """date -> '10/2(金)'"""
+    return f"{d.month}/{d.day}({WEEKDAYS_JA[d.weekday()]})"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG_PATH = os.path.join(BASE_DIR, "log.csv")
@@ -283,7 +300,7 @@ def render_signals_parts(sig, latest):
       <div class="sub muted">先物データ未取得のため VIX3M÷VIX で暫定判定</div>
     </div>"""
         return {"card_vix": card_vix, "card_carry": card_carry, "card_regime": "",
-                "regime_section": "", "roll_card": "", "holding_section": "", "basis": ""}
+                "regime_section": "", "roll_card": "", "holding_section": "", "basis": "", "stale": {}}
 
     fut = sig.get("futures") or {}
     cz = sig.get("carry_zone", {})
@@ -375,7 +392,7 @@ def render_signals_parts(sig, latest):
     return {"card_vix": card_vix, "card_carry": card_carry, "card_regime": card_regime,
             "regime_section": regime_section, "roll_card": roll_card,
             "holding_section": holding_section,
-            "basis": f" / Cboe終値ベース: {esc(sig.get('date'))}"}
+            "basis": "", "stale": sig.get("stale") or {}}
 
 
 def render_dashboard(rows, latest):
@@ -383,7 +400,19 @@ def render_dashboard(rows, latest):
     recent_rev = list(reversed(recent))
     outlook = load_outlook()
     outlook_html = render_outlook_section(outlook)
+    now_jst = datetime.now(JST)
+    page_updated = f"{md_wd(now_jst.date())} {now_jst.strftime('%H:%M')}"
+    data_date = datetime.strptime(latest["date"], "%Y-%m-%d").date()
+    data_label = md_wd(data_date)
     parts = render_signals_parts(load_signals(), latest)
+    stale_items = parts.get("stale") or {}
+    stale_note = ""
+    if stale_items:
+        txt = " / ".join(
+            f"{k}は{md_wd(datetime.strptime(v, '%Y-%m-%d').date())}の値"
+            for k, v in stale_items.items()
+        )
+        stale_note = f'<span class="upd-note">※Cboeの反映待ちのため一部前日値: {txt}</span>'
 
     def esc(v):
         return str(v)
@@ -444,7 +473,9 @@ def render_dashboard(rows, latest):
     padding: 24px;
   }}
   h1 {{ font-size: 20px; margin: 0 0 4px; }}
-  .updated {{ color: var(--muted); font-size: 13px; margin-bottom: 20px; }}
+  .updated {{ color: var(--muted); font-size: 13px; margin-bottom: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }}
+  .updated .upd-main {{ color: var(--text); font-size: 15px; font-weight: 700; }}
+  .updated .upd-note {{ flex-basis: 100%; font-size: 12px; }}
   .grid {{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -589,7 +620,12 @@ def render_dashboard(rows, latest):
 </head>
 <body>
   <h1>VIXショート運用ダッシュボード</h1>
-  <div class="updated">最終更新: {latest['date']}{parts['basis']}</div>
+  <div class="updated">
+    <span class="upd-main">ページ更新 {page_updated}</span>
+    <span class="upd-data">データ: 米国 {data_label} 終値</span>
+    <span id="stale-badge" class="badge warn" style="display:none"></span>
+    {stale_note}
+  </div>
 
   <section>
     <h2>今日の結論</h2>
@@ -680,6 +716,26 @@ def render_dashboard(rows, latest):
   <script id="log-data" type="application/json">{chart_data_json}</script>
   <script id="econ-data" type="application/json">{econ_events_json}</script>
   <script>
+    // データ遅延バッジ: 閲覧時点(日本時間)で取得できているはずの米国終値日と比べる
+    (function() {{
+      var dataDate = "{latest['date']}";
+      var holidays = {json.dumps(US_MARKET_HOLIDAYS)};
+      function iso(d) {{ return d.toISOString().slice(0, 10); }}
+      var jst = new Date(Date.now() + 9 * 3600 * 1000);  // UTCフィールドで日本時間を表す
+      var d = new Date(Date.UTC(jst.getUTCFullYear(), jst.getUTCMonth(), jst.getUTCDate()));
+      // 前日の米国終値は日本時間8時までに反映される想定
+      d.setUTCDate(d.getUTCDate() - (jst.getUTCHours() >= 8 ? 1 : 2));
+      while (d.getUTCDay() === 0 || d.getUTCDay() === 6 || holidays.indexOf(iso(d)) >= 0) {{
+        d.setUTCDate(d.getUTCDate() - 1);
+      }}
+      var expected = iso(d);
+      if (dataDate < expected) {{
+        var b = document.getElementById("stale-badge");
+        var wd = "日月火水木金土";
+        b.textContent = "データ遅延: " + (d.getUTCMonth() + 1) + "/" + d.getUTCDate() + "(" + wd[d.getUTCDay()] + ")の終値が未反映";
+        b.style.display = "inline-block";
+      }}
+    }})();
     const allData = JSON.parse(document.getElementById('log-data').textContent);
     const econEvents = JSON.parse(document.getElementById('econ-data').textContent);
     const CHART_W = 900, CHART_H = 90;
