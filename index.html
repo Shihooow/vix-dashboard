@@ -173,10 +173,10 @@
 <body>
   <h1>VIXショート運用ダッシュボード</h1>
   <div class="updated">
-    <span class="upd-main">ページ更新 10/3(土) 20:39</span>
+    <span class="upd-main">ページ更新 10/5(月) 07:05</span>
     <span class="upd-data">データ: 米国 10/2(金) 終値</span>
     <span id="stale-badge" class="badge warn" style="display:none"></span>
-    <span class="upd-note">※Cboeの反映待ちのため一部前日値: VIX先物は10/1(木)の値</span>
+    
   </div>
 
   <section>
@@ -192,9 +192,9 @@
       
     <div class="card">
       <div class="label">調整金ゾーン(先物1〜2限月コンタンゴ率)</div>
-      <div class="value">2.9%</div>
+      <div class="value">3.95%</div>
       <div class="sub"><span class="badge danger">新規・積み増し見送り(5.6%未満)</span></div>
-      <div class="sub muted">推定調整金 2.33円/lot/日(Admin Fee比 10.6、30以上で保有OK)</div>
+      <div class="sub muted">推定調整金 3.14円/lot/日(Admin Fee比 14.3、30以上で保有OK)</div>
     </div>
       
     <div class="card">
@@ -216,7 +216,7 @@
   <section>
     <h2>地合いシグナル(2013〜2026年の検証)</h2>
     <table class="regime"><tbody><tr class="hit-row"><td style="width:64px"><span class="badge danger">該当</span></td><td>カーブが平らでVIXも低め<div class="sub muted">コンタンゴ5%未満、VIX17未満</div></td><td class="muted">20営業日以内にVIX20超え 35%(平時28%)</td></tr><tr class=""><td style="width:64px"><span class="badge normal">—</span></td><td>株は好調なのにカーブが平ら<div class="sub muted">S&P500が50日線+2%超、コンタンゴ5%未満、VIX18未満</div></td><td class="muted">20営業日以内にVIX20超え 48%(平時32%)</td></tr><tr class=""><td style="width:64px"><span class="badge normal">—</span></td><td>VIXが低いのにオプションが割高<div class="sub muted">VIX15未満、VIX − 実現ボラ20日 > 6pt</div></td><td class="muted">2週間以内に+30% 30%(平時18%)</td></tr><tr class=""><td style="width:64px"><span class="badge normal">—</span></td><td>静けさが極端(参考・該当日少)<div class="sub muted">VIX15未満、SKEW145超、VIX9D÷VIX 0.86未満</div></td><td class="muted">20営業日以内にVIX20超え 41%</td></tr></tbody></table>
-    <div class="sub muted" style="margin-top:8px">根拠: S&amp;P500 50日線乖離 0.85% / VIX − 実現ボラ20日 4.99pt / VIX9D÷VIX 0.788 / 期近 18.1009(2026-10-21満期)・次限月 18.6253</div>
+    <div class="sub muted" style="margin-top:8px">根拠: S&amp;P500 50日線乖離 0.85% / VIX − 実現ボラ20日 4.99pt / VIX9D÷VIX 0.788 / 期近 17.648(2026-10-21満期)・次限月 18.3449</div>
     <div class="sub" style="margin-top:10px"><b>ノーポジ時に該当したら</b>: VIX20前後にアラートを入れて、証拠金の余力を空けて待つ。</div>
     <div class="sub"><b>保有中に該当したら</b>: 積み増しは止める。2つ以上該当したら、下のストレステストの金額とロット数を見比べて縮小を検討する。</div>
     <div class="sub muted">急騰が来やすい地合いかどうかの目安で、タイミングの予測ではない。</div>
@@ -257,7 +257,7 @@
       <div class="card">
         <div class="label">保有中の利確判定(今後20営業日の平均)</div>
         <div class="value" style="font-size:20px"><span class="badge danger">利確ゾーン</span></div>
-        <div class="sub">VIX 15〜17帯: 残りの利幅 1.9pt + 調整金 0.42pt = 2.32pt</div>
+        <div class="sub">VIX 15〜17帯: 残りの利幅 1.9pt + 調整金 0.57pt = 2.47pt</div>
         <div class="sub muted">上振れリスクの平均: 4.7pt</div>
       </div>
     </div>
@@ -287,11 +287,11 @@
   
   <section>
     <h2>指標予想・相場解説(週次更新)</h2>
-    <div class="updated" style="margin-bottom:14px">最終更新: 2026-10-03</div>
+    <div class="updated" style="margin-bottom:14px">最終更新: 2026-10-05</div>
     
     <div class="card changes-card" style="margin-bottom:16px">
       <div class="label">前回更新からの変更点</div>
-      <div class="outlook-text"><ul style="margin:4px 0 0;padding-left:18px"><li>9月雇用統計(10/2発表)は非農業部門+2.9万人と予想(+8.4〜8.9万人)を大幅に下回り、失業率は4.1%→4.2%に上昇。7〜8月分も合計6万人下方修正(前回は予想+9万人・失業率4.1%の見通しだった)</li><li>10/28FOMCでの追加25bp利上げ織り込みが9/30の約37%(10/2朝時点で約70%との報道も)から約14〜22%へ急低下(CME FedWatch、情報源により差あり)。JPモルガンなどは追加利上げは12月との見方</li><li>10年債利回りは9/30の一時5.30%・終値付近5.25%から、10/2は5.18%前後へ低下(約-5bp)</li><li>S&P500は10/2に+0.19%の7,666.45(9/30のログ終値7,651.54から小幅上昇)。ナスダックは約+1.2%でNVIDIAが史上最高値圏。ただし50日線を上回る銘柄は約21%と相場の裾野は狭い</li><li>VIXは10/2に15.6台へ低下(Schwab 15.59、-4.9%)。9/30の16.34から一段と低下し、仕込み目安の20近辺からは遠のいた</li></ul></div>
+      <div class="outlook-text"><ul style="margin:4px 0 0;padding-left:18px"><li>主要な変化なし:前回(10/3更新)以降に新たな主要指標の発表はなく、次の焦点は10/14のCPIと10/28のFOMC。</li><li>10/2の米国市場の引け値報道を確認し、VIXは15.31(週間+約3%)と15台前半での推移。仕込み目安の20近辺からは依然距離がある。</li><li>10月利上げ確率は約22%(1週間前の約64%から低下)との報道。前回記載の14〜22%レンジの上限に近い水準。</li><li>G7が戦略備蓄から1億バレルを4か月かけて放出する計画を発表し、原油は下落。10年債利回りは報道により5.18〜5.24%と差があるが、5%台の高水準は継続。</li><li>9月CPIの予想(Continuum Economics)は総合前月比+0.6%・前年比+3.7%、コア前月比+0.2%・前年比+2.4%。総合は高め、コアは鈍化の見通し。</li></ul></div>
     </div>
 
     <div class="grid" style="margin-bottom:16px">
@@ -301,11 +301,11 @@
       </div>
       <div class="card">
         <div class="label">次回FOMC 2026-10-28</div>
-        <div class="sub" style="line-height:1.6">10/27〜28開催。9月雇用統計の大幅下振れを受け、FedWatchの10月追加25bp利上げ確率は報道により約14〜22%まで低下し、据え置きが優勢となった。JPモルガンのFeroli氏らは追加利上げは10月ではなく12月との見方で、「年内に少なくとも1回の25bp利上げ」を見込む声もなお多い。一方、原油が1バレル100ドル超で推移しておりインフレ再燃リスクが残るため、10/14CPIの結果次第で織り込みが再び動く可能性がある。</div>
+        <div class="sub" style="line-height:1.6">10/27〜28開催。9月雇用統計(+2.9万人)の大幅下振れで、10月の追加25bp利上げ確率は約22%(1週間前は約64%)、情報源により10〜22%程度まで低下し、据え置きが優勢。一方、年内に少なくとも1回の追加利上げ(12月)を見込む声も残る。原油高や5%台の長期金利などインフレ再燃リスクがあり、10/14CPIの結果次第で織り込みが再び動く可能性がある。</div>
       </div>
       <div class="card">
         <div class="label">次回CPI 2026-10-14</div>
-        <div class="sub" style="line-height:1.6">市場予想: 9月分CPIの市場予想はStreetコンセンサスで総合前年比+3.70%。Nowflationは+3.59%、Cleveland Fed nowcastは+3.57%。前回(8月分)は総合+3.4%、コア前月比+0.3%・前年比+2.4%。雇用統計後の新たな予想修正は確認できていない。</div>
+        <div class="sub" style="line-height:1.6">市場予想: 9月分CPIの予想は総合前年比+3.7%(前月比+0.6%、8月は+3.4%)、コアは前月比+0.2%・前年比+2.4%(Continuum Economics)。Nowflationは総合+3.59%、Cleveland Fed nowcastは+3.57%。総合は押し上げ、コアは鈍化との見立て。</div>
       </div>
       <div class="card">
         <div class="label">次回雇用統計 2026-11-06</div>
@@ -315,13 +315,13 @@
 
     <div class="card" style="margin-bottom:12px">
       <div class="label">株式(S&P500など)の見通し</div>
-      <div class="outlook-text">S&P500は10/2に7,666.45(+0.19%)で引け、雇用の下振れで利上げ観測が後退し長期金利が低下したことが追い風となった。ナスダックは約+1.2%でNVIDIAが最高値を更新するなど、AI・半導体が相場を牽引している。一方、50日線を上回る銘柄は約21%にとどまり、上昇の裾野は狭い。10年債利回りは5.18%と依然高水準で、原油も100ドル超と、インフレと金利が株式バリュエーションの重石となるリスクは残る。「悪い雇用統計が株高」という構図は景気減速懸念が強まれば反転し得るため、10/14CPIと10/28FOMCが次の焦点となる。</div>
+      <div class="outlook-text">雇用の下振れで利上げ観測が後退し、10/2の米株は上昇した。報道によりS&P500の引け値は7,666〜7,722と数値に差があり、週間ではほぼ横ばい〜小幅安、ナスダックは週間で小幅上昇、ダウは週間で下落との見方がある。AI・半導体が相場を牽引する一方、50日線を上回る銘柄は約21%と裾野は狭い。10年債利回りが5.2%前後と高水準で、世界的な債券利回り上昇が株価の重石になっている。『悪い雇用統計が株高』の構図は景気減速懸念が強まれば反転し得るため、10/14CPIと10/28FOMCが次の焦点となる。</div>
     </div>
     <div class="card">
       <div class="label">VIX・ショートポジションへの見立て</div>
-      <div class="outlook-text">VIXは10/2時点で15.6台(Schwab報、-4.9%)と、9/30の16.34からさらに低下し、仕込み目安の『20近辺』からは距離がある状態が続く。利上げ観測の後退と株高はVIXを抑える方向に働く一方、長期金利5%台・原油100ドル超・相場の裾野の狭さといった火種は残り、10/14CPIや10/28FOMCで急騰する可能性もある。新規の大口建玉は20近辺への上昇を待つ余地があり、証拠金維持率800%超のキープを最優先とする設計に変わりはない。なお本内容は公開情報の要約であり、投資助言ではない。</div>
+      <div class="outlook-text">VIXは10/2に15.31前後(報道により15.3〜15.6)と低位で、仕込み目安の『20近辺』からは距離がある。利上げ観測の後退と株高はVIXを抑える方向に働く一方、長期金利5%台、原油高、相場の裾野の狭さ、10/14CPIや10/28FOMCといったイベントで急騰する可能性も残る。新規の大口建玉は20近辺への上昇を待つ余地があり、証拠金維持率800%超のキープを最優先とする設計に変わりはない。なお本内容は公開情報の要約であり、投資助言ではない。</div>
     </div>
-    <div class="outlook-sources"><a href="https://www.bls.gov/news.release/empsit.nr0.htm" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">BLS: Employment Situation Summary - September 2026</a><a href="https://www.schwab.com/learn/story/stock-market-update-open" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Schwab: Lower Yields Boost Stocks Early on Soft Jobs Data (10/2)</a><a href="https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-02-2026" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">TheStreet: Stock Market Today (Oct. 2, 2026)</a><a href="https://investing.com/news/economy-news/reaction-roundup-experts-analysts-weigh-in-on-september-jobs-report-4930206" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Investing.com: Reaction roundup on September jobs report (10/2)</a><a href="https://finance.yahoo.com/markets/live/stock-market-today-friday-october-2-dow-sp-500-nasdaq-september-jobs-report-080623878.html" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Yahoo Finance: Stock market today, October 2</a><a href="https://nowflation.com/cpi-preview/september-2026" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Nowflation: September 2026 CPI Report Preview</a><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Federal Reserve: FOMC Statement (9/16)</a></div>
+    <div class="outlook-sources"><a href="https://www.usnn.news/wall-street-review-soft-jobs-report-cuts-rate-hike-bets-lifting-stocks-friday/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Wall Street Review: Soft Jobs Report Cuts Rate-Hike Bets, Lifting Stocks Friday</a><a href="https://www.cnbc.com/2026/10/02/fed-rate-hike-odds-decline-after-september-jobs-report.html" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">CNBC: Traders now see little chance of a Fed rate hike in October after weak jobs report (10/2)</a><a href="https://continuumeconomics.com/a/353fee43/preview-due-october-14-us-september-cpi-stronger-but-with-a-slower-core-rate" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Continuum Economics: Preview - U.S. September CPI due October 14</a><a href="https://phemex.com/news/article/fed-october-hike-probability-drops-to-17-after-nonfarm-payrolls-signal-cooling-labor-market-98610" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Phemex: Fed October Hike Odds Fall to 17% After Nonfarm Data</a><a href="https://www.bls.gov/news.release/empsit.nr0.htm" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">BLS: Employment Situation Summary - September 2026</a><a href="https://www.schwab.com/learn/story/stock-market-update-open" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Schwab: Lower Yields Boost Stocks Early on Soft Jobs Data (10/2)</a><a href="https://nowflation.com/cpi-preview/september-2026" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Nowflation: September 2026 CPI Report Preview</a><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;margin-right:14px">Federal Reserve: FOMC Statement (9/16)</a></div>
   </section>
 
 

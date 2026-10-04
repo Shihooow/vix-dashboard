@@ -1,6 +1,6 @@
 {
   "date": "2026-10-02",
-  "generated_at": "2026-10-03T02:56:14",
+  "generated_at": "2026-10-04T22:05:18",
   "closes": {
     "vix": 15.31,
     "vix3m": 18.01,
@@ -8,20 +8,18 @@
     "skew": 144.88,
     "spx": 7722.72
   },
-  "stale": {
-    "VIX先物": "2026-10-01"
-  },
+  "stale": {},
   "futures": {
     "exp1": "2026-10-21",
-    "f1": 18.1009,
+    "f1": 17.648,
     "exp2": "2026-11-18",
-    "f2": 18.6253,
+    "f2": 18.3449,
     "roll_date": "2026-10-20",
-    "date": "2026-10-01"
+    "date": "2026-10-02"
   },
-  "contango_12_pct": 2.9,
-  "est_ratio": 10.6,
-  "est_yen_per_lot_day": 2.33,
+  "contango_12_pct": 3.95,
+  "est_ratio": 14.3,
+  "est_yen_per_lot_day": 3.14,
   "carry_zone": {
     "label": "新規・積み増し見送り(5.6%未満)",
     "class": "danger"
@@ -60,8 +58,8 @@
     "vix_band": "15〜17",
     "down_pt": 1.9,
     "up_pt": 4.7,
-    "carry_pt_20d": 0.42,
-    "remaining_pt": 2.32,
+    "carry_pt_20d": 0.57,
+    "remaining_pt": 2.47,
     "take_profit": true
   },
   "stress_per_100lot": [
