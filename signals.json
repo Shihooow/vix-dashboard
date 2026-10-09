@@ -1,33 +1,33 @@
 {
-  "date": "2026-10-07",
-  "generated_at": "2026-10-08T23:31:55",
+  "date": "2026-10-08",
+  "generated_at": "2026-10-09T22:16:29",
   "closes": {
-    "vix": 15.08,
-    "vix3m": 17.72,
-    "vix9d": 11.78,
-    "skew": 141.84,
-    "spx": 7801.77
+    "vix": 15.41,
+    "vix3m": 18.08,
+    "vix9d": 12.21,
+    "skew": 149.19,
+    "spx": 7765.36
   },
   "stale": {},
   "futures": {
     "exp1": "2026-10-21",
-    "f1": 17.3343,
+    "f1": 17.6239,
     "exp2": "2026-11-18",
-    "f2": 17.6458,
+    "f2": 18.0079,
     "roll_date": "2026-10-20",
-    "date": "2026-10-07"
+    "date": "2026-10-08"
   },
-  "contango_12_pct": 1.8,
-  "est_ratio": 6.8,
-  "est_yen_per_lot_day": 1.49,
+  "contango_12_pct": 2.18,
+  "est_ratio": 8.1,
+  "est_yen_per_lot_day": 1.78,
   "carry_zone": {
     "label": "新規・積み増し見送り(5.6%未満)",
     "class": "danger"
   },
-  "spx_vs_ma50_pct": 1.58,
-  "rv20": 10.24,
-  "vix_minus_rv": 4.84,
-  "vix9d_over_vix": 0.781,
+  "spx_vs_ma50_pct": 0.99,
+  "rv20": 10.14,
+  "vix_minus_rv": 5.27,
+  "vix9d_over_vix": 0.792,
   "regime_signals": [
     {
       "name": "株は好調なのにカーブが平ら",
@@ -58,30 +58,30 @@
     "vix_band": "15〜17",
     "down_pt": 1.9,
     "up_pt": 4.7,
-    "carry_pt_20d": 0.27,
-    "remaining_pt": 2.17,
+    "carry_pt_20d": 0.32,
+    "remaining_pt": 2.22,
     "take_profit": true
   },
   "stress_per_100lot": [
     {
       "to": 20,
-      "loss_yen": -76260
+      "loss_yen": -71145
     },
     {
       "to": 25,
-      "loss_yen": -153760
+      "loss_yen": -148645
     },
     {
       "to": 30,
-      "loss_yen": -231260
+      "loss_yen": -226145
     },
     {
       "to": 35,
-      "loss_yen": -308760
+      "loss_yen": -303645
     },
     {
       "to": 40,
-      "loss_yen": -386260
+      "loss_yen": -381145
     }
   ]
 }
