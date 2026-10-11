@@ -397,6 +397,202 @@ def render_signals_parts(sig, latest):
             "basis": "", "stale": sig.get("stale") or {}}
 
 
+# ===== 第1段階(2026-10追加): 急落時の行動ルール =====
+MARKETS_PATH = os.path.join(BASE_DIR, "markets.json")  # fetch_markets.py が生成
+
+# VIXの段階ごとの行動(4口座)。下限 <= VIX < 上限
+ACTION_TIERS = [
+    (0, 20, "待機", "normal", {
+        "vix": "待機。VIX20でアラート",
+        "nisa": "積立4本だけ(いつも通り)",
+        "tokutei": "なし",
+        "crypto": "両建てのポイント稼ぎ(いつも通り)",
+    }),
+    (20, 25, "第1段階", "warn", {
+        "vix": "1単位(100lot)。4時間足RSI70超えで建てる",
+        "nisa": "積立だけ",
+        "tokutei": "なし",
+        "crypto": "いつも通り",
+    }),
+    (25, 30, "第2段階", "warn", {
+        "vix": "+1単位(合計2)",
+        "nisa": "積立だけ",
+        "tokutei": "SOXLに3万円",
+        "crypto": "両建てのレバレッジを半分に。新規は建てない",
+    }),
+    (30, 40, "第3段階", "danger", {
+        "vix": "+1単位(合計3)",
+        "nisa": "10万円スポット買い(下の「拾う候補」で一番下げているもの)",
+        "tokutei": "TQQQに3万円",
+        "crypto": "USDCのうち10万円でBTCを現物買い(長期)",
+    }),
+    (40, 50, "第4段階", "danger", {
+        "vix": "+1単位(合計4、ここで上限)",
+        "nisa": "追加で10万円",
+        "tokutei": "追加しない",
+        "crypto": "使っていないUSDCを取引所から引き出す",
+    }),
+    (50, 999, "第5段階", "danger", {
+        "vix": "追加しない",
+        "nisa": "最後の10万円(年30万円の上限まで)",
+        "tokutei": "なし",
+        "crypto": "守り優先",
+    }),
+]
+
+RULES_TEXT = [
+    "VIXは最大4単位(20・25・30・40で1単位ずつ)。<b>VIX全体の含み損が−60万円になったら全部決済</b>",
+    "SOXL・TQQQは +30%で半分利益確定 / −30%で損切り / 最長3ヶ月",
+    "NISAのスポット買いは年30万円まで(急落専用の現金から)。買ったものは売らない",
+    "4口座合計の急落作戦の損失が年−80万円に達したら、その年は新しく入らない",
+    "半導体だけの急落(VIX20未満)ではSOXLは使わず、NISAで日経半導体を拾う",
+    "VIXの待機資金は円で持つ。円高が進んだら円→USDCで暗号資産側を補充",
+]
+
+
+def load_markets():
+    if os.path.exists(MARKETS_PATH):
+        try:
+            with open(MARKETS_PATH, encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return None
+    return None
+
+
+def render_action_section(latest, sig, mk):
+    """今日のアクション: VIXの段階 × 4口座の行動を表示する。"""
+    vix = float(latest["vix"])
+    tier = next(t for t in ACTION_TIERS if t[0] <= vix < t[1])
+    lo, hi, name, cls, acts = tier
+    acts = dict(acts)
+    crash = (mk or {}).get("crash_type") or {}
+    notes = []
+
+    # 半導体だけの急落(VIXは低いまま)の上書き
+    if crash.get("type") == "semis" and vix < 20:
+        acts["nisa"] = "日経半導体を10万円スポット買い(半導体だけの急落)"
+        acts["tokutei"] = "SOXLは使わない(半導体だけの急落は勝率50%・最悪−59%)"
+        notes.append("半導体だけの急落を検知")
+    # 第2段階のSOXLは「半導体だけの急落」では使わない(VIX25以上の検証で有効だったのは全体の急落)
+    if lo == 25 and crash.get("type") == "semis":
+        acts["tokutei"] = "SOXLは見送り(半導体だけの急落のため)"
+    # 調整金ゾーン
+    cz = (sig or {}).get("carry_zone") or {}
+    if vix >= 20 and cz.get("class") == "danger":
+        notes.append("調整金が薄い/マイナス(" + str(cz.get("label")) + ")。建てるなら早めの利確前提")
+
+    # 次の段階まで
+    nxt = next((t for t in ACTION_TIERS if t[0] > vix), None)
+    to_next = f"次の段階(VIX{nxt[0]}・{nxt[2]})まで あと +{nxt[0] - vix:.2f}" if nxt else "最終段階"
+    rng = f"VIX {hi}未満" if lo == 0 else (f"VIX {lo}以上" if hi >= 999 else f"VIX {lo}〜{hi}")
+
+    def cell(title, body):
+        return f'<div class="act"><div class="act-h">{title}</div><div class="act-b">{body}</div></div>'
+
+    notes_html = "".join(f'<div class="sub">⚠ {n}</div>' for n in notes)
+    rules_html = "".join(f"<li>{r}</li>" for r in RULES_TEXT)
+    crash_badge = ""
+    if crash:
+        crash_badge = f'<span class="badge {crash.get("class", "normal")}">株価: {crash.get("label")}</span>'
+
+    return f"""
+  <section>
+    <h2>今日のアクション(急落時の追加ルール)</h2>
+    <div class="card tier-card tier-{cls}">
+      <div class="tier-top">
+        <div>
+          <div class="label">今の段階({rng})</div>
+          <div class="value">{name}<span class="tier-vix">VIX {latest['vix']}</span></div>
+        </div>
+        <div class="tier-side">{crash_badge}<div class="sub muted">{to_next}</div></div>
+      </div>
+      {notes_html}
+      <div class="acts">
+        {cell("VIX(IG証券)", acts["vix"])}
+        {cell("NISA成長投資枠", acts["nisa"])}
+        {cell("特定口座(レバレッジ)", acts["tokutei"])}
+        {cell("暗号資産(Perp・USDC)", acts["crypto"])}
+      </div>
+      <details class="rules"><summary>運用ルール(2026/10改訂)</summary><ul>{rules_html}</ul></details>
+    </div>
+  </section>"""
+
+
+def render_crash_section(mk):
+    """急落の種類・NISAで拾う候補・ドル円/BTC。"""
+    if not mk or not mk.get("markets"):
+        return """
+  <section>
+    <h2>急落の種類・拾う候補</h2>
+    <div class="card"><div class="sub muted">市場データ(markets.json)がまだありません。fetch_signals.py の実行時に自動で作られます。</div></div>
+  </section>"""
+    m = mk["markets"]
+    crash = mk.get("crash_type") or {}
+
+    def f(v, unit="%"):
+        if v is None:
+            return "—"
+        color = "var(--danger)" if v < 0 else "var(--normal)"
+        return f'<span style="color:{color}">{v:+.1f}{unit}</span>'
+
+    # NISAで拾う候補 = FANG+・日経半導体・S&P500のうち52週高値からの下落が最大のもの
+    cands = [k for k in ("fang", "nsemi", "spx") if k in m and m[k].get("dd_52w") is not None]
+    pick = min(cands, key=lambda k: m[k]["dd_52w"]) if cands else None
+
+    order = ["spx", "ndx", "sox", "fang", "nsemi", "btc", "usdjpy"]
+    rows = ""
+    for k in order:
+        if k not in m:
+            continue
+        x = m[k]
+        tag = ' <span class="badge warn">拾う候補</span>' if k == pick else ""
+        hl = ' class="hit-row"' if k == pick else ""
+        close = f"{x['close']:,.2f}" if x["close"] < 1000 else f"{x['close']:,.0f}"
+        rows += (f"<tr{hl}><td>{x['name']}{tag}</td><td>{close}</td><td>{f(x.get('chg_1d'))}</td>"
+                 f"<td>{f(x.get('chg_5d'))}</td><td>{f(x.get('dd_52w'))}</td></tr>")
+
+    fx = m.get("usdjpy")
+    fx_msg = "—"
+    if fx and fx.get("chg_20d") is not None:
+        if fx["chg_20d"] <= -3:
+            fx_msg = f'<span class="badge warn">円高</span> 20日で{fx["chg_20d"]:+.1f}%。円→USDCで暗号資産側を補充する目安'
+        else:
+            fx_msg = f'20日で{fx["chg_20d"]:+.1f}%(円高サインなし)'
+    btc = m.get("btc")
+    btc_msg = f"高値から{btc['dd_52w']:+.1f}%。VIX30以上でUSDC10万円分を現物買い" if btc else "—"
+    pick_msg = f"{m[pick]['name']}(52週高値から{m[pick]['dd_52w']:+.1f}%)" if pick else "—"
+    err = mk.get("errors") or {}
+    err_html = f'<div class="sub muted">取得失敗: {", ".join(err)}</div>' if err else ""
+
+    return f"""
+  <section>
+    <h2>急落の種類・拾う候補</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="label">急落の種類(株価5日騰落・52週高値からの下落で判定)</div>
+        <div class="value" style="font-size:22px"><span class="badge {crash.get('class', 'normal')}" style="font-size:15px">{crash.get('label', '—')}</span></div>
+        <div class="sub muted">全体: S&amp;P500が5日で−4%以下 or 高値から−8%以下 / 半導体だけ: SOXが5日で−8%以下 or 高値から−15%以下(S&amp;P500は−3%より上)</div>
+      </div>
+      <div class="card">
+        <div class="label">NISAで拾うなら(一番下げているもの)</div>
+        <div class="value" style="font-size:20px">{pick_msg}</div>
+        <div class="sub muted">FANG+・日経半導体(200A)・S&amp;P500から自動選択。実行はVIX30以上 or 半導体だけの急落時</div>
+      </div>
+      <div class="card">
+        <div class="label">ドル円・BTC</div>
+        <div class="sub">ドル円 {fx['close'] if fx else '—'}: {fx_msg}</div>
+        <div class="sub">BTC: {btc_msg}</div>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>指数</th><th>終値</th><th>前日比</th><th>5日</th><th>52週高値から</th></tr></thead>
+      <tbody>{rows}</tbody>
+    </table>
+    {err_html}
+  </section>"""
+
+
 def render_dashboard(rows, latest):
     recent = rows[-30:]
     recent_rev = list(reversed(recent))
@@ -406,7 +602,11 @@ def render_dashboard(rows, latest):
     page_updated = f"{md_wd(now_jst.date())} {now_jst.strftime('%H:%M')}"
     data_date = datetime.strptime(latest["date"], "%Y-%m-%d").date()
     data_label = md_wd(data_date)
-    parts = render_signals_parts(load_signals(), latest)
+    sig_data = load_signals()
+    parts = render_signals_parts(sig_data, latest)
+    mk = load_markets()
+    action_html = render_action_section(latest, sig_data, mk)
+    crash_html = render_crash_section(mk)
     stale_items = parts.get("stale") or {}
     stale_note = ""
     if stale_items:
@@ -617,6 +817,20 @@ def render_dashboard(rows, latest):
   table.regime td:last-child {{ text-align: right; font-size: 12px; white-space: nowrap; }}
   tr.hit-row td {{ background: rgba(185,28,28,0.06); }}
   @media (max-width: 640px) {{ body {{ padding: 16px; }} table.regime td:last-child {{ white-space: normal; }} }}
+  .tier-card {{ border-left: 6px solid var(--normal); }}
+  .tier-card.tier-warn {{ border-left-color: var(--warn); background: #fffbeb; }}
+  .tier-card.tier-danger {{ border-left-color: var(--danger); background: #fef2f2; }}
+  .tier-top {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }}
+  .tier-vix {{ font-size: 15px; color: var(--muted); font-weight: 600; margin-left: 10px; }}
+  .tier-side {{ text-align: right; }}
+  .acts {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-top: 14px; }}
+  .act {{ background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }}
+  .act-h {{ font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 4px; }}
+  .act-b {{ font-size: 14px; line-height: 1.5; }}
+  details.rules {{ margin-top: 12px; font-size: 13px; }}
+  details.rules summary {{ cursor: pointer; color: var(--accent); font-weight: 600; }}
+  details.rules ul {{ margin: 8px 0 0; padding-left: 18px; line-height: 1.7; }}
+  @media (max-width: 640px) {{ .tier-side {{ text-align: left; }} }}
   .changes-card {{ border-left: 4px solid var(--accent); background: rgba(15,118,110,0.08); }}
 </style>
 </head>
@@ -628,6 +842,8 @@ def render_dashboard(rows, latest):
     <span id="stale-badge" class="badge warn" style="display:none"></span>
     {stale_note}
   </div>
+
+  {action_html}
 
   <section>
     <h2>今日の結論</h2>
@@ -645,6 +861,8 @@ def render_dashboard(rows, latest):
   </section>
 
   {parts['regime_section']}
+
+  {crash_html}
 
   <section>
     <h2>日程</h2>

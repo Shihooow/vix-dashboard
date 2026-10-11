@@ -1,33 +1,33 @@
 {
-  "date": "2026-10-08",
-  "generated_at": "2026-10-09T22:16:29",
+  "date": "2026-10-09",
+  "generated_at": "2026-10-11T06:07:31",
   "closes": {
-    "vix": 15.41,
-    "vix3m": 18.08,
-    "vix9d": 12.21,
-    "skew": 149.19,
-    "spx": 7765.36
+    "vix": 14.84,
+    "vix3m": 17.77,
+    "vix9d": 11.26,
+    "skew": 154.34,
+    "spx": 7811.54
   },
   "stale": {},
   "futures": {
     "exp1": "2026-10-21",
-    "f1": 17.6239,
+    "f1": 17.1186,
     "exp2": "2026-11-18",
-    "f2": 18.0079,
+    "f2": 17.8517,
     "roll_date": "2026-10-20",
-    "date": "2026-10-08"
+    "date": "2026-10-09"
   },
-  "contango_12_pct": 2.18,
-  "est_ratio": 8.1,
-  "est_yen_per_lot_day": 1.78,
+  "contango_12_pct": 4.28,
+  "est_ratio": 15.4,
+  "est_yen_per_lot_day": 3.4,
   "carry_zone": {
     "label": "新規・積み増し見送り(5.6%未満)",
     "class": "danger"
   },
-  "spx_vs_ma50_pct": 0.99,
-  "rv20": 10.14,
-  "vix_minus_rv": 5.27,
-  "vix9d_over_vix": 0.792,
+  "spx_vs_ma50_pct": 1.49,
+  "rv20": 9.93,
+  "vix_minus_rv": 4.91,
+  "vix9d_over_vix": 0.759,
   "regime_signals": [
     {
       "name": "株は好調なのにカーブが平ら",
@@ -44,7 +44,7 @@
     {
       "name": "静けさが極端(参考・該当日少)",
       "rule": "VIX15未満、SKEW145超、VIX9D÷VIX 0.86未満",
-      "hit": false,
+      "hit": true,
       "stat": "20営業日以内にVIX20超え 41%"
     },
     {
@@ -55,33 +55,33 @@
     }
   ],
   "exit": {
-    "vix_band": "15〜17",
-    "down_pt": 1.9,
+    "vix_band": "13〜15",
+    "down_pt": 1.2,
     "up_pt": 4.7,
-    "carry_pt_20d": 0.32,
-    "remaining_pt": 2.22,
+    "carry_pt_20d": 0.61,
+    "remaining_pt": 1.81,
     "take_profit": true
   },
   "stress_per_100lot": [
     {
       "to": 20,
-      "loss_yen": -71145
+      "loss_yen": -79980
     },
     {
       "to": 25,
-      "loss_yen": -148645
+      "loss_yen": -157480
     },
     {
       "to": 30,
-      "loss_yen": -226145
+      "loss_yen": -234980
     },
     {
       "to": 35,
-      "loss_yen": -303645
+      "loss_yen": -312480
     },
     {
       "to": 40,
-      "loss_yen": -381145
+      "loss_yen": -389980
     }
   ]
 }

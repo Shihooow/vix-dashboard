@@ -291,6 +291,17 @@ def main():
     sig = build_signals()
     with open(SIGNALS_PATH, "w", encoding="utf-8") as f:
         json.dump(sig, f, ensure_ascii=False, indent=2)
+    # 第1段階(2026-10): 急落タイプ判定などの市場データ。失敗してもVIX側の更新は続ける
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import fetch_markets
+        mk = fetch_markets.build_markets()
+        with open(fetch_markets.MARKETS_PATH, "w", encoding="utf-8") as f:
+            json.dump(mk, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        mk = None
+        if not (len(sys.argv) >= 2 and sys.argv[1] == "--closes"):
+            print(f"markets.json の更新に失敗(VIX側は更新済み): {e}")
     c = sig["closes"]
     line = f"{c['vix']} {c['vix3m']} {c['skew']} {sig['date']}"
     if len(sys.argv) >= 2 and sys.argv[1] == "--closes":
