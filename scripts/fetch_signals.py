@@ -85,7 +85,9 @@ def load_latest_quotes(fetch=http_get):
         ts = datetime.fromisoformat(str(d["last_trade_time"])[:19])
         if (ts.hour, ts.minute) < (16, 15):   # まだ取引時間中 or 引け前の値は使わない
             return None
-        price = float(d["current_price"])
+        # current_price は引け後の時間外の値に動くことがある(10/14: current 17.53 / 公式終値 16.87)。
+        # 公式終値と一致するのは close なので、close を優先する。
+        price = float(d.get("close") or d.get("current_price") or 0)
         if price <= 0:
             return None
         out[key] = price
