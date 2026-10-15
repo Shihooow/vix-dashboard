@@ -9,7 +9,7 @@ VIX/SKEW 日次ダッシュボード更新スクリプト
 処理内容:
   1. log.csv に本日分の行を追記(同日が既にあれば上書き)
   2. コンタンゴ/バックワーデーション判定 (VIX3M/VIX比率)
-  3. SKEW アラート判定 (140超=注意, 144超=警戒)
+  3. SKEW アラート判定 (log.csvは従来の140/144のまま記録。画面は過去1年パーセンタイルで表示)
   4. 毎月第2水曜(価格調整日)までのカウントダウン計算
   5. dashboard.html を最新状態に再生成(静的・オフラインで開ける単一HTML)
      - 1週間/1ヶ月/3ヶ月/6ヶ月/1年の期間タブ付きグラフ
@@ -125,6 +125,64 @@ def skew_alert(skew: float) -> str:
     elif skew >= 140:
         return "注意(140超)"
     return "通常"
+
+
+# SKEWは長期的に水準が切り上がっており、固定ライン(140/144)だと毎日「警戒」になって情報がない。
+# そこで「過去1年(約252営業日)の中で今日が何%目か」で判定する(2026-10-12追加)。
+SKEW_WINDOW = 252
+
+
+def _pctl(sorted_vals, q):
+    if not sorted_vals:
+        return None
+    k = (len(sorted_vals) - 1) * q
+    lo = int(k)
+    hi = min(lo + 1, len(sorted_vals) - 1)
+    return sorted_vals[lo] + (sorted_vals[hi] - sorted_vals[lo]) * (k - lo)
+
+
+def skew_rank(skews, idx):
+    """skews[idx] が、直近SKEW_WINDOW日(当日含む)の中で何パーセンタイルか(0〜100)。"""
+    window = skews[max(0, idx - SKEW_WINDOW + 1): idx + 1]
+    v = skews[idx]
+    below = sum(1 for x in window if x < v)
+    equal = sum(1 for x in window if x == v)
+    return round((below + 0.5 * equal) / len(window) * 100), len(window)
+
+
+def skew_rank_label(pct):
+    if pct >= 90:
+        return "danger", f"1年で上位10%(上位{100 - pct}%)"
+    if pct >= 75:
+        return "warn", f"1年の中では高め(上位{100 - pct}%)"
+    return "normal", "1年の中では普通"
+
+
+def skew_year_stats(skews):
+    window = sorted(skews[-SKEW_WINDOW:])
+    return {
+        "median": _pctl(window, 0.5),
+        "p75": _pctl(window, 0.75),
+        "p90": _pctl(window, 0.9),
+        "n": len(window),
+    }
+
+
+def make_row(vix, vix3m, skew, day):
+    """log.csv の1行分を作る。"""
+    ratio = round(vix3m / vix, 3) if vix else 0.0
+    adj_day = next_adjustment_day(day)
+    return {
+        "date": day.isoformat(),
+        "vix": f"{vix:.2f}",
+        "vix3m": f"{vix3m:.2f}",
+        "ratio": f"{ratio:.3f}",
+        "contango_status": contango_status(ratio),
+        "skew": f"{skew:.2f}",
+        "skew_alert": skew_alert(skew),
+        "next_adjustment_date": adj_day.isoformat(),
+        "days_to_adjustment": str((adj_day - day).days),
+    }
 
 
 def load_log():
@@ -607,7 +665,10 @@ def render_dashboard(rows, latest):
     mk = load_markets()
     action_html = render_action_section(latest, sig_data, mk)
     crash_html = render_crash_section(mk)
-    stale_items = parts.get("stale") or {}
+    stale_items = dict(parts.get("stale") or {})
+    # 最新の数値が delayed_quotes 由来(CSV未反映)のときは、シグナル欄が何日の値かを明記する
+    if sig_data and sig_data.get("date") and sig_data["date"] < latest["date"]:
+        stale_items["地合いシグナル・先物"] = sig_data["date"]
     stale_note = ""
     if stale_items:
         txt = " / ".join(
@@ -619,19 +680,26 @@ def render_dashboard(rows, latest):
     def esc(v):
         return str(v)
 
+    # SKEWは固定ラインではなく「過去1年の中での位置(パーセンタイル)」で判定
+    all_skews = [float(r["skew"]) for r in rows]
+    n_rows = len(rows)
+
+    def skew_cell(i):
+        pct, _ = skew_rank(all_skews, i)
+        cls, _lbl = skew_rank_label(pct)
+        return f'<span class="badge {cls}">{pct}%</span>'
+
     table_rows = "\n".join(
         f"<tr><td>{esc(r['date'])}</td><td>{esc(r['vix'])}</td>"
         f"<td>{esc(r['vix3m'])}</td><td>{esc(r['ratio'])}</td>"
         f"<td>{esc(r['contango_status'])}</td><td>{esc(r['skew'])}</td>"
-        f"<td>{esc(r['skew_alert'])}</td></tr>"
-        for r in recent_rev
+        f"<td>{skew_cell(n_rows - 1 - j)}</td></tr>"
+        for j, r in enumerate(recent_rev)
     )
 
-    skew_class = "normal"
-    if "警戒" in latest["skew_alert"]:
-        skew_class = "danger"
-    elif "注意" in latest["skew_alert"]:
-        skew_class = "warn"
+    skew_pct, skew_n = skew_rank(all_skews, n_rows - 1)
+    skew_class, skew_label = skew_rank_label(skew_pct)
+    sk = skew_year_stats(all_skews)
 
     contango_class = "normal" if "コンタンゴ" in latest["contango_status"] else "danger"
 
@@ -854,8 +922,9 @@ def render_dashboard(rows, latest):
     <div class="card">
       <div class="label">SKEW指数</div>
       <div class="value">{latest['skew']}</div>
-      <div class="sub"><span class="badge {skew_class}">{latest['skew_alert']}</span></div>
-      <div class="sub muted">注意140 / 警戒144</div>
+      <div class="sub"><span class="badge {skew_class}">{skew_label}</span></div>
+      <div class="sub muted">過去1年で{skew_pct}パーセンタイル(直近{skew_n}営業日)<br>1年の中央値 {sk['median']:.1f} / 上位25% {sk['p75']:.1f} / 上位10% {sk['p90']:.1f}</div>
+      <div class="sub muted">※判断の軸にはしない参考値</div>
     </div>
     </div>
   </section>
@@ -898,7 +967,7 @@ def render_dashboard(rows, latest):
       <div id="vix-chart"></div>
     </div>
     <div class="card">
-      <div class="label">SKEW指数 ・ 注意ライン140 / 警戒ライン144</div>
+      <div class="label">SKEW指数 ・ 過去1年の中央値 {sk['median']:.1f} / 上位10%ライン {sk['p90']:.1f}</div>
       <div id="skew-chart"></div>
     </div>
     <div class="data-note" id="data-note"></div>
@@ -925,7 +994,7 @@ def render_dashboard(rows, latest):
     <h2>日次ログ(直近{len(recent)}日)</h2>
     <table>
       <thead>
-        <tr><th>日付</th><th>VIX</th><th>VIX3M</th><th>比率</th><th>判定</th><th>SKEW</th><th>アラート</th></tr>
+        <tr><th>日付</th><th>VIX</th><th>VIX3M</th><th>比率</th><th>判定</th><th>SKEW</th><th>1年順位</th></tr>
       </thead>
       <tbody>
         {table_rows}
@@ -1075,8 +1144,8 @@ def render_dashboard(rows, latest):
       renderChart('skew-chart', filtered.map(function(r) {{ return {{ date: r.date, v: r.skew }}; }}), {{
         color: '#c2410c',
         thresholds: [
-          {{ value: 140, color: '#d97706' }},
-          {{ value: 144, color: '#dc2626' }}
+          {{ value: {sk['median']:.2f}, color: '#94a3b8' }},
+          {{ value: {sk['p90']:.2f}, color: '#dc2626' }}
         ]
       }});
 
@@ -1183,8 +1252,18 @@ def main():
         if not sig:
             print("signals.json がありません。先に fetch_signals.py を実行してください。")
             sys.exit(1)
-        c = sig["closes"]
-        sys.argv = [sys.argv[0], str(c["vix"]), str(c["vix3m"]), str(c["skew"]), sig["date"]]
+        # 直近のCSV確定値で log.csv を書き戻す(取りこぼした日・delayed_quotes由来の暫定値を自動修復)
+        tail = sig.get("history_tail") or []
+        if tail:
+            rows = load_log()
+            for h in tail:
+                rows = upsert_today(rows, make_row(h["vix"], h["vix3m"], h["skew"],
+                                                   datetime.strptime(h["date"], "%Y-%m-%d").date()))
+            save_log(rows)
+        # CSVが未反映でも、引け後の delayed_quotes があればそちらを最新日として使う
+        q = sig.get("latest_quote")
+        c, d_str = (q, q["date"]) if q else (sig["closes"], sig["date"])
+        sys.argv = [sys.argv[0], str(c["vix"]), str(c["vix3m"]), str(c["skew"]), d_str]
 
     if len(sys.argv) < 4:
         print("usage: update_dashboard.py <VIX> <VIX3M> <SKEW> [YYYY-MM-DD]")
@@ -1200,23 +1279,7 @@ def main():
     else:
         today = date.today()
 
-    ratio = round(vix3m / vix, 3) if vix else 0.0
-    status = contango_status(ratio)
-    alert = skew_alert(skew)
-    adj_day = next_adjustment_day(today)
-    days_remaining = (adj_day - today).days
-
-    row = {
-        "date": today.isoformat(),
-        "vix": f"{vix:.2f}",
-        "vix3m": f"{vix3m:.2f}",
-        "ratio": f"{ratio:.3f}",
-        "contango_status": status,
-        "skew": f"{skew:.2f}",
-        "skew_alert": alert,
-        "next_adjustment_date": adj_day.isoformat(),
-        "days_to_adjustment": str(days_remaining),
-    }
+    row = make_row(vix, vix3m, skew, today)
 
     rows = load_log()
     rows = upsert_today(rows, row)

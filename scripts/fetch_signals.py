@@ -35,6 +35,10 @@ SIGNALS_PATH = os.path.join(BASE_DIR, "signals.json")
 
 IDX_URL = "https://cdn.cboe.com/api/global/us_indices/daily_prices/{sym}_History.csv"
 VX_URL = "https://cdn.cboe.com/data/us/futures/market_statistics/historical_data/VX/VX_{d}.csv"
+# 日次CSVは終値から数時間遅れて更新されるため、当日の数値は delayed_quotes で補う(2026-10-15追加)。
+# 旧URL cdn.cboe.com/api/global/delayed_quotes/... は cdn-api.cboe.com へ転送されるようになったので新URLを直接使う。
+QUOTE_URL = "https://cdn-api.cboe.com/api/global/delayed_quotes/quotes/_{sym}.json"
+HISTORY_TAIL_DAYS = 15   # 毎回この日数分をCSVの確定値でlog.csvへ書き戻す(取りこぼし・暫定値の自動修復)
 
 FX_YEN = 155.0           # 1pt=1ドルの円換算(ストレステスト用の概算)
 ADMIN_YEN_PER_LOT = 0.22  # Admin Fee 1lot/日(2025/7〜2026/9の実績でほぼ一定)
@@ -68,6 +72,27 @@ def load_index(sym, fetch=http_get):
             out[d] = float(row[-1])
         except ValueError:
             continue
+    return out
+
+
+def load_latest_quotes(fetch=http_get):
+    """delayed_quotes から VIX / VIX3M / SKEW の確定終値を取る。
+    3つとも同じ米国日付で、引け(16:15 ET)後の値がそろったときだけ
+    {"date": date, "vix":…, "vix3m":…, "skew":…} を返す。そろわなければ None。"""
+    out, dates = {}, set()
+    for key, sym in (("vix", "VIX"), ("vix3m", "VIX3M"), ("skew", "SKEW")):
+        d = json.loads(fetch(QUOTE_URL.format(sym=sym)))["data"]
+        ts = datetime.fromisoformat(str(d["last_trade_time"])[:19])
+        if (ts.hour, ts.minute) < (16, 15):   # まだ取引時間中 or 引け前の値は使わない
+            return None
+        price = float(d["current_price"])
+        if price <= 0:
+            return None
+        out[key] = price
+        dates.add(ts.date())
+    if len(dates) != 1:
+        return None
+    out["date"] = dates.pop()
     return out
 
 
@@ -254,6 +279,21 @@ def build_signals(fetch=http_get, today=None):
     def r(x, n=2):
         return None if x is None else round(x, n)
 
+    # log.csv 自動修復用: 直近のCSV確定値(VIX・VIX3M・SKEWがそろう日)
+    history_tail = []
+    for d in common[-HISTORY_TAIL_DAYS:]:
+        if d in skew:
+            history_tail.append({"date": d.isoformat(), "vix": vix[d], "vix3m": vix3m[d], "skew": skew[d]})
+
+    # CSVがまだ前日のままでも、引け後の delayed_quotes があれば当日の数値として使う
+    latest_quote = None
+    try:
+        q = load_latest_quotes(fetch)
+        if q and q["date"] > t:
+            latest_quote = {**q, "date": q["date"].isoformat()}
+    except Exception as e:
+        print(f"delayed_quotes の取得に失敗(CSVの値で続行): {e}", file=sys.stderr)
+
     return {
         "date": t.isoformat(),
         "generated_at": datetime.now().isoformat(timespec="seconds"),
@@ -265,6 +305,8 @@ def build_signals(fetch=http_get, today=None):
             "spx": spx_v,
         },
         "stale": stale,
+        "history_tail": history_tail,
+        "latest_quote": latest_quote,
         "futures": None if not ft else {
             "exp1": ft["exp1"].isoformat(),
             "f1": ft["f1"],
@@ -302,12 +344,15 @@ def main():
         mk = None
         if not (len(sys.argv) >= 2 and sys.argv[1] == "--closes"):
             print(f"markets.json の更新に失敗(VIX側は更新済み): {e}")
-    c = sig["closes"]
-    line = f"{c['vix']} {c['vix3m']} {c['skew']} {sig['date']}"
+    c = sig["latest_quote"] or sig["closes"]
+    d_line = sig["latest_quote"]["date"] if sig["latest_quote"] else sig["date"]
+    line = f"{c['vix']} {c['vix3m']} {c['skew']} {d_line}"
     if len(sys.argv) >= 2 and sys.argv[1] == "--closes":
         print(line)
     else:
         print(f"signals.json を更新しました({sig['date']})")
+        if sig.get("latest_quote"):
+            print(f"CSV未反映のため delayed_quotes で {d_line} の終値を反映(シグナル欄は {sig['date']} 終値ベース)")
         if sig.get("stale"):
             print("一部は前日以前の値で代用: " + " / ".join(f"{k} {v}" for k, v in sig["stale"].items()))
         print(f"コンタンゴ1-2限月: {sig['contango_12_pct']}% / 推定調整金: {sig['est_yen_per_lot_day']}円/lot/日")
