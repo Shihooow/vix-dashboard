@@ -168,6 +168,23 @@ def skew_year_stats(skews):
     }
 
 
+def make_row(vix, vix3m, skew, day):
+    """log.csv の1行分を作る。"""
+    ratio = round(vix3m / vix, 3) if vix else 0.0
+    adj_day = next_adjustment_day(day)
+    return {
+        "date": day.isoformat(),
+        "vix": f"{vix:.2f}",
+        "vix3m": f"{vix3m:.2f}",
+        "ratio": f"{ratio:.3f}",
+        "contango_status": contango_status(ratio),
+        "skew": f"{skew:.2f}",
+        "skew_alert": skew_alert(skew),
+        "next_adjustment_date": adj_day.isoformat(),
+        "days_to_adjustment": str((adj_day - day).days),
+    }
+
+
 def load_log():
     rows = []
     if os.path.exists(LOG_PATH):
