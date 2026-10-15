@@ -1,0 +1,50 @@
+{
+  "updated": "2026-10-15",
+  "changes_since_last": [
+    "9月CPIが発表され、総合は前年比+3.7%(予想+3.6%を上振れ、前月比+0.6%は予想通り)、コアは前年比+2.6%(予想+2.5%、前月+2.4%から加速)・前月比+0.3%(予想+0.2%)と上振れ。前回更新時の「未発表」から確定。",
+    "10/14の米株は下落。S&P500は7,718.94(-1.11%)、ナスダック総合26,692.87(-1.88%)、ラッセル2000 -1.93%。情報技術セクターが-3.00%と最大の下げで、AI・半導体株が主導(NVIDIA -3.2%、AMD -5.7%、マイクロン -4.1%、CoreWeave -15%)。",
+    "VIXは10/13の15.27から10/14は約16.8〜16.9(+約10%)へ上昇。ルール上の最初の建て段階(VIX20)までの距離は約4.7ptから約3.1ptに縮小。",
+    "10年債利回りは5.28%近辺(+6bp超)、30年債は5.59%へ上昇。10月FOMCの据え置き織り込みはCME FedWatchで約78%、予測市場では据え置き約77〜81%・利上げ約19〜22%で、前回(利上げ約18%)から小幅に利上げ側へ。"
+  ],
+  "fed_funds_rate": "3.75〜4.00%(9/16FOMCで25bp利上げ、全会一致。9月ドットの年末中央値は4.1%で年内あと1回の利上げを示唆)",
+  "next_fomc": {
+    "date": "2026-10-28",
+    "view": "10/27〜28開催。CPI後もCME FedWatchでは据え置き約78%、予測市場(Kalshi/Polymarket)でも据え置きが約77〜81%、25bp利上げが約19〜22%と、据え置きが優勢です。ただしコアCPIが予想を上回り、エネルギー高(WTI約95ドル)も続いているため、利上げ観測が再燃しやすい状況です。次の材料は10/28のFOMCと11/6の雇用統計です。"
+  },
+  "next_cpi": {
+    "date": "2026-11-10",
+    "consensus": "10/14発表の9月分は総合 前年比+3.7%(予想+3.6%、前月比+0.6%は予想通り)、コア 前年比+2.6%(予想+2.5%)・前月比+0.3%(予想+0.2%)。住居費・航空運賃・中古車がコアを押し上げ、エネルギー高が総合を押し上げた。次回(10月分)の予想は未発表。"
+  },
+  "next_jobs": {
+    "date": "2026-11-06",
+    "consensus": "10月分の予想は未定。直近の9月分(10/2発表)は+2.9万人(予想+9万人前後)、失業率4.2%と雇用の勢いは鈍化している。"
+  },
+  "market_view": "10/14のS&P500は7,718.94(-1.11%)と、52週高値(7,818.93)から約1.3%下に位置し、高値圏からの小幅な調整入りです。9月CPIの上振れで追加利上げ観測と長期金利上昇(10年債5.28%、30年債5.59%)が重なり、グロース株や小型株が売られました(ナスダック総合-1.88%、ラッセル2000 -1.93%)。一方でダウは-0.09%、ヘルスケア(+2.44%)や生活必需品(+2.21%)は上昇しており、全面安ではなくディフェンシブへのローテーションの色合いです。半導体は前回データ時点でSOXが52週高値から約17%下、日経半導体が約33%下と出遅れていた状況で、10/14もAI関連株が主導して売られ(SOXL -13%、マイクロン -4%、CoreWeave -15%)、AI関連の牽引力は弱まっています。ただしSOX自体の10/14終値は確認できていません。",
+  "vix_view": "VIXは10/14に約16.8〜16.9(+約10%)へ上昇しましたが、依然として『VIX20未満=待機』の段階で、最初の建て段階(VIX20)まで約3.1ポイントです。直近で計算したコンタンゴ率(10/13時点で約4.5%)は新規・積み増し見送りの目安(5.6%未満)に該当しており、10/14の再計算値は未確認です。CPI上振れで利上げ観測と金利上昇が重なり、半導体・AI株が急落しているため、10/28のFOMCに向けてVIXが20に近づくシナリオには注意が必要です。一方、現時点のVIXは過去の水準に比べて低く、このままVIX20に届かず落ち着く可能性もあります。段階建てはVIX20・25・30・40で1単位(100lot)ずつ最大4単位、VIX全体の含み損−60万円で全決済というルールに沿って確認します。本内容は公開情報の要約であり、投資助言ではありません。",
+  "sources": [
+    {
+      "label": "TheStreet: Stock Market Today (Oct. 14, 2026)",
+      "url": "https://www.thestreet.com/stock-market/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-14-2026"
+    },
+    {
+      "label": "FN News: New York Stock Market (10/14 close)",
+      "url": "https://en.fnnews.com/news/202610150522571470"
+    },
+    {
+      "label": "Yahoo Finance: Stock market today, Oct 14 (CPI)",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-wednesday-october-14-dow-sp-500-nasdaq-081136597.html"
+    },
+    {
+      "label": "Prediction Markets Picks: October 2026 FOMC odds",
+      "url": "https://predictionmarketspicks.com/tools/fed-rate-tracker/october-2026"
+    },
+    {
+      "label": "Federal Reserve: FOMC Statement (9/16)",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm"
+    },
+    {
+      "label": "First Trust: Nonfarm payrolls increased 29,000 in September",
+      "url": "https://www.ftportfolios.com/Commentary/EconomicResearch/2026/10/2/nonfarm-payrolls-increased-29,000-in-september"
+    }
+  ]
+}

@@ -1,1 +1,6 @@
 .github_token
+取引判断ログ.csv
+outlook_history.jsonl
+outlook_new.json
+_backup_*/
+__pycache__/
