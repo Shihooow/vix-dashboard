@@ -1,58 +1,59 @@
 {
-  "updated": "2026-10-16",
+  "updated": "2026-10-19",
   "changes_since_last": [
-    "10/15発表の9月PPIは前月比+1.3%(予想+0.6%)、前年比+6.3%(予想+5.5%)と2022年以来の大きな伸びで上振れ。ガソリン(前月比+20.3%)などエネルギーが主因とされ、10月FOMCの利上げ確率はむしろ30%弱(据え置き約71%)へ小幅低下。",
-    "米株は10/15に反発。S&P500は7,744前後(+0.3%)、ダウ+1.1%、ラッセル2000+1.4%と景気敏感株・小型株へ資金が移った一方、ハイテクは-0.65%、エヌビディアは約-2%と半導体の売りは継続(SOXも約-2%)。",
-    "VIXの10/15終値は16.45(前日比-2.5%)と小幅低下し、VIX20まで約3.5pt(前回は約3.1pt)。",
-    "米10年債利回りは5.10%前後(前日比約-9bp)へ低下し、CPI・PPI上振れ後も長期金利の上昇は続いていない。"
+    "VIXは10/16に19.99(前日比+21.5%)へ急上昇し、VIX20まで残り約0.01ptと最初の建て段階の目前に到達(前回は約3.5pt手前)。期近と2限月の先物(19.91/19.24)は逆転し、コンタンゴ率は約-3.4%(バックワーデーション)に。",
+    "10/16の米株は反落。S&P500は7,659(-1.1%)、ナスダック総合は-2.1%で週間-4.5%と6月下旬以来の大幅な下げ。CoreWeaveの財務懸念などAI関連の売りが続いた。",
+    "半導体の下落が拡大。SOXは10/16に-3.8%、5日間で約-11%、52週高値から約24%下。半導体ETF(SOXX)は週間-11.8%で、ダッシュボードの急落判定は『半導体だけの急落』。",
+    "10月FOMCの利上げ織り込みは約15%(Bloomberg・債券先物ベース、前回は30%弱)へ低下し、据え置き観測が強まった。ウォーシュ議長は『会合の結論を事前に決めない』と発言。",
+    "ホルムズ海峡での緊張でブレント原油が一時1バレル110ドルに上昇。米10年債利回りは5.10%前後で横ばい。"
   ],
-  "fed_funds_rate": "3.75〜4.00%(9/16FOMCで3年ぶりに25bp利上げ。9月ドットの年末中央値は4.1%で年内あと1回の利上げを示唆。複数の当局者が追加の判断にはデータを見たいと発言)",
+  "fed_funds_rate": "3.75〜4.00%(9/16FOMCで25bp利上げ。9月ドットの年末中央値は4.1%で年内あと1回の利上げを示唆。今週は会合前のブラックアウト期間で当局者の発言はない見込み)",
   "next_fomc": {
     "date": "2026-10-28",
-    "view": "10/27〜28開催。CME FedWatchの10月利上げ確率は、CPI直後の10/14昼に一時41.5%まで上昇した後、PPI発表後の10/15朝時点で30%弱(据え置き約71%)に低下し、据え置きが優勢です。一方で12月の利上げを予想する金融機関も多く(UBS・RSMなど)、10月を見送って12月に動くという見方が広がっています。11/3の米大統領選の直前という日程も意識されています。"
+    "view": "10/27〜28開催。10/16時点で10月の利上げ織り込みは約15%(Bloomberg・債券先物ベース。予測市場Kalshiも利上げ15%・据え置き84%)と、前回(30%弱)から低下し据え置きが優勢です。CPI・PPIの上振れや原油高は利上げ要因ですが、市場では次の利上げは12月(12/9)との見方が多く、11/3の米大統領選直前という日程も意識されています。"
   },
   "next_cpi": {
     "date": "2026-11-10",
-    "consensus": "10/14発表の9月分は総合 前年比+3.7%(予想+3.6%、前月比+0.6%は予想通り)、コア 前年比+2.6%(予想+2.5%)・前月比+0.3%(予想+0.2%)と上振れ。10/15の9月PPIも前年比+6.3%(予想+5.5%)と上振れ。次回(10月分)の予想は未発表。"
+    "consensus": "10月分の市場予想は未発表。直近の9月分(10/14発表)は総合 前年比+3.7%(予想+3.6%)、コア 前年比+2.6%(予想+2.5%)・前月比+0.3%(予想+0.2%)と上振れ。9月PPIも前年比+6.3%(予想+5.5%)。"
   },
   "next_jobs": {
     "date": "2026-11-06",
     "consensus": "10月分の予想は未定。直近の9月分(10/2発表)は+2.9万人(予想+9万人前後)、失業率4.2%と雇用の勢いは鈍化。"
   },
-  "market_view": "10/15のS&P500は7,744前後(+0.3%)で、52週高値(7,818.93)から約1%下と依然として高値圏です。PPIの上振れにもかかわらず、長期金利が5.10%前後へ低下したことで、ヘルスケア・素材・一般消費財、小型株(ラッセル2000+1.4%)へ資金が移り、S&P500の構成銘柄の約7割が上昇しました。一方、ナスダック総合は+0.1%前後にとどまり、AI関連は借入に頼ったインフラ投資への懸念から売りが続いており、市場全体が崩れたというより「AI・半導体から他のセクターへの資金移動」と読めます。半導体はSOXが10/14に-4.3%、10/15も約-2%と続落して52週高値から約2割下にあり、日経半導体株指数も10/15に約-10%で高値から約40%下と下げが大きく、エネルギー価格による物価上振れと10/28のFOMCに向けて金利見通しが再び変われば、値動きの大きい状態が続くリスクがあります。",
-  "vix_view": "VIXは10/15終値で16.45(前日比-2.5%)と、CPI後の上昇から小幅に戻しました。ルール上はまだ『VIX20未満=待機』の段階で、最初の建て段階(VIX20)まで約3.5ポイント、2段階目(VIX25)までは約8.5ポイントあります。10/14時点の期近・2限月の先物(17.65/18.08)から計算したコンタンゴ率は約2.4%で、新規・積み増し見送りの目安(5.6%未満)に該当しており、ダッシュボードの『カーブが平らでVIXも低め』のシグナル(20営業日以内にVIX20超え35%、平時28%)も点灯しています。S&P500は高値近辺を保つ一方で半導体の下げが続いているため、売りが指数全体に広がればVIXが20に近づく可能性があり、段階建て(VIX20・25・30・40で1単位=100lotずつ最大4単位、VIX全体の含み損−60万円で全決済)のルールに沿って確認する局面です。本内容は公開情報の要約であり、投資助言ではありません。",
+  "market_view": "10/16のS&P500は7,659(-1.1%)で、52週高値(7,818.93)から約2%下と高値圏は保っているものの、週間では約-2%と下げました。ナスダック総合は週間-4.5%と6月下旬以来の大きな下げで、CPI・PPIの上振れと原油高(ブレント一時110ドル)による金利上昇懸念に加え、AIインフラ投資の資金調達(借入依存)への警戒が重しになっています。今週は10/20のネットフリックス、10/21のメタ・テスラ・ラムリサーチ・テキサス・インスツルメンツなど決算が集中し、AI関連の業績・設備投資の見通しが相場の方向を左右しやすい局面です。半導体はSOXが52週高値から約24%下(5日間で約-11%)と下げが続く一方、日経半導体株指数は10/16に約+2%と自律反発したものの高値から約39%下にあり、UBSは『AI投資の物語の崩れというより期待の調整』とみていますが、決算次第で値動きが大きくなるリスクがあります。",
+  "vix_view": "VIXは10/16終値で19.99(前日比+21.5%)と急上昇し、ルール上の最初の建て段階(VIX20)まで約0.01ポイントと、ほぼ到達した状態です。2段階目(VIX25)までは約5ポイント、3段階目(VIX30)までは約10ポイントあります。一方、期近(10/21満期)19.91・2限月19.24とカーブは逆転しており(コンタンゴ率約-3.4%)、ダッシュボードのキャリー判定は『ノーポジ推奨(バックワーデーション)』で、ショートを持ってもロール益が見込めない状態です。今週は大型ハイテク決算が集中しFOMCも翌週に控えるため、VIXが20を挟んで上下しやすく、段階建て(VIX20・25・30・40で1単位=100lotずつ最大4単位、VIX全体の含み損−60万円で全決済)のルールとカーブの状態を合わせて確認する局面です。本内容は公開情報の要約であり、投資助言ではありません。",
   "sources": [
     {
-      "label": "TechStock²: Dow Jumps 1.1%, Russell 2000 Rises 1.4% as Broad Rotation Beats Tech (10/15終値)",
-      "url": "https://ts2.tech/en/dow-jumps-1-1-russell-2000-rises-1-4-as-broad-rotation-beats-tech/"
+      "label": "Yahoo Finance: Stock market today — Dow, S&P 500, Nasdaq sink as tech sell-off caps volatile week (10/16終値)",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-dow-sp-500-nasdaq-futures-mixed-amid-volatile-week-112939401.html"
     },
     {
-      "label": "ad-hoc-news: VIX closes 2.5 percent lower after hot PPI data (10/15)",
-      "url": "https://www.ad-hoc-news.de/boerse/news/marktberichte/vix-closes-2-5-percent-lower-after-hot-ppi-data/70333685"
+      "label": "Pluang: VIX jumps 21.45% as S&P 500 falls 1.1% (10/16)",
+      "url": "https://pluang.com/en/news-feed/vix-naik-2145-volatilitas-jangka-panjang-tetap-tinggi"
     },
     {
-      "label": "Yahoo Finance: The PPI Was Much Higher Than Expected. Odds of a Fed Rate Hike Edged Down Anyway. (10/15)",
-      "url": "https://finance.yahoo.com/economy/policy/articles/ppi-much-higher-expected-odds-134943355.html"
+      "label": "Opening Bell Daily: Stock market this week — Chip stocks fell 12% by October 16",
+      "url": "https://www.openingbelldailynews.com/p/stock-market-this-week-oct-17-2026"
     },
     {
-      "label": "Yahoo Finance: Traders Give Warsh A 42% Chance ... (10/15)",
-      "url": "https://finance.yahoo.com/economy/policy/articles/traders-warsh-42-chance-doing-082651946.html"
+      "label": "Opening Bell Daily: Stock market Week Ahead (Oct 19, 2026)",
+      "url": "https://www.openingbelldailynews.com/p/stock-market-week-ahead-oct-19-2026"
     },
     {
-      "label": "TheStreet: Stock Market Today (Oct. 15, 2026)",
-      "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-15-2026"
+      "label": "Bloomberg: Longest chip selloff since 2006 mints short sellers $32 billion (10/16)",
+      "url": "https://www.bloomberg.com/news/articles/2026-10-16/longest-chip-selloff-since-2006-mints-short-sellers-32-billion"
     },
     {
-      "label": "Rallies: US chip stocks fall as rate-hike fears raise AI spending concerns (10/15)",
-      "url": "https://rallies.ai/news/us-chip-stocks-fall-as-rate-hike-fears-raise-ai-spending-concerns-45c3ba3548c3a293"
+      "label": "Yahoo Finance: SOXX heads for 7th straight losing session (10/14)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/soxx-heads-7th-straight-losing-174325012.html"
     },
     {
-      "label": "Saxo: Options Brief (15 Oct 2026)",
-      "url": "https://www.home.saxo/en-sg/content/articles/options/front-end-reprices-long-end-holds---options-brief---15-october-2026-15102026"
+      "label": "Prediction Markets Picks: Fed Rate Odds — Oct 28 FOMC (Kalshi)",
+      "url": "https://predictionmarketspicks.com/tools/fed-rate-tracker/october-2026"
     },
     {
-      "label": "財経新聞(フィスコ): 10/15 東京市場",
-      "url": "https://www.zaikei.co.jp/article/20261015/873545.html"
+      "label": "株探: 日経平均 大引け 7日ぶり反発、AI・半導体関連に買い戻し (10/16)",
+      "url": "https://kabutan.jp/news/marketnews/?b=n202610160962"
     },
     {
       "label": "Federal Reserve: FOMC Statement (9/16)",
