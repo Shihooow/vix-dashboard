@@ -373,6 +373,7 @@ def render_signals_parts(sig, latest):
       <div class="value">{esc(sig.get('contango_12_pct'))}%</div>
       <div class="sub"><span class="badge {esc(cz.get('class'))}">{esc(cz.get('label'))}</span></div>
       <div class="sub muted">推定調整金 {esc(sig.get('est_yen_per_lot_day'))}円/lot/日(Admin Fee比 {esc(sig.get('est_ratio'))}、30以上で保有OK)</div>
+      <div class="sub muted">期近 {esc(fut.get('f1'))}({esc(fut.get('exp1'))}満期)→ 次限月 {esc(fut.get('f2'))} / 参考: 2〜3限月 {esc(sig.get('contango_23_pct'))}% ・先物 {esc(fut.get('date'))} 清算値</div>
     </div>"""
 
     # --- 結論カード: 地合い ---
@@ -407,17 +408,10 @@ def render_signals_parts(sig, latest):
   </section>"""
 
     # --- 日程: 次のロール ---
-    roll_days = ""
-    try:
-        rd = datetime.strptime(fut.get("roll_date"), "%Y-%m-%d").date()
-        base = datetime.strptime(latest["date"], "%Y-%m-%d").date()
-        roll_days = f"{(rd - base).days}日"
-    except Exception:
-        pass
     roll_card = f"""
     <div class="card">
       <div class="label">次のロール(満期の前日)</div>
-      <div class="value">{roll_days or esc(fut.get('roll_date'))}</div>
+      <div class="value" data-countdown="{esc(fut.get('roll_date'))}">{esc(fut.get('roll_date'))}</div>
       <div class="sub">{esc(fut.get('roll_date'))}</div>
       <div class="sub muted">この前後で調整金の水準が切り替わりやすい</div>
     </div>"""
@@ -938,8 +932,8 @@ def render_dashboard(rows, latest):
     <div class="grid">
     <div class="card">
       <div class="label">次回価格調整日(毎月第2水曜)</div>
-      <div class="value">{latest['days_to_adjustment']}日</div>
-      <div class="sub">{latest['next_adjustment_date']}</div>
+      <div class="value" data-countdown="{next_adjustment_day(datetime.now(JST).date()).isoformat()}">{latest['days_to_adjustment']}日</div>
+      <div class="sub">{next_adjustment_day(datetime.now(JST).date()).isoformat()}</div>
     </div>
       {parts['roll_card']}
     <div class="card" id="next-high-card">
@@ -994,7 +988,7 @@ def render_dashboard(rows, latest):
     <h2>日次ログ(直近{len(recent)}日)</h2>
     <table>
       <thead>
-        <tr><th>日付</th><th>VIX</th><th>VIX3M</th><th>比率</th><th>判定</th><th>SKEW</th><th>1年順位</th></tr>
+        <tr><th>日付</th><th>VIX</th><th>VIX3M</th><th>VIX3M÷VIX</th><th>3ヶ月先との関係</th><th>SKEW</th><th>1年順位</th></tr>
       </thead>
       <tbody>
         {table_rows}
@@ -1012,8 +1006,8 @@ def render_dashboard(rows, latest):
       function iso(d) {{ return d.toISOString().slice(0, 10); }}
       var jst = new Date(Date.now() + 9 * 3600 * 1000);  // UTCフィールドで日本時間を表す
       var d = new Date(Date.UTC(jst.getUTCFullYear(), jst.getUTCMonth(), jst.getUTCDate()));
-      // 前日の米国終値は日本時間8時までに反映される想定
-      d.setUTCDate(d.getUTCDate() - (jst.getUTCHours() >= 8 ? 1 : 2));
+      // 前日の米国終値は日本時間7:30までに反映される想定(毎朝6:45に更新)
+      d.setUTCDate(d.getUTCDate() - (jst.getUTCHours() * 60 + jst.getUTCMinutes() >= 450 ? 1 : 2));
       while (d.getUTCDay() === 0 || d.getUTCDay() === 6 || holidays.indexOf(iso(d)) >= 0) {{
         d.setUTCDate(d.getUTCDate() - 1);
       }}
@@ -1024,6 +1018,17 @@ def render_dashboard(rows, latest):
         b.textContent = "データ遅延: " + (d.getUTCMonth() + 1) + "/" + d.getUTCDate() + "(" + wd[d.getUTCDay()] + ")の終値が未反映";
         b.style.display = "inline-block";
       }}
+    }})();
+    // 日程カードの残り日数: ページ生成日ではなく、閲覧した日(日本時間)から数える
+    (function() {{
+      var jst = new Date(Date.now() + 9 * 3600 * 1000);
+      var today = Date.UTC(jst.getUTCFullYear(), jst.getUTCMonth(), jst.getUTCDate());
+      document.querySelectorAll('[data-countdown]').forEach(function(el) {{
+        var p = el.getAttribute('data-countdown').split('-');
+        if (p.length !== 3) return;
+        var n = Math.round((Date.UTC(+p[0], +p[1] - 1, +p[2]) - today) / 86400000);
+        el.textContent = n === 0 ? '今日' : (n < 0 ? '済み' : n + '日');
+      }});
     }})();
     const allData = JSON.parse(document.getElementById('log-data').textContent);
     const econEvents = JSON.parse(document.getElementById('econ-data').textContent);
@@ -1259,6 +1264,14 @@ def main():
             for h in tail:
                 rows = upsert_today(rows, make_row(h["vix"], h["vix3m"], h["skew"],
                                                    datetime.strptime(h["date"], "%Y-%m-%d").date()))
+            # CSVで確定済みの期間に、営業日でない日付の行があれば消す(取得失敗時に前日値を書き込んだ重複など)
+            tdays = set(sig.get("trading_days") or [])
+            if tdays:
+                lo, hi = min(tdays), sig.get("csv_last") or max(tdays)
+                before = len(rows)
+                rows = [r for r in rows if not (lo <= r["date"] <= hi and r["date"] not in tdays)]
+                if len(rows) != before:
+                    print(f"log.csv から営業日でない行を{before - len(rows)}件削除")
             save_log(rows)
         # CSVが未反映でも、引け後の delayed_quotes があればそちらを最新日として使う
         q = sig.get("latest_quote")
