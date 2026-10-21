@@ -1,12 +1,12 @@
 {
-  "date": "2026-10-20",
-  "generated_at": "2026-10-21T09:41:43",
+  "date": "2026-10-21",
+  "generated_at": "2026-10-22T06:46:01",
   "closes": {
-    "vix": 17.31,
-    "vix3m": 18.99,
-    "vix9d": 16.27,
-    "skew": 160.4,
-    "spx": 7712.57
+    "vix": 16.68,
+    "vix3m": 18.72,
+    "vix9d": 15.49,
+    "skew": 150.36,
+    "spx": 7757.1699
   },
   "stale": {},
   "history_tail": [
@@ -1845,9 +1845,15 @@
       "vix": 18.44,
       "vix3m": 19.6,
       "skew": 161.86
+    },
+    {
+      "date": "2026-10-20",
+      "vix": 17.31,
+      "vix3m": 18.99,
+      "skew": 160.4
     }
   ],
-  "csv_last": "2026-10-19",
+  "csv_last": "2026-10-20",
   "trading_days": [
     "2025-08-01",
     "2025-08-04",
@@ -2154,33 +2160,35 @@
     "2026-10-14",
     "2026-10-15",
     "2026-10-16",
-    "2026-10-19"
+    "2026-10-19",
+    "2026-10-20"
   ],
   "quotes_used": {
-    "VIX": "2026-10-20",
-    "SKEW": "2026-10-20"
+    "VIX": "2026-10-21",
+    "SKEW": "2026-10-21",
+    "SPX": "2026-10-21"
   },
   "latest_quote": null,
   "futures": {
     "exp1": "2026-11-18",
-    "f1": 18.4881,
+    "f1": 18.2382,
     "exp2": "2026-12-16",
-    "f2": 18.6965,
+    "f2": 18.5457,
     "roll_date": "2026-11-17",
-    "date": "2026-10-20"
+    "date": "2026-10-21"
   },
-  "contango_12_pct": 1.13,
-  "contango_23_pct": 4.97,
-  "est_ratio": 4.5,
-  "est_yen_per_lot_day": 0.98,
+  "contango_12_pct": 1.69,
+  "contango_23_pct": 5.38,
+  "est_ratio": 6.4,
+  "est_yen_per_lot_day": 1.41,
   "carry_zone": {
     "label": "新規・積み増し見送り(5.6%未満)",
     "class": "danger"
   },
-  "spx_vs_ma50_pct": 0.11,
-  "rv20": 9.12,
-  "vix_minus_rv": 8.19,
-  "vix9d_over_vix": 0.94,
+  "spx_vs_ma50_pct": 0.68,
+  "rv20": 8.94,
+  "vix_minus_rv": 7.74,
+  "vix9d_over_vix": 0.929,
   "regime_signals": [
     {
       "name": "株は好調なのにカーブが平ら",
@@ -2203,38 +2211,38 @@
     {
       "name": "カーブが平らでVIXも低め",
       "rule": "コンタンゴ5%未満、VIX17未満",
-      "hit": false,
+      "hit": true,
       "stat": "20営業日以内にVIX20超え 35%(平時28%)"
     }
   ],
   "exit": {
-    "vix_band": "17〜20",
-    "down_pt": 2.9,
-    "up_pt": 4.8,
-    "carry_pt_20d": 0.18,
-    "remaining_pt": 3.08,
-    "take_profit": false
+    "vix_band": "15〜17",
+    "down_pt": 1.9,
+    "up_pt": 4.7,
+    "carry_pt_20d": 0.25,
+    "remaining_pt": 2.15,
+    "take_profit": true
   },
   "stress_per_100lot": [
     {
       "to": 20,
-      "loss_yen": -41695
+      "loss_yen": -51460
     },
     {
       "to": 25,
-      "loss_yen": -119195
+      "loss_yen": -128960
     },
     {
       "to": 30,
-      "loss_yen": -196695
+      "loss_yen": -206460
     },
     {
       "to": 35,
-      "loss_yen": -274195
+      "loss_yen": -283960
     },
     {
       "to": 40,
-      "loss_yen": -351695
+      "loss_yen": -361460
     }
   ]
 }
