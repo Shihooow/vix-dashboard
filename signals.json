@@ -1,12 +1,12 @@
 {
-  "date": "2026-10-21",
-  "generated_at": "2026-10-22T09:45:10",
+  "date": "2026-10-22",
+  "generated_at": "2026-10-23T06:45:38",
   "closes": {
-    "vix": 16.68,
-    "vix3m": 18.72,
-    "vix9d": 15.49,
-    "skew": 150.36,
-    "spx": 7757.1699
+    "vix": 19.03,
+    "vix3m": 20.12,
+    "vix9d": 18.86,
+    "skew": 152.39,
+    "spx": 7663.4302
   },
   "stale": {},
   "history_tail": [
@@ -1851,9 +1851,15 @@
       "vix": 17.31,
       "vix3m": 18.99,
       "skew": 160.4
+    },
+    {
+      "date": "2026-10-21",
+      "vix": 16.68,
+      "vix3m": 18.72,
+      "skew": 150.36
     }
   ],
-  "csv_last": "2026-10-20",
+  "csv_last": "2026-10-21",
   "trading_days": [
     "2025-08-01",
     "2025-08-04",
@@ -2161,34 +2167,36 @@
     "2026-10-15",
     "2026-10-16",
     "2026-10-19",
-    "2026-10-20"
+    "2026-10-20",
+    "2026-10-21"
   ],
   "quotes_used": {
-    "VIX": "2026-10-21",
-    "SKEW": "2026-10-21",
-    "SPX": "2026-10-21"
+    "VIX": "2026-10-22",
+    "VIX9D": "2026-10-22",
+    "SKEW": "2026-10-22",
+    "SPX": "2026-10-22"
   },
   "latest_quote": null,
   "futures": {
     "exp1": "2026-11-18",
-    "f1": 18.2382,
+    "f1": 19.379,
     "exp2": "2026-12-16",
-    "f2": 18.5457,
+    "f2": 19.2298,
     "roll_date": "2026-11-17",
-    "date": "2026-10-21"
+    "date": "2026-10-22"
   },
-  "contango_12_pct": 1.69,
-  "contango_23_pct": 5.38,
-  "est_ratio": 6.4,
-  "est_yen_per_lot_day": 1.41,
+  "contango_12_pct": -0.77,
+  "contango_23_pct": 4.01,
+  "est_ratio": -2.1,
+  "est_yen_per_lot_day": -0.47,
   "carry_zone": {
-    "label": "新規・積み増し見送り(5.6%未満)",
+    "label": "ノーポジ推奨(バックワーデーション)",
     "class": "danger"
   },
-  "spx_vs_ma50_pct": 0.68,
-  "rv20": 8.94,
-  "vix_minus_rv": 7.74,
-  "vix9d_over_vix": 0.929,
+  "spx_vs_ma50_pct": -0.52,
+  "rv20": 9.98,
+  "vix_minus_rv": 9.05,
+  "vix9d_over_vix": 0.991,
   "regime_signals": [
     {
       "name": "株は好調なのにカーブが平ら",
@@ -2211,38 +2219,38 @@
     {
       "name": "カーブが平らでVIXも低め",
       "rule": "コンタンゴ5%未満、VIX17未満",
-      "hit": true,
+      "hit": false,
       "stat": "20営業日以内にVIX20超え 35%(平時28%)"
     }
   ],
   "exit": {
-    "vix_band": "15〜17",
-    "down_pt": 1.9,
-    "up_pt": 4.7,
-    "carry_pt_20d": 0.25,
-    "remaining_pt": 2.15,
-    "take_profit": true
+    "vix_band": "17〜20",
+    "down_pt": 2.9,
+    "up_pt": 4.8,
+    "carry_pt_20d": -0.09,
+    "remaining_pt": 2.9,
+    "take_profit": false
   },
   "stress_per_100lot": [
     {
       "to": 20,
-      "loss_yen": -51460
+      "loss_yen": -15035
     },
     {
       "to": 25,
-      "loss_yen": -128960
+      "loss_yen": -92535
     },
     {
       "to": 30,
-      "loss_yen": -206460
+      "loss_yen": -170035
     },
     {
       "to": 35,
-      "loss_yen": -283960
+      "loss_yen": -247535
     },
     {
       "to": 40,
-      "loss_yen": -361460
+      "loss_yen": -325035
     }
   ]
 }
