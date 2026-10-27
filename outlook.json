@@ -1,51 +1,50 @@
 {
-  "updated": "2026-10-27",
+  "updated": "2026-10-28",
   "changes_since_last": [
-    "VIXは10/26終値18.39と前回(10/23の19.45)から約1.1pt低下し、最初の建て段階(VIX20)までの距離は約0.55ptから約1.6ptに広がった。",
-    "先物1〜2限月(11/18満期19.16・12/16満期19.20、10/26清算値)のコンタンゴ率は+0.19%と、前回(-0.6%)のバックワーデーションからわずかにコンタンゴへ戻った(ただしロール益が見込める水準ではない)。",
-    "S&P500は10/26に+0.7%の7,676.77と反発し、52週高値からの下落率は約2.5%→約1.8%に縮小。AI関連株が反発し、SOXは+2.8%(52週高値から約24%下、前回約26%)。一方、日経半導体株指数は10/26に-2.4%で52週高値から約44%下(前回約43%)と弱さが続いた。",
-    "10月FOMCの利上げ織り込みは引き続き約1割(先物ベースで据え置き約90%・利上げ約10%、Kalshiは据え置き89%)で、大勢は前回から変わらず。",
-    "WTI原油は101ドル台(-1.5%)とやや反落、米10年債利回りは約4.97%で5%をわずかに下回ったまま横ばい。"
+    "VIXは10/27終値17.52と前回(10/26の18.39)から約0.9pt低下し、最初の建て段階(VIX20)までの距離は約1.6ptから約2.5ptに広がった。",
+    "先物1〜2限月(11/18満期18.95・12/16満期19.07、10/27清算値)のコンタンゴ率は+0.61%と、前回(+0.19%)からわずかに拡大したが、ロール益が見込める水準ではない。",
+    "S&P500は10/27に+0.6%の7,722.60と続伸し、52週高値からの下落率は約1.8%→約1.2%に縮小。SOXは+3.6%(52週高値から約22%下、前回約24%)、日経半導体株指数も+2.9%と反発したが高値からは約43%下にとどまる。",
+    "10月FOMCは据え置き約90%の織り込みで前回から変わらず。一方、CME FedWatchで12月利上げの確率は約73%(1か月前は約42%)と、12月利上げ観測が強まっている。"
   ],
-  "fed_funds_rate": "3.75〜4.00%(9/16FOMCで25bp利上げ後、据え置き中。10月の実効FF金利は3.88%)。9月ドットの年末中央値は4.1%で年内あと1回の利上げを示唆。",
+  "fed_funds_rate": "3.75〜4.00%(9/16FOMCで25bp利上げ後、据え置き中)。10/27〜28のFOMCでは据え置きが大勢で、市場の焦点は12月会合(12/8〜9)での追加利上げの有無に移っている。",
   "next_fomc": {
     "date": "2026-10-28",
-    "view": "10/27〜28開催、日本時間10/29午前3時に声明、3時30分からウォーシュ議長会見。10/26時点でFF金利先物から算出した確率は据え置き約90%・利上げ約10%、予測市場(Kalshi・Polymarket)も据え置き89〜93%と据え置きが大勢です。焦点は声明やウォーシュ議長会見が12月(12/9)の利上げを示唆するかで、議長は『フォワードガイダンスはしない』姿勢を示しているため、会見中に相場が振れやすい点に注意が必要です。"
+    "view": "10/27〜28開催、日本時間10/29午前3時に声明、通常は3時30分からウォーシュ議長会見。CME FedWatchでは据え置き約90%・利上げ約10%で、エコノミストは『タカ派的な据え置き』を予想しています。一方で12月利上げの確率は約73%まで上がっており、声明や会見が12月利上げを裏付けるか否定するかで金利・株・VIXが振れやすい点に注意が必要です(今回はドットチャートの更新なし)。"
   },
   "next_cpi": {
     "date": "2026-11-10",
-    "consensus": "10月分の市場予想は未発表(クリーブランド連銀のナウキャストは前年比約3.6%)。直近の9月分は総合 前年比+3.7%・前月比+0.6%、コア 前年比+2.6%・前月比+0.3%で予想を上回った。なお10/29に9月PCEが発表予定(クリーブランド連銀ナウキャスト:コア前年比3.1%、総合3.6%)。"
+    "consensus": "10月分の市場予想はまだ公表されていない。直近の9月分は総合 前年比+3.7%(予想3.6%を上回る)で、10月FOMC前の利上げ観測を一時強めた。10/29には9月PCEが発表予定。"
   },
   "next_jobs": {
     "date": "2026-11-06",
-    "consensus": "10月分の市場予想は未定。直近の9月分は+2.9万人(予想+9万人前後)、失業率4.2%と雇用の勢いは鈍化。週次の新規失業保険申請件数は19.4万件と低水準。"
+    "consensus": "10月分の市場予想は未定。直近の9月分は+2.9万人(予想を大きく下回る)、失業率4.2%と雇用の勢いは鈍化。"
   },
-  "market_view": "S&P500は10/26に+0.7%の7,676.77で、52週高値(7,818.93)から約1.8%下と、前週の下げの一部を戻しました。AI関連の大型IPO申請の報道などでAI関連株が買い戻され、原油の反落も支えになった一方、50日線をわずかに下回る位置(-0.3%)にあり、データセンター事業者の資金調達への懸念や10年債利回り5%近辺など上値を抑える材料も残っています。今週は10/28のFOMCとマイクロソフト・アルファベット、10/29のアマゾン決算・GDP速報・9月PCEが集中し、設備投資見通しと金利見通し次第で値動きが大きくなりやすい日程です。半導体はSOXが10/26に+2.8%と反発したものの52週高値から約24%下、日経半導体株指数は約44%下でダッシュボードの判定は『半導体だけの急落』が続いており、反発が続くかは今週の決算での設備投資見通しが手がかりになります。",
-  "vix_view": "VIXは10/26終値18.39で、ルール上は待機ゾーン(VIX20未満)にとどまり、最初の建て段階(VIX20)まで約1.6ポイント、2段階目(VIX25)まで約6.6ポイント、3段階目(VIX30)まで約11.6ポイント、4段階目(VIX40)まで約21.6ポイントです。先物1〜2限月(11/18満期19.16・12/16満期19.20、10/26清算値)のコンタンゴ率は+0.19%とほぼフラットで、ダッシュボードのキャリー判定は『新規・積み増し見送り(5.6%未満)』のため、仮にVIX20に届いてもロール益は小さい状態です。FOMC(日本時間10/29未明)と大型ハイテク決算の前後はVIXが一時的に跳ねやすく、20を超えた場合でもカーブの形と、段階建て(VIX20・25・30・40で1単位=100lotずつ最大4単位、VIX全体の含み損−60万円で全決済)のルールをあわせて確認する局面です。本内容は公開情報の要約であり、投資助言ではありません。",
+  "market_view": "S&P500は10/27に+0.6%の7,722.60と2日続伸し、52週高値(7,818.93)から約1.2%下まで戻りました。アンソロピックのIPO申請を受けたAI関連の買い戻しと、米・イラン外交の進展期待によるWTI原油の反落(約100ドル、-1.5%)が支えになった一方、10年債利回りは約4.99%と5%目前で、金利面の重しは残っています。今週は10/28のFOMCとマイクロソフト・アルファベット決算、その後のアマゾン・アップル決算と9月PCEが続き、AI投資が収益につながっているかと12月利上げ観測の行方次第で値動きが大きくなりやすい日程です。半導体はSOXが+3.6%、日経半導体株指数が+2.9%と反発したものの、それぞれ52週高値から約22%・約43%下で、ダッシュボードの判定は引き続き『半導体だけの急落』です。",
+  "vix_view": "VIXは10/27終値17.52(前日比-4.7%)で、ルール上は待機ゾーン(VIX20未満)にとどまり、最初の建て段階(VIX20)まで約2.5ポイント、2段階目(VIX25)まで約7.5ポイント、3段階目(VIX30)まで約12.5ポイント、4段階目(VIX40)まで約22.5ポイントです。先物1〜2限月(11/18満期18.95・12/16満期19.07、10/27清算値)のコンタンゴ率は+0.61%と小さく、仮にVIX20に届いてもロール益は限られる状態です。FOMC声明・議長会見(日本時間10/29未明)と大型ハイテク決算の前後はVIXが一時的に跳ねやすく、20を超えた場合でもカーブの形と、段階建て(VIX20・25・30・40で1単位=100lotずつ最大4単位、VIX全体の含み損−60万円で全決済)のルールをあわせて確認する局面です。本内容は公開情報の要約であり、投資助言ではありません。",
   "sources": [
     {
-      "label": "Investrade: Market Review October 26, 2026(10/26終値)",
-      "url": "https://investrade.com/market-review-october-26-2026/"
+      "label": "TheStreet: Stock Market Today (Oct. 27, 2026)(10/27終値)",
+      "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-27-2026"
     },
     {
-      "label": "Yahoo Finance: Stock Market Today (Oct. 26, 2026)",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stock-market-today-oct-26-134626728.html"
+      "label": "Yahoo Finance: Stock market today, Oct 27 — chip stocks rally(VIX・原油・10年債)",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-tuesday-october-27-dow-sp-500-nasdaq-081901995.html"
     },
     {
-      "label": "Prediction Markets Picks: Fed Rate Odds(10/26更新、Kalshi・Polymarket・FF金利先物)",
-      "url": "https://predictionmarketspicks.com/tools/fed-rate-tracker"
+      "label": "Kiplinger: October Fed Meeting Live Updates(FedWatch確率・日程)",
+      "url": "https://www.kiplinger.com/investing/live/fed-meeting-updates-and-commentary-october-2026"
     },
     {
-      "label": "Admiral Markets: Fed Rate Decision October 2026(日程・会見時刻・焦点)",
-      "url": "https://admiralmarkets.com/analytics/traders-blog/fed-rate-decision-october-2026"
+      "label": "Yahoo Finance: Traders Give Warsh A 42% Chance...(9月CPIと利上げ観測、10/15時点)",
+      "url": "https://finance.yahoo.com/economy/policy/articles/traders-warsh-42-chance-doing-082651946.html"
     },
     {
-      "label": "Seoul Economic Daily: U.S. Economists See Fed Holding Rates on the 28th, Hiking in December (Reuters調査)",
-      "url": "https://en.sedaily.com/international/2026/10/26/us-economists-see-fed-holding-rates-on-the-28th-hiking-in"
+      "label": "Finance Calendar: US CPI Report November 2026(発表日)",
+      "url": "https://www.financecalendar.com/event/us-cpi-report-november-2026/"
     },
     {
-      "label": "TickerVelocity: US CPI October 2026 report — release scheduled Nov 10",
-      "url": "https://tickervelocity.com/2026/10/18/us-cpi-october-2026-report/"
+      "label": "Finance Calendar: US Employment Situation November 2026(発表日)",
+      "url": "https://www.financecalendar.com/event/us-employment-situation-non-farm-payrolls-november-2026/"
     },
     {
       "label": "Cboe / Yahoo Finance(VIX・先物清算値・各指数、ダッシュボード取得データ)",
