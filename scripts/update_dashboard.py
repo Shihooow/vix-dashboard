@@ -61,6 +61,10 @@ LOG_HEADER = [
 ]
 
 # 重要度: "high" = 最重要(FOMC/CPI/雇用統計), "mid" = 重要(PCE/GDP/PPI)
+# date は米国東部時間(ET)での発表日。発表時刻は ET で FOMC=14:00、それ以外=8:30 が既定。
+# 例外がある場合だけ {"time_et": "10:00"} のように個別に指定する。
+# 日本時間への変換(夏時間/冬時間の切替を含む)は econ_events_with_jst() で自動計算する。
+ET = ZoneInfo("America/New_York")
 ECON_EVENTS = [
     {"date": "2026-08-12", "name": "CPI(消費者物価指数)", "importance": "high"},
     {"date": "2026-08-13", "name": "PPI(卸売物価指数)", "importance": "mid"},
@@ -85,6 +89,25 @@ ECON_EVENTS = [
     {"date": "2026-12-15", "name": "PPI(卸売物価指数)", "importance": "mid"},
     {"date": "2026-12-23", "name": "GDP確定値・PCE(個人消費支出)", "importance": "mid"},
 ]
+
+
+def econ_events_with_jst():
+    """ECON_EVENTS に日本時間の発表日時を付け足したリストを返す。"""
+    out = []
+    for e in ECON_EVENTS:
+        is_fomc = "FOMC" in e["name"]
+        t = e.get("time_et") or ("14:00" if is_fomc else "08:30")
+        et_dt = datetime.strptime(f"{e['date']} {t}", "%Y-%m-%d %H:%M").replace(tzinfo=ET)
+        jst_dt = et_dt.astimezone(JST)
+        label = f"{md_wd(jst_dt.date())} {jst_dt.hour}:{jst_dt.minute:02d}"
+        item = dict(e)
+        item["jst"] = jst_dt.isoformat()
+        item["jst_date"] = jst_dt.date().isoformat()
+        item["jst_label"] = label
+        if is_fomc:
+            item["jst_note"] = "議長会見は30分後"
+        out.append(item)
+    return out
 
 
 def second_wednesday(year: int, month: int) -> date:
@@ -708,7 +731,7 @@ def render_dashboard(rows, latest):
         for r in rows
     ]
     chart_data_json = json.dumps(chart_data, ensure_ascii=False)
-    econ_events_json = json.dumps(ECON_EVENTS, ensure_ascii=False)
+    econ_events_json = json.dumps(econ_events_with_jst(), ensure_ascii=False)
 
     html = f"""<!DOCTYPE html>
 <html lang="ja">
@@ -978,7 +1001,7 @@ def render_dashboard(rows, latest):
     </div>
     <table>
       <thead>
-        <tr><th>日付</th><th>指標</th><th>残り</th><th>重要度</th></tr>
+        <tr><th>日本時間</th><th>指標</th><th>残り</th><th>重要度</th></tr>
       </thead>
       <tbody id="econ-table-body"></tbody>
     </table>
@@ -1182,19 +1205,35 @@ def render_dashboard(rows, latest):
       return Math.round((target - today) / 86400000);
     }}
 
+    // 日本時間の発表日時までの残り。24時間を切ったら時間単位で表示する
+    function remainLabel(e, compact) {{
+      const ms = new Date(e.jst) - new Date();
+      if (ms <= 0) return '発表済み';
+      const hours = Math.floor(ms / 3600000);
+      if (hours < 24) return hours === 0 ? 'まもなく' : ((compact ? '' : 'あと') + hours + '時間');
+      if (e.days === 1) return '明日';
+      return e.days + '日';
+    }}
+
+    // 日本時間の発表時刻を過ぎて2時間までは「発表済み」として残し、その後は次のイベントへ
+    const econUpcoming = econEvents
+      .map(function(e) {{ return Object.assign({{}}, e, {{ days: daysUntil(e.jst_date) }}); }})
+      .filter(function(e) {{ return new Date(e.jst) - new Date() > -2 * 3600000; }})
+      .sort(function(a, b) {{ return a.jst < b.jst ? -1 : 1; }});
+
+    function whenText(e) {{
+      return '日本時間 ' + e.jst_label + (e.jst_note ? '(' + e.jst_note + ')' : '');
+    }}
+
     function renderEconCalendar() {{
-      const upcoming = econEvents
-        .map(function(e) {{ return Object.assign({{}}, e, {{ days: daysUntil(e.date) }}); }})
-        .filter(function(e) {{ return e.days >= 0; }})
-        .sort(function(a, b) {{ return a.date < b.date ? -1 : 1; }});
+      const upcoming = econUpcoming;
 
       const bannerEl = document.getElementById('next-event-banner');
       if (upcoming.length > 0) {{
         const next = upcoming[0];
-        const daysLabel = next.days === 0 ? '本日' : (next.days + '日後');
         bannerEl.innerHTML =
-          '<div><div class="ne-name">次: ' + next.name + '</div><div class="ne-date">' + next.date + '</div></div>' +
-          '<div><div class="ne-days">' + daysLabel + '</div><div class="ne-days-label">まで</div></div>';
+          '<div><div class="ne-name">次: ' + next.name + '</div><div class="ne-date">' + whenText(next) + '</div></div>' +
+          '<div><div class="ne-days">' + remainLabel(next) + '</div><div class="ne-days-label">まで</div></div>';
       }} else {{
         bannerEl.innerHTML = '';
       }}
@@ -1203,9 +1242,8 @@ def render_dashboard(rows, latest):
       tbody.innerHTML = upcoming.slice(0, 15).map(function(e, i) {{
         const badgeClass = e.importance === 'high' ? 'imp-high' : 'imp-mid';
         const badgeLabel = e.importance === 'high' ? '最重要' : '重要';
-        const daysLabel = e.days === 0 ? '本日' : ('あと' + e.days + '日');
         const rowClass = i === 0 ? 'today-row' : '';
-        return '<tr class="' + rowClass + '"><td>' + e.date + '</td><td>' + e.name + '</td><td>' + daysLabel +
+        return '<tr class="' + rowClass + '"><td style="white-space:nowrap">' + e.jst_label + '</td><td>' + e.name + '</td><td style="white-space:nowrap">' + remainLabel(e, true) +
           '</td><td><span class="badge ' + badgeClass + '">' + badgeLabel + '</span></td></tr>';
       }}).join('');
     }}
@@ -1213,14 +1251,11 @@ def render_dashboard(rows, latest):
     renderEconCalendar();
 
     (function() {{
-      const nh = econEvents
-        .map(function(e) {{ return Object.assign({{}}, e, {{ days: daysUntil(e.date) }}); }})
-        .filter(function(e) {{ return e.days >= 0 && e.importance === 'high'; }})
-        .sort(function(a, b) {{ return a.date < b.date ? -1 : 1; }})[0];
+      const nh = econUpcoming.filter(function(e) {{ return e.importance === 'high'; }})[0];
       if (nh) {{
-        document.getElementById('nh-days').textContent = nh.days === 0 ? '本日' : (nh.days + '日');
-        document.getElementById('nh-name').textContent = nh.date + ' ' + nh.name;
-        if (nh.days <= 3) document.getElementById('next-high-card').style.borderLeft = '4px solid var(--danger)';
+        document.getElementById('nh-days').textContent = remainLabel(nh);
+        document.getElementById('nh-name').textContent = whenText(nh) + ' ' + nh.name;
+        if (new Date(nh.jst) - new Date() <= 3 * 86400000) document.getElementById('next-high-card').style.borderLeft = '4px solid var(--danger)';
       }}
     }})();
   </script>
