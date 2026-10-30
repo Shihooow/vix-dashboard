@@ -1,12 +1,12 @@
 {
   "date": "2026-10-29",
-  "generated_at": "2026-10-30T10:23:03",
+  "generated_at": "2026-10-30T11:01:49",
   "closes": {
     "vix": 17.2,
     "vix3m": 19.37,
     "vix9d": 15.87,
     "skew": 151.03,
-    "spx": 7720.3901
+    "spx": 7720.39
   },
   "stale": {},
   "history_tail": [
@@ -2212,9 +2212,7 @@
     "2026-10-28",
     "2026-10-29"
   ],
-  "quotes_used": {
-    "SPX": "2026-10-29"
-  },
+  "quotes_used": {},
   "latest_quote": null,
   "futures": {
     "exp1": "2026-11-18",
