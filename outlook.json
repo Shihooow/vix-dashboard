@@ -1,51 +1,51 @@
 {
-  "updated": "2026-11-02",
+  "updated": "2026-11-05",
   "changes_since_last": [
-    "10/30は大型テック・半導体売りで急落。S&P500は-1.82%の7,580.07(52週高値からの下落率は約1.3%→約3.1%)、ナスダック総合は-2.86%で10月は月間-5.3%と2025年3月以来の大幅下落。",
-    "インテルが10〜12月期の弱い見通しで-28.6%(1974年以来の下落率)となり、SOXは-7.2%、日経半導体株指数も-5.8%と急落。高値からの下落率はSOX約21%→約27%、日経半導体約38%→約42%。",
-    "VIXは10/30終値19.42(前回17.20から+2.2pt)で、最初の建て段階(VIX20)まで約0.6ptに接近。先物1〜2限月は+1.34%のコンタンゴから-2.81%のバックワーデーション(逆鞘)に転じた。",
-    "12月利上げの織り込みはFedWatchで約86%→約76〜80%とやや低下。一方、10/30にダラス連銀ローガン総裁があと2回の利上げが必要、セントルイス連銀ムサレム総裁も早期の追加引き締めが必要と発言。",
-    "今週は11/3米中間選挙、11/6の10月雇用統計(予想は+5万人前後、失業率4.1〜4.2%)が控える。"
+    "11/3の中間選挙で民主党が上下両院を制し、11/4はダウ+3.0%・S&P500+1.58%の7,688.62と大幅反発。S&P500の52週高値からの下落率は約3.1%→約1.7%に縮小。",
+    "VIXは10/30の19.42から11/4終値16.61へ低下し、最初の建て段階(VIX20)までの距離は約0.6pt→約3.4ptに拡大。先物1〜2限月は-2.81%の逆鞘から+1.35%の順鞘(コンタンゴ)に戻った。",
+    "一方で半導体は続落。11/4はSOX-3.1%(マイクロン-4.9%、インテル-4.3%など)、日経半導体株指数-3.9%で、高値からの下落率はSOX約27%→約30%、日経半導体約42%→約46%に拡大。",
+    "12月利上げ確率(CME FedWatch)は11/4時点で81.2%と、前回の約76〜80%からやや上昇。10月ADP民間雇用は+8.6万人で予想(+6.9万人)を上回った。",
+    "11/6の10月雇用統計の予想は+6.5万人(前回は+5万人前後)、失業率4.2%。原油は米イラン外交期待もあり急落し、ブレントは100ドルを割り込んだ。"
   ],
-  "fed_funds_rate": "3.75〜4.00%(10/28のFOMCで据え置き、10対2で2名が利上げを主張)。声明はインフレ高止まりを指摘し景気判断を『力強い』へ引き上げ。10/30にはローガン総裁(2026年投票権あり)が少なくとも2回の25bp利上げが必要と述べるなど、タカ派発言が続いている。",
+  "fed_funds_rate": "3.75〜4.00%(10/28のFOMCで据え置き、10対2で2名が利上げを主張)。声明はインフレ高止まりを指摘し景気判断を引き上げ。その後もダラス連銀ローガン総裁らが追加利上げの必要性に言及しており、利上げ方向の議論が続いている。",
   "next_fomc": {
     "date": "2026-12-09",
-    "view": "12/8〜9開催(日本時間12/10未明に声明)。CME FedWatchの12月25bp利上げ確率は10/30時点の報道で約76〜80%(据え置き約20%)と、FOMC直後の約86%からやや低下したものの、利上げが引き続き優勢です。11/6雇用統計・11/10CPIの結果で確率が大きく動く可能性があります。"
+    "view": "12/8〜9開催(日本時間12/10未明に声明)。CME FedWatchの12月25bp利上げ確率は11/4時点で81.2%(据え置き18.8%)と利上げが優勢で、1月までの累計では25bp利上げ65.5%・50bp利上げ20.5%が織り込まれています。11/6雇用統計と11/10CPIの結果で確率が動く可能性があります。"
   },
   "next_cpi": {
     "date": "2026-11-10",
-    "consensus": "10月分の予想(Continuum Economics)は総合・コアとも前月比+0.2%。前年比は2025年10月分が政府閉鎖で欠けているため比較が変則的(同社試算で総合3.9%・コア2.8%)。直近9月分は総合前年比+3.7%・コア2.6%と予想を上回った。参考:9月PCEは前年比3.6%・コア3.1%。"
+    "consensus": "10月分の予想(Continuum Economics)は総合・コアとも前月比+0.2%。前年比は2025年10月分が政府閉鎖で欠けているため比較が変則的(同社試算で総合3.9%・コア2.8%)。直近9月分は総合前年比+3.7%・コア2.6%と予想を上回った。"
   },
   "next_jobs": {
     "date": "2026-11-06",
-    "consensus": "10月分の予想は非農業部門雇用者数+5万人前後(Continuum Economics・バークレイズともに+5万人)、失業率は4.2%(Continuum)〜4.1%(バークレイズ)、平均時給は前月比+0.2%(Continuum)。直近9月分は+2.9万人、失業率4.2%。"
+    "consensus": "10月分の予想(FinancialJuice集計)は非農業部門雇用者数+6.5万人(予想レンジ+3.5万〜+12.5万人、9月分は+2.9万人)、失業率4.2%(前回4.2%)、平均時給は前年比+2.9%(前回3.0%)。先行指標の10月ADP民間雇用は+8.6万人で予想+6.9万人を上回った。"
   },
-  "market_view": "S&P500は10/30に-1.82%の7,580.07と続落し、52週高値(7,818.93)から約3.1%下まで調整しました。下げを主導したのはインテル(-28.6%)の弱い見通しをきっかけとしたAI・半導体・大型テック売りで、ナスダック総合は-2.86%、10月は月間-5.3%と大きく崩れた一方、ダウは10月+1.7%と、売りはハイテクに集中しています。12月利上げ観測(約76〜80%)と10年債利回り4.9%台の高止まりが株価の重しになっており、今週は中間選挙(11/3)と雇用統計(11/6)が相場の振れを大きくしうる材料です。半導体はSOXが-7.2%で52週高値から約27%下、日経半導体株指数は-5.8%で高値から約42%下と下げが深まり、ダッシュボードの判定は引き続き『半導体だけの急落』です。",
-  "vix_view": "VIXは10/30終値19.42(前日比+12.9%)で、ルール上はまだ待機ゾーン(VIX20未満)ですが、最初の建て段階(VIX20)まで約0.6ポイントと目前です。2段階目(VIX25)までは約5.6ポイント、3段階目(VIX30)まで約10.6ポイント、4段階目(VIX40)まで約20.6ポイントです。ただし先物1〜2限月(11/18満期20.36・12/16満期19.79、10/30清算値)はコンタンゴ率-2.81%の逆鞘で、ショートの調整金は1lotあたり1日約-2円とマイナスになっており、VIXが20に届いてもロール益が見込めない形です。中間選挙・雇用統計・CPIとイベントが続くため、VIX20超えの場合も、カーブが順鞘に戻っているか、段階建て(VIX20・25・30・40で1単位=100lotずつ最大4単位、VIX全体の含み損−60万円で全決済)のルールと照らして確認する局面です。本内容は公開情報の要約であり、投資助言ではありません。",
+  "market_view": "S&P500は11/4に+1.58%の7,688.62と反発し、52週高値(7,818.93)から約1.7%下まで戻しました。民主党の上下両院制覇で選挙の不透明感が後退したことに加え、原油急落(ブレント100ドル割れ)と10年債利回りの低下(4.89%前後)が支えとなり、ダウは+3.0%と大きく上げました。ただ、12月利上げ確率は約81%と高く、ナスダック100は高値から約9%下にとどまるなど大型テックの戻りは限定的で、11/6雇用統計・11/10CPIの結果次第で利上げ観測と金利が再び振れるリスクがあります。半導体は指数全体が上げた日にもSOXが-3.1%、日経半導体株指数が-3.9%と下げ、高値からの下落率はそれぞれ約30%・約46%まで拡大しており、ダッシュボードの判定は引き続き『半導体だけの急落』です。",
+  "vix_view": "VIXは11/4終値16.61(前日比約-20%)と、10/30の19.42から低下し、ルール上は引き続き待機ゾーン(VIX20未満)です。最初の建て段階(VIX20)まで約3.4ポイント、2段階目(VIX25)まで約8.4ポイント、3段階目(VIX30)まで約13.4ポイント、4段階目(VIX40)まで約23.4ポイントです。先物1〜2限月(11/18満期17.74・12/16満期17.98、11/4清算値)はコンタンゴ率+1.35%と順鞘に戻ったものの傾きは小さく、推定調整金は1lotあたり1日約1.15円にとどまります。雇用統計・CPIと重要指標が続き、半導体株の下げも止まっていないため、VIXが再び20に近づく可能性も残っており、その際は段階建て(VIX20・25・30・40で1単位=100lotずつ最大4単位、VIX全体の含み損−60万円で全決済)のルールとカーブの形を照らして確認する局面です。本内容は公開情報の要約であり、投資助言ではありません。",
   "sources": [
     {
-      "label": "Yahoo Finance: Markets News, Oct. 30, 2026 — Tech Sell-Off, Intel Drops 30%(10/30終値・VIX・月間騰落)",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stock-market-today-nasdaq-p-123540419.html"
+      "label": "TheStreet: Stock Market Today (Nov. 4, 2026) — Stocks rise, oil collapses after Dems sweep midterm elections(11/4終値)",
+      "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-nov-04-2026"
     },
     {
-      "label": "Stock Titan: Stock Market Today October 30, 2026(インテル見通し・半導体株の動き)",
-      "url": "https://www.stocktitan.net/articles/stock-market-today-live-october-30-2026"
+      "label": "Yahoo Finance: Stock Market Today (Nov. 4, 2026) — Dow rises after Dems sweep midterm elections(VIX・10年債・原油)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/stock-market-today-nov-4-145445827.html"
     },
     {
-      "label": "24/7 Wall St.: Two Fed Officials Just Called for More Rate Hikes(10/31、ローガン・ムサレム発言とFedWatch)",
-      "url": "https://247wallst.com/investing/2026/10/31/two-fed-officials-just-called-for-more-rate-hikes-starting-soon"
+      "label": "KuCoin News: Philadelphia Semiconductor Index Drops 3%(11/4の半導体株の動き)",
+      "url": "https://www.kucoin.com/news/flash/philadelphia-semiconductor-index-falls-3-as-major-tech-stocks-decline"
     },
     {
-      "label": "KuCoin News: December 25bp rate hike probability at 79.6%(CME FedWatch)",
-      "url": "https://www.kucoin.com/news/flash/december-25-basis-point-rate-hike-probability-at-79-6"
+      "label": "TechFlow: December rate hike probability 81.2%(CME FedWatch、11/4)",
+      "url": "https://www.techflowpost.com/en-US/newsletter/142961"
     },
     {
-      "label": "Continuum Economics: Preview — U.S. October Employment(11/6雇用統計の予想)",
-      "url": "https://continuumeconomics.com/a/6bbddd0c/preview-due-november-6-us-october-employment-non-farm-payrolls-subdued-report-to-hint-at-q4-slowing"
+      "label": "Fox Business: Private sector added 86,000 jobs in October(ADP、11/4)",
+      "url": "https://www.foxbusiness.com/economy/private-sector-added-86000-jobs-october-above-expectations-adp-says"
     },
     {
-      "label": "Kiplinger: Economic Data This Week (November 2-6)(今週の日程・バークレイズ予想)",
-      "url": "https://www.kiplinger.com/investing/economy/this-weeks-economic-calendar"
+      "label": "FinancialJuice: US NFP Prep (6th November)(雇用統計の予想)",
+      "url": "https://features.financialjuice.com/2026/11/02/us-nfp-prep-6th-november/"
     },
     {
       "label": "Continuum Economics: Preview — U.S. October CPI(11/10発表の予想)",
