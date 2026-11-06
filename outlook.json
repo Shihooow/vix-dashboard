@@ -1,55 +1,51 @@
 {
-  "updated": "2026-11-06",
+  "updated": "2026-11-07",
   "changes_since_last": [
-    "11/5はAI・半導体株が急落し、S&P500は-4.36%の7,353.73(2025年4月以来の大幅安)、ダウ-3.44%、ナスダック総合-5.52%で調整局面入り(高値から10%超安)。前日の選挙後の上昇を打ち消した。S&P500の52週高値からの下落率は約1.7%→約6.0%に拡大し、ダッシュボードの判定は『半導体だけの急落』から『全体の急落』に変わった。",
-    "VIXは11/4終値16.61から11/5終値28.18(+69.7%)へ急騰。ルール上の段階はVIX20・VIX25の2段階目まで到達し、次のVIX30まで約1.8ポイント。",
-    "VIX先物1〜2限月は+1.35%の順鞘から-9.55%の逆鞘(バックワーデーション)に反転し、推定調整金は1lotあたり1日約+1.15円→約-7.2円(支払い側)に。",
-    "半導体はSOX-12.25%、日経半導体株指数-10.0%と下げが加速し、52週高値からの下落率はSOX約30%→約38%、日経半導体約46%→約51%に拡大。",
-    "安全資産への買いで米10年債利回りは4.84%前後に低下。12月利上げの織り込みは予測市場で80%超→67%前後に低下したとの報道がある一方、市場の織り込みを82%前後とする記事もあり、11/6(日本時間22:30)の10月雇用統計が次の材料。"
+    "11/6発表の10月雇用統計は非農業部門雇用者数+16.5万人と予想(+6.5万人前後)を大きく上回り、失業率は4.1%(予想4.2%)に低下。8〜9月分も合計8.4万人上方修正された。",
+    "強い雇用統計を受けて12月利上げの織り込みは70%→78%前後に上昇したと報じられ、米10年債利回りは4.86〜4.87%前後へやや上昇。",
+    "11/6はS&P500が+0.31%の7,376.86、ナスダック総合+1.09%と反発(ダウは-0.46%)。S&P500の52週高値からの下落率は約6.0%→約5.7%に縮小し、ダッシュボードの判定は『全体の急落』から『半導体だけの急落』に戻った。",
+    "VIXは28.18→25.64(-9.0%)に低下。段階はVIX20・25の2段階目のままで、次のVIX30までは約1.8→約4.4ポイントに拡大。",
+    "先物1〜2限月の逆鞘は-9.55%→-6.38%に縮小し、推定調整金は1lotあたり1日約-7.2円→約-4.8円。SOXは+4.2%と反発した一方、日経半導体株指数は-5.8%と下げが続き高値から約54%安。"
   ],
-  "fed_funds_rate": "3.75〜4.00%(10/28のFOMCで据え置き、10対2で2名が利上げを主張)。声明はインフレ高止まりを指摘しており、利上げ方向の議論が続いている。11/5には英中銀が2023年以来の利上げに踏み切った。",
+  "fed_funds_rate": "3.75〜4.00%(10/28のFOMCで据え置き、10対2で2名が利上げを主張)。声明はインフレ高止まりを指摘しており、11/6の強い雇用統計で利上げ方向の議論が意識されやすい状況。",
   "next_fomc": {
     "date": "2026-12-09",
-    "view": "12/8〜9開催(日本時間12/10未明に声明)。12月の25bp利上げ確率はCME FedWatchで11/4時点81.2%でしたが、11/5の株急落と金利低下を受けて予測市場では67%前後(据え置き33%)まで低下したとの報道があります。11/6雇用統計と11/10CPIの結果で織り込みが大きく動く可能性があります。"
+    "view": "12/8〜9開催(日本時間12/10未明に声明)。10月雇用統計が予想を大きく上回ったことで、12月の25bp利上げの織り込みは70%から78%前後に上昇したと報じられています。11/10のCPIが次の大きな材料で、上振れなら利上げ観測がさらに強まり、下振れなら織り込みが後退する可能性があります。"
   },
   "next_cpi": {
     "date": "2026-11-10",
-    "consensus": "10月分の予想(Continuum Economics)は総合・コアとも前月比+0.2%。前年比は2025年10月分が政府閉鎖で欠けているため比較が変則的(同社試算で総合3.9%・コア2.8%)。直近9月分は総合前年比+3.7%・コア2.6%と予想を上回った。"
+    "consensus": "日本時間11/10 22:30発表予定。10月分の予想(Continuum Economics)は総合・コアとも前月比+0.2%。前年比は2025年10月分が政府閉鎖で欠けているため比較が変則的(同社試算で総合3.9%・コア2.8%)。直近9月分は総合前年比+3.7%(予想3.6%)・コア2.6%。"
   },
   "next_jobs": {
-    "date": "2026-11-06",
-    "consensus": "日本時間11/6 22:30発表(未発表)。10月分の非農業部門雇用者数の予想は+6.5万人(ダウ・ジョーンズ集計は+5.9万人)、9月分は+2.9万人。失業率予想4.2%(前回4.2%)。先行指標の10月ADP民間雇用は+8.6万人、新規失業保険申請は18.9万件と予想(19.7万件)を下回った。"
+    "date": "2026-12-04",
+    "consensus": "11月分の予想は未定。直近の10月分(11/6発表)は非農業部門雇用者数+16.5万人(予想+6.5万人前後)、9月分は+2.9万人→+6.0万人に上方修正、失業率4.1%(予想4.2%)、平均時給は前年比+3.1%前後。"
   },
-  "market_view": "S&P500は11/5に-4.36%の7,353.73と急落し、52週高値(7,818.93)から約6%下、ナスダック100は約15%下まで下げ幅を広げました。民主党の上下両院制覇を受けてAIデータセンター規制や電力コストへの懸念が強まったことに加え、年末を前にしたヘッジファンドの利益確定やAI関連株の持ち高解消、個人投資家の2020年以来とされる売り越しが重なったと報じられています。一方で米10年債利回りの低下(4.84%前後)や新規失業保険申請の低水準は下支え材料で、11/6雇用統計・11/10CPIの結果によっては利上げ観測の後退と金利低下で反発する余地もあれば、強い結果で利上げ観測が戻り下げが続くリスクもあります。半導体はSOXが-12.25%(エヌビディア約-9%、マイクロン約-12%など)、日経半導体株指数が-10.0%と急落し、高値からの下落率はそれぞれ約38%・約51%に達しています。",
-  "vix_view": "VIXは11/5終値28.18(前日比+69.7%)と急騰し、ルール上はVIX20(1段階目)とVIX25(2段階目)の水準を超え、2単位(200lot)までの段階にあたります。次のVIX30(3段階目)まで約1.8ポイント、VIX40(4段階目)まで約11.8ポイントです。先物1〜2限月(11/18満期24.54・12/16満期22.19、11/5清算値)はコンタンゴ率-9.55%の逆鞘で、推定調整金は1lotあたり1日約-7.2円と保有コストがかかる状態のため、急騰直後で値動きが大きい点と合わせ、VIX全体の含み損−60万円の決済ラインまでの余裕を確認しておく局面です。11/6雇用統計・11/10CPIと重要指標が続き、半導体株の下げも止まっていないため一段の上昇もあり得る一方、過去の急騰局面では短期間で低下に転じた例も多く、どちらの可能性も残ります。本内容は公開情報の要約であり、投資助言ではありません。",
+  "market_view": "S&P500は11/6に+0.31%の7,376.86と小反発しましたが、週間では6月以来の大幅安となり、52週高値(7,818.93)から約5.7%下、ナスダック100は約13.6%下の水準です。強い雇用統計は景気の底堅さを示す一方、利上げ観測(12月78%前後)と10年債利回り4.86%前後への上昇につながり、株式のバリュエーションには逆風となるため、11/10のCPI次第で反発継続と再下落のどちらもあり得る状況です。中間選挙後のAIデータセンター規制や電力コストへの懸念、AI関連株の持ち高解消といった前週の売り材料も解消されたわけではありません。半導体はSOXが+4.2%(エヌビディア約+6%、AMD約+8%)と反発したものの高値から約36%安、日経半導体株指数は11/6も-5.8%と下げが続き高値から約54%安です。",
+  "vix_view": "VIXは11/6終値25.64(前日比-9.0%)と低下しましたが、VIX20(1段階目)とVIX25(2段階目)の水準を上回ったままで、2単位(200lot)までの段階にあたります。次のVIX30(3段階目)まで約4.4ポイント、VIX40(4段階目)まで約14.4ポイント、VIX25割れまでは約0.6ポイントです。先物1〜2限月(11/18満期23.69・12/16満期22.18、11/6清算値)はコンタンゴ率-6.38%の逆鞘で、推定調整金は1lotあたり1日約-4.8円と保有コストがかかる状態が続いており、逆鞘は縮小しつつあるもののまだ順鞘には戻っていません。11/10のCPIで利上げ観測が強まれば再上昇、落ち着けば低下という両方の可能性があるため、VIX全体の含み損−60万円の決済ラインまでの余裕を確認しておく局面です。本内容は公開情報の要約であり、投資助言ではありません。",
   "sources": [
     {
-      "label": "Yahoo Finance: Stock market today (Nov. 5, 2026) — Dow plunges 1,800 points, Nasdaq enters correction in AI trade meltdown(11/5終値・VIX・10年債・原油)",
-      "url": "https://finance.yahoo.com/markets/live/stock-market-today-thursday-november-5-dow-sp-500-nasdaq-oil-rises-chip-stocks-141439950.html"
+      "label": "Yahoo Finance: Stock market today (Nov. 6, 2026) — Nasdaq and S&P 500 rebound, Dow slips to cap bruising week for AI stocks(11/6終値・VIX・10年債・半導体)",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html"
     },
     {
-      "label": "Fox Business: Nasdaq tumbles 5%, Dow plunges more than 1,800 points(11/5の個別株・要因)",
-      "url": "https://www.foxbusiness.com/markets/stocks-nov-5-2026"
+      "label": "Yahoo Finance(Reuters): Strong October jobs report sends yields higher(雇用統計・利回り・利上げ織り込み)",
+      "url": "https://finance.yahoo.com/economy/policy/articles/strong-october-jobs-report-sends-134858909.html"
     },
     {
-      "label": "TheStreet: Stock market tumbles on post-election reset(11/5)",
-      "url": "https://www.thestreet.com/investing/stock-market-tumbles-on-post-election-reset"
+      "label": "BLS: Employment Situation Summary(10月雇用統計)",
+      "url": "https://www.bls.gov/news.release/empsit.nr0.htm"
     },
     {
-      "label": "The Private Banker: Treasury yields slide as tech rout fuels haven bid(11/5の利回り・雇用統計予想)",
-      "url": "https://leprivatebanker.com/2026/11/05/treasury-yields-slide-as-tech-rout-fuels-haven-bid-with-two-year-down-11-basis-points-before-fridays-payrolls/"
+      "label": "Bloomberg: US Job Growth Beats Forecasts With 165,000 Added, Unemployment Drops(11/6)",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-06/us-adds-165-000-jobs-above-all-forecasts-as-unemployment-falls"
     },
     {
-      "label": "Bloomingbit: Fed December rate-hike odds fall to 67% after U.S. midterms(11/5)",
-      "url": "https://en.bloomingbit.io/feed/news/123761"
+      "label": "TheStreet: Stock Market Today (Nov. 6, 2026)",
+      "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-nov-06-2026"
     },
     {
-      "label": "Discovery Alert: Gold price jumps above $4,100 as midterms drag dollar and yields lower(11/5、利上げ織り込み82%との記述)",
-      "url": "https://discoveryalert.com/news/gold-price-dollar-yields-fed-hike-november-2026/"
-    },
-    {
-      "label": "Forex Fundamentals: US Non-Farm Payrolls 2026-11-06(雇用統計の予想)",
-      "url": "https://forexfundamentals.com/economic-calendar/nfp/2026-11-06"
+      "label": "Forex Fundamentals: US CPI 2026-11-10(発表日・前回値)",
+      "url": "https://forexfundamentals.com/economic-calendar/us-cpi/2026-11-10"
     },
     {
       "label": "Continuum Economics: Preview — U.S. October CPI(11/10発表の予想)",
