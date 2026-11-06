@@ -29,7 +29,7 @@ import sys
 import csv
 import json
 import os
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from zoneinfo import ZoneInfo
 
 JST = ZoneInfo("Asia/Tokyo")
@@ -132,6 +132,41 @@ def next_adjustment_day(today: date) -> date:
         month = 1
         year += 1
     return second_wednesday(year, month)
+
+
+def us_monthly_opex(year: int, month: int) -> date:
+    """米国の月次オプション満期(第3金曜)。休場なら前営業日に繰り上げ。"""
+    d = date(year, month, 15)
+    d = d + timedelta(days=(4 - d.weekday()) % 7)
+    hol = set(US_MARKET_HOLIDAYS)
+    while d.isoformat() in hol or d.weekday() >= 5:
+        d -= timedelta(days=1)
+    return d
+
+
+def next_us_opex(today: date) -> date:
+    d = us_monthly_opex(today.year, today.month)
+    if today <= d:
+        return d
+    y, m = (today.year + 1, 1) if today.month == 12 else (today.year, today.month + 1)
+    return us_monthly_opex(y, m)
+
+
+def opex_card(today: date) -> str:
+    d = next_us_opex(today)
+    wd = "月火水木金土日"[d.weekday()]
+    if d.month in (3, 6, 9, 12):
+        note = '<span class="badge warn">クアドルプル・ウィッチング</span> 先物とオプションが一斉に満期'
+    else:
+        note = "S&amp;P500オプションの月次満期"
+    return f"""
+    <div class="card">
+      <div class="label">次の米国オプション満期(第3金曜)</div>
+      <div class="value" data-countdown="{d.isoformat()}">{d.isoformat()}</div>
+      <div class="sub">{d.isoformat()}({wd})</div>
+      <div class="sub">{note}</div>
+      <div class="sub muted">前はVIXが下がりやすく、過ぎると動き出しやすい</div>
+    </div>"""
 
 
 def contango_status(ratio: float) -> str:
@@ -959,6 +994,7 @@ def render_dashboard(rows, latest):
       <div class="sub">{next_adjustment_day(datetime.now(JST).date()).isoformat()}</div>
     </div>
       {parts['roll_card']}
+      {opex_card(datetime.now(JST).date())}
     <div class="card" id="next-high-card">
       <div class="label">次の最重要指標(FOMC・CPI・雇用統計)</div>
       <div class="value" id="nh-days">—</div>
