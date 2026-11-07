@@ -703,6 +703,122 @@ def render_crash_section(mk):
   </section>"""
 
 
+# ===== 2026-11-08追加: VIX/VIX3M 逆イールド(期間構造の逆転)の追跡・検証中 =====
+# 出典: Xの投稿(2006〜2023年の85回をバックテストしたという主張、未検証)。
+# 逆イールド = VIX > VIX3M。解消日 = 逆イールドの翌営業日に VIX < VIX3M へ戻った日。
+# 持続日数 = 逆イールドで引けた営業日数。
+INV_GROUPS = [
+    # (下限日数, 上限日数, ラベル, class, 投稿の数字)
+    (1, 3, "1〜3日", "warn",
+     "21日後の勝率61%・中央値+1.8%(ランダム62%と同じ、シグナルなし)。1〜2日なら解消後63日の最大DD中央値6.4%=第2波が来やすい"),
+    (4, 10, "4〜10日", "normal",
+     "21日後の勝率89%・中央値+3.9%、63日後+6.5%。解消後の最大DD中央値1.4%。勝率が一番高い"),
+    (11, 9999, "11日以上", "warn",
+     "21日後の勝率79%、ただし63日後は+2%のみ。長引くほど継続的な悪化"),
+]
+
+
+def inv_group(n):
+    for lo, hi, label, cls, note in INV_GROUPS:
+        if lo <= n <= hi:
+            return label, cls, note
+    return "—", "normal", ""
+
+
+def inversion_episodes(rows):
+    """log.csv から逆イールド(VIX > VIX3M)の期間を抜き出す。
+    返り値: [{start, end, days, max_vix, max_spread, resolved_on}](resolved_on=None なら継続中)"""
+    eps, cur = [], None
+    for r in rows:
+        vix, v3 = float(r["vix"]), float(r["vix3m"])
+        if vix > v3:
+            if cur is None:
+                cur = {"start": r["date"], "days": 0, "max_vix": vix, "max_spread": 0.0}
+            cur["days"] += 1
+            cur["end"] = r["date"]
+            cur["max_vix"] = max(cur["max_vix"], vix)
+            cur["max_spread"] = max(cur["max_spread"], vix - v3)
+        elif cur is not None:
+            cur["resolved_on"] = r["date"]
+            eps.append(cur)
+            cur = None
+    if cur is not None:
+        cur["resolved_on"] = None
+        eps.append(cur)
+    return eps
+
+
+def render_inversion_card(rows):
+    eps = inversion_episodes(rows)
+    latest = rows[-1]
+    vix, v3 = float(latest["vix"]), float(latest["vix3m"])
+    spread = vix - v3
+    last = eps[-1] if eps else None
+
+    if last and last["resolved_on"] is None:
+        n = last["days"]
+        label, _, note = inv_group(n)
+        value = f'{n}<span style="font-size:16px;color:var(--muted)">日目</span>'
+        badge = '<span class="badge danger">逆イールド中=待つ(ここでは買わない)</span>'
+        if n < 4:
+            k = 4 - n
+            nxt = (f"次の営業日にVIXが{v3:.2f}(今日のVIX3M)を下回って引けると解消・持続{n}日({label})。"
+                   f"あと{k}営業日続けば4〜10日グループに入る")
+        elif n <= 10:
+            nxt = f"いま解消すれば4〜10日グループ(勝率最高のケース)。解消の目安はVIXが{v3:.2f}を下回って引けること"
+        else:
+            nxt = "11日以上=継続的な悪化型。解消しても63日後の上積みは小さめ"
+        sub = f"VIX−VIX3M = +{spread:.2f}(開始 {last['start']} / 期間中の最大 +{last['max_spread']:.2f})"
+        body = f'<div class="sub">{nxt}</div><div class="sub muted">今の日数で解消した場合: {note}</div>'
+    elif last and last["resolved_on"] == latest["date"]:
+        n = last["days"]
+        label, cls, note = inv_group(n)
+        value = '<span style="font-size:20px">本日解消</span>'
+        badge = f'<span class="badge {cls}">持続{n}日 → {label}グループ</span>'
+        sub = f"VIX {vix:.2f} &lt; VIX3M {v3:.2f}(逆イールド {last['start']}〜{last['end']})"
+        body = f'<div class="sub">{note}</div>'
+    else:
+        value = '<span style="font-size:20px">なし</span>'
+        badge = '<span class="badge normal">順イールド(VIX &lt; VIX3M)</span>'
+        sub = f"VIX3M−VIX = {(-spread):.2f}"
+        body = ""
+        if last:
+            body = (f'<div class="sub muted">直近の逆イールド: {last["start"]}〜{last["end"]}'
+                    f'(持続{last["days"]}日、{last["resolved_on"]}に解消)</div>')
+    return f"""
+    <div class="card">
+      <div class="label">逆イールド(VIX &gt; VIX3M)・検証中</div>
+      <div class="value">{value}</div>
+      <div class="sub">{badge}</div>
+      <div class="sub muted">{sub}</div>
+      {body}
+    </div>"""
+
+
+def render_inversion_section(rows):
+    eps = inversion_episodes(rows)
+    if not eps:
+        return ""
+    trs = []
+    for e in reversed(eps):
+        label, cls, _ = inv_group(e["days"])
+        res = e["resolved_on"] or '<span class="badge danger">継続中</span>'
+        trs.append(
+            f"<tr><td>{e['start']}</td><td>{e['end']}</td><td>{e['days']}日</td>"
+            f'<td><span class="badge {cls}">{label}</span></td>'
+            f"<td>{res}</td><td>{e['max_vix']:.2f}</td><td>+{e['max_spread']:.2f}</td></tr>"
+        )
+    return f"""
+  <section>
+    <h2>逆イールドの記録(検証用・記録開始 {rows[0]['date']}〜)</h2>
+    <div class="sub muted" style="margin-bottom:8px">使い方の仮説(Xの投稿、未検証): ①急落でも逆イールドが出ないなら底を狙わない ②逆イールド中は買わず待つ ③4〜10日続いて解消した日に買う。1〜2日で解消したら第2波に注意。<br>下の表に解消日のS&amp;P500とその後の動きを照らして、自分のデータで確かめる。</div>
+    <table>
+      <thead><tr><th>開始</th><th>最終日</th><th>持続</th><th>グループ</th><th>解消日</th><th>最大VIX</th><th>最大VIX−VIX3M</th></tr></thead>
+      <tbody>{''.join(trs)}</tbody>
+    </table>
+  </section>"""
+
+
 def render_dashboard(rows, latest):
     recent = rows[-30:]
     recent_rev = list(reversed(recent))
@@ -971,6 +1087,7 @@ def render_dashboard(rows, latest):
       {parts['card_vix']}
       {parts['card_carry']}
       {parts['card_regime']}
+      {render_inversion_card(rows)}
     <div class="card">
       <div class="label">SKEW指数</div>
       <div class="value">{latest['skew']}</div>
@@ -982,6 +1099,8 @@ def render_dashboard(rows, latest):
   </section>
 
   {parts['regime_section']}
+
+  {render_inversion_section(rows)}
 
   {crash_html}
 
