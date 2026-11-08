@@ -1,56 +1,54 @@
 {
-  "updated": "2026-11-08",
+  "updated": "2026-11-09",
   "changes_since_last": [
-    "主要な変化なし。前回(11/7)更新以降は週末で米国市場の取引がなく、VIX25.64・コンタンゴ率-6.38%・S&P500 7,376.86(いずれも11/6終値・清算値)は前回と同じ。",
-    "週明けの最大の材料は日本時間11/10 22:30発表の10月CPIで、予想(総合・コアとも前月比+0.2%)に新たな変更は見当たらない。12月利上げの織り込み(78%前後との報道)もCPI待ちの状態。"
+    "数値は前回と同じ。前回(11/8)更新以降も米国市場は週末で取引がなく、VIX25.64・コンタンゴ率-6.38%・S&P500 7,376.86(いずれも11/6終値・清算値)のまま。",
+    "12月利上げの織り込みは約78%から約80%(LSEGデータ、11/8報道)へわずかに上昇。",
+    "10月CPIの予想に幅が出ている:総合前月比+0.2%(Continuum)〜+0.3%(FXEmpire)、コアは+0.2%でほぼ一致。クリーブランド連銀の予測モデルは総合+0.24%・コア+0.21%。",
+    "今週はCPI(11/10)のほか、CoreWeave決算(11/10)、Cisco・アプライド・マテリアルズ決算(11/12)、PPI(11/13)、FRB高官約10人の講演が予定されている。"
   ],
-  "fed_funds_rate": "3.75〜4.00%(10/28のFOMCで据え置き、10対2で2名が利上げを主張)。声明はインフレ高止まりを指摘しており、11/6の強い雇用統計で利上げ方向の議論が意識されやすい状況。",
+  "fed_funds_rate": "3.75〜4.00%(10/28のFOMCで据え置き、10対2で2名が利上げを主張)。声明はインフレ高止まりを指摘しており、11/6の強い雇用統計を受けて市場は12月の利上げを約80%織り込んでいます。",
   "next_fomc": {
     "date": "2026-12-09",
-    "view": "12/8〜9開催(日本時間12/10未明に声明)。10月雇用統計が予想を大きく上回ったことで、12月の25bp利上げの織り込みは70%から78%前後に上昇したと報じられています。11/10のCPIが次の大きな材料で、上振れなら利上げ観測がさらに強まり、下振れなら織り込みが後退する可能性があります。"
+    "view": "12/8〜9開催(日本時間12/10未明に声明)。10月雇用統計の上振れ後、FF金利先物は12月の25bp利上げを約80%織り込んでいます(LSEGデータ)。今週のCPI・PPIとFRB高官の発言がこの織り込みを維持するかの判断材料になります。"
   },
   "next_cpi": {
     "date": "2026-11-10",
-    "consensus": "日本時間11/10 22:30発表予定。10月分の予想(Continuum Economics)は総合・コアとも前月比+0.2%。前年比は2025年10月分が政府閉鎖で欠けているため比較が変則的(同社試算で総合3.9%・コア2.8%)。直近9月分は総合前年比+3.7%(予想3.6%)・コア2.6%。"
+    "consensus": "日本時間11/10 22:30発表予定。10月分の予想は総合前月比+0.2%(Continuum)〜+0.3%(FXEmpire、前回+0.6%)、コア前月比+0.2%(前回+0.3%)。クリーブランド連銀モデルは総合+0.24%・コア+0.21%。前年比は2025年10月分が政府閉鎖で欠けているため比較が変則的(Continuum試算で総合3.9%・コア2.8%)。直近9月分は総合前年比+3.7%・コア2.6%。"
   },
   "next_jobs": {
     "date": "2026-12-04",
-    "consensus": "11月分の予想は未定。直近の10月分(11/6発表)は非農業部門雇用者数+16.5万人(予想+6.5万人前後)、9月分は+2.9万人→+6.0万人に上方修正、失業率4.1%(予想4.2%)、平均時給は前年比+3.1%前後。"
+    "consensus": "11月分の予想は未定。直近の10月分(11/6発表)は非農業部門雇用者数+16.5万人(予想+6.5万人前後)、9月分は+2.9万人→+6.0万人に上方修正、失業率4.1%(予想4.2%)。"
   },
-  "market_view": "S&P500は11/6に+0.31%の7,376.86と小反発しましたが、週間では6月以来の大幅安となり、52週高値(7,818.93)から約5.7%下、ナスダック100は約13.6%下の水準です。強い雇用統計は景気の底堅さを示す一方、利上げ観測(12月78%前後)と10年債利回り4.86%前後への上昇につながり、株式のバリュエーションには逆風となるため、11/10のCPI次第で反発継続と再下落のどちらもあり得る状況です。中間選挙後のAIデータセンター規制や電力コストへの懸念、AI関連株の持ち高解消といった前週の売り材料も解消されたわけではありません。半導体はSOXが+4.2%(エヌビディア約+6%、AMD約+8%)と反発したものの高値から約36%安、日経半導体株指数は11/6も-5.8%と下げが続き高値から約54%安です。",
-  "vix_view": "VIXは11/6終値25.64(前日比-9.0%)と低下しましたが、VIX20(1段階目)とVIX25(2段階目)の水準を上回ったままで、2単位(200lot)までの段階にあたります。次のVIX30(3段階目)まで約4.4ポイント、VIX40(4段階目)まで約14.4ポイント、VIX25割れまでは約0.6ポイントです。先物1〜2限月(11/18満期23.69・12/16満期22.18、11/6清算値)はコンタンゴ率-6.38%の逆鞘で、推定調整金は1lotあたり1日約-4.8円と保有コストがかかる状態が続いており、逆鞘は縮小しつつあるもののまだ順鞘には戻っていません。11/10のCPIで利上げ観測が強まれば再上昇、落ち着けば低下という両方の可能性があるため、VIX全体の含み損−60万円の決済ラインまでの余裕を確認しておく局面です。本内容は公開情報の要約であり、投資助言ではありません。",
+  "market_view": "S&P500は11/6終値7,376.86で週間-2.68%となり、52週高値(7,818.93)から約5.7%下、ナスダック100は約13.6%下の水準です。FXEmpireはS&P500が上昇中の52週移動平均(約7,220)より上にあり、7,314・7,238付近を支持線として挙げています。一方で利上げ観測(12月約80%)と長期金利の上昇は割高なAI関連株の逆風で、今週はCPIに加えCoreWeave(債務負担と設備投資が焦点)やCisco・アプライド・マテリアルズの決算が、AI投資の見通しを確かめる材料になります。半導体はSOXが11/6に+4.2%と反発したものの高値から約36%安、日経半導体株指数は11/6も-5.8%で高値から約54%安と、半導体に偏った下げが続いています。",
+  "vix_view": "VIXは11/6終値25.64で、VIX20(1段階目)とVIX25(2段階目)の水準を上回っており、2単位(200lot)までの段階にあたります。次のVIX30(3段階目)まで約4.4ポイント、VIX40(4段階目)まで約14.4ポイント、VIX25割れまでは約0.6ポイントです。先物1〜2限月はコンタンゴ率-6.38%(11/6清算値)の逆鞘で、推定調整金は1lotあたり1日約-4.8円と保有コストがかかる状態です。11/10のCPIが上振れて利上げ観測が強まれば再上昇、落ち着けば低下という両方の可能性があり、VIX全体の含み損−60万円の決済ラインまでの余裕を確認しておく局面です。本内容は公開情報の要約であり、投資助言ではありません。",
   "sources": [
     {
-      "label": "Thrive in Markets: 経済指標カレンダー(11/9週)",
-      "url": "https://thriveinmarkets.com/calendar/2026-11-09/"
+      "label": "FXEmpire: The Week Ahead — CPI and Tech Earnings Test a Fragile Stock Market(11/8)",
+      "url": "https://www.fxempire.com/forecasts/article/the-week-ahead-cpi-and-tech-earnings-test-a-fragile-stock-market-1643118"
     },
     {
-      "label": "Yahoo Finance: Stock market today (Nov. 6, 2026) — Nasdaq and S&P 500 rebound, Dow slips to cap bruising week for AI stocks(11/6終値・VIX・10年債・半導体)",
+      "label": "Phemex News: US CPI Due Tuesday as Markets Price 80% Odds of December Rate Hike(11/8)",
+      "url": "https://phemex.com/news/article/macro-outlook-us-cpi-due-tuesday-as-markets-price-80-odds-of-december-rate-hike-102768"
+    },
+    {
+      "label": "Continuum Economics: Preview — U.S. October CPI(11/10発表の予想)",
+      "url": "https://continuumeconomics.com/a/1883e5a0/preview-due-november-10-us-october-cpi-a-more-moderate-month"
+    },
+    {
+      "label": "CNBC: Stock market next week — Outlook for Nov. 9-13, 2026",
+      "url": "https://www.cnbc.com/2026/11/06/stock-market-next-week-outlook-for-nov-9-13-2026.html"
+    },
+    {
+      "label": "Yahoo Finance: Stock market today (Nov. 6, 2026)(11/6終値・半導体)",
       "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html"
-    },
-    {
-      "label": "Yahoo Finance(Reuters): Strong October jobs report sends yields higher(雇用統計・利回り・利上げ織り込み)",
-      "url": "https://finance.yahoo.com/economy/policy/articles/strong-october-jobs-report-sends-134858909.html"
     },
     {
       "label": "BLS: Employment Situation Summary(10月雇用統計)",
       "url": "https://www.bls.gov/news.release/empsit.nr0.htm"
     },
     {
-      "label": "Bloomberg: US Job Growth Beats Forecasts With 165,000 Added, Unemployment Drops(11/6)",
-      "url": "https://www.bloomberg.com/news/articles/2026-11-06/us-adds-165-000-jobs-above-all-forecasts-as-unemployment-falls"
-    },
-    {
-      "label": "TheStreet: Stock Market Today (Nov. 6, 2026)",
-      "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-nov-06-2026"
-    },
-    {
-      "label": "Forex Fundamentals: US CPI 2026-11-10(発表日・前回値)",
-      "url": "https://forexfundamentals.com/economic-calendar/us-cpi/2026-11-10"
-    },
-    {
-      "label": "Continuum Economics: Preview — U.S. October CPI(11/10発表の予想)",
-      "url": "https://continuumeconomics.com/a/c299b396/preview-due-november-10-us-october-cpi-a-more-moderate-month"
+      "label": "Thrive in Markets: 経済指標カレンダー(CPI 2026)",
+      "url": "https://thriveinmarkets.com/calendar/dates/cpi-2026/"
     },
     {
       "label": "Cboe / Yahoo Finance(VIX・先物清算値・各指数、ダッシュボード取得データ)",
