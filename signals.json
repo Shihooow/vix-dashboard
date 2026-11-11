@@ -1,12 +1,12 @@
 {
-  "date": "2026-11-09",
-  "generated_at": "2026-11-10T13:12:12",
+  "date": "2026-11-10",
+  "generated_at": "2026-11-11T10:19:29",
   "closes": {
-    "vix": 19.92,
-    "vix3m": 20.85,
-    "vix9d": 19.88,
-    "skew": 150.34,
-    "spx": 7549.94
+    "vix": 19.46,
+    "vix3m": 20.64,
+    "vix9d": 18.54,
+    "skew": 151.12,
+    "spx": 7520.9302
   },
   "stale": {},
   "history_tail": [
@@ -2261,28 +2261,32 @@
     "2026-11-06",
     "2026-11-09"
   ],
-  "quotes_used": {},
+  "quotes_used": {
+    "VIX": "2026-11-10",
+    "SKEW": "2026-11-10",
+    "SPX": "2026-11-10"
+  },
   "latest_quote": null,
   "futures": {
     "exp1": "2026-11-18",
-    "f1": 20.0091,
+    "f1": 19.9067,
     "exp2": "2026-12-16",
-    "f2": 19.4945,
+    "f2": 19.5125,
     "roll_date": "2026-11-17",
-    "date": "2026-11-09"
+    "date": "2026-11-10"
   },
-  "contango_12_pct": -2.57,
-  "contango_23_pct": 3.11,
-  "est_ratio": -8.4,
-  "est_yen_per_lot_day": -1.85,
+  "contango_12_pct": -1.98,
+  "contango_23_pct": 2.7,
+  "est_ratio": -6.4,
+  "est_yen_per_lot_day": -1.4,
   "carry_zone": {
     "label": "ノーポジ推奨(バックワーデーション)",
     "class": "danger"
   },
-  "spx_vs_ma50_pct": -1.64,
-  "rv20": 22.11,
-  "vix_minus_rv": -2.19,
-  "vix9d_over_vix": 0.998,
+  "spx_vs_ma50_pct": -1.98,
+  "rv20": 22.12,
+  "vix_minus_rv": -2.66,
+  "vix9d_over_vix": 0.953,
   "regime_signals": [
     {
       "name": "株は好調なのにカーブが平ら",
@@ -2313,30 +2317,30 @@
     "vix_band": "17〜20",
     "down_pt": 2.9,
     "up_pt": 4.8,
-    "carry_pt_20d": -0.33,
+    "carry_pt_20d": -0.25,
     "remaining_pt": 2.9,
     "take_profit": false
   },
   "stress_per_100lot": [
     {
       "to": 20,
-      "loss_yen": -1240
+      "loss_yen": -8370
     },
     {
       "to": 25,
-      "loss_yen": -78740
+      "loss_yen": -85870
     },
     {
       "to": 30,
-      "loss_yen": -156240
+      "loss_yen": -163370
     },
     {
       "to": 35,
-      "loss_yen": -233740
+      "loss_yen": -240870
     },
     {
       "to": 40,
-      "loss_yen": -311240
+      "loss_yen": -318370
     }
   ]
 }
