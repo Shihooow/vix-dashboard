@@ -1,12 +1,12 @@
 {
-  "date": "2026-11-11",
-  "generated_at": "2026-11-12T12:09:18",
+  "date": "2026-11-12",
+  "generated_at": "2026-11-13T10:57:39",
   "closes": {
-    "vix": 17.49,
-    "vix3m": 19.24,
-    "vix9d": 16.04,
-    "skew": 149.09,
-    "spx": 7619.38
+    "vix": 18.7,
+    "vix3m": 20.06,
+    "vix9d": 17.51,
+    "skew": 150.16,
+    "spx": 7592.3999
   },
   "stale": {},
   "history_tail": [
@@ -2275,28 +2275,32 @@
     "2026-11-10",
     "2026-11-11"
   ],
-  "quotes_used": {},
+  "quotes_used": {
+    "VIX": "2026-11-12",
+    "SKEW": "2026-11-12",
+    "SPX": "2026-11-12"
+  },
   "latest_quote": null,
   "futures": {
     "exp1": "2026-11-18",
-    "f1": 18.0519,
+    "f1": 18.7337,
     "exp2": "2026-12-16",
-    "f2": 18.4042,
+    "f2": 18.9627,
     "roll_date": "2026-11-17",
-    "date": "2026-11-11"
+    "date": "2026-11-12"
   },
-  "contango_12_pct": 1.95,
-  "contango_23_pct": 4.79,
-  "est_ratio": 7.3,
-  "est_yen_per_lot_day": 1.61,
+  "contango_12_pct": 1.22,
+  "contango_23_pct": 3.77,
+  "est_ratio": 4.8,
+  "est_yen_per_lot_day": 1.05,
   "carry_zone": {
     "label": "新規・積み増し見送り(5.6%未満)",
     "class": "danger"
   },
-  "spx_vs_ma50_pct": -0.69,
-  "rv20": 22.43,
-  "vix_minus_rv": -4.94,
-  "vix9d_over_vix": 0.917,
+  "spx_vs_ma50_pct": -1.03,
+  "rv20": 22.4,
+  "vix_minus_rv": -3.7,
+  "vix9d_over_vix": 0.936,
   "regime_signals": [
     {
       "name": "株は好調なのにカーブが平ら",
@@ -2327,30 +2331,30 @@
     "vix_band": "17〜20",
     "down_pt": 2.9,
     "up_pt": 4.8,
-    "carry_pt_20d": 0.29,
-    "remaining_pt": 3.19,
+    "carry_pt_20d": 0.19,
+    "remaining_pt": 3.09,
     "take_profit": false
   },
   "stress_per_100lot": [
     {
       "to": 20,
-      "loss_yen": -38905
+      "loss_yen": -20150
     },
     {
       "to": 25,
-      "loss_yen": -116405
+      "loss_yen": -97650
     },
     {
       "to": 30,
-      "loss_yen": -193905
+      "loss_yen": -175150
     },
     {
       "to": 35,
-      "loss_yen": -271405
+      "loss_yen": -252650
     },
     {
       "to": 40,
-      "loss_yen": -348905
+      "loss_yen": -330150
     }
   ]
 }
