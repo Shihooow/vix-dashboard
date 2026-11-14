@@ -1,6 +1,6 @@
 {
   "date": "2026-11-13",
-  "generated_at": "2026-11-14T11:30:43",
+  "generated_at": "2026-11-15T06:46:18",
   "closes": {
     "vix": 19.3,
     "vix3m": 20.62,
@@ -2289,9 +2289,7 @@
     "2026-11-12",
     "2026-11-13"
   ],
-  "quotes_used": {
-    "SKEW": "2026-11-13"
-  },
+  "quotes_used": {},
   "latest_quote": null,
   "futures": {
     "exp1": "2026-11-18",
