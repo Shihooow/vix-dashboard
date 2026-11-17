@@ -1,14 +1,16 @@
 {
-  "date": "2026-11-16",
-  "generated_at": "2026-11-17T13:38:44",
+  "date": "2026-11-17",
+  "generated_at": "2026-11-18T06:45:35",
   "closes": {
-    "vix": 22.91,
-    "vix3m": 23.02,
-    "vix9d": 23.15,
+    "vix": 25.46,
+    "vix3m": 24.98,
+    "vix9d": 26.7,
     "skew": 146.33,
-    "spx": 7416.59
+    "spx": 7340.5298
   },
-  "stale": {},
+  "stale": {
+    "SKEW": "2026-11-16"
+  },
   "history_tail": [
     {
       "date": "2025-08-01",
@@ -2296,28 +2298,33 @@
     "2026-11-13",
     "2026-11-16"
   ],
-  "quotes_used": {},
+  "quotes_used": {
+    "VIX": "2026-11-17",
+    "VIX3M": "2026-11-17",
+    "VIX9D": "2026-11-17",
+    "SPX": "2026-11-17"
+  },
   "latest_quote": null,
   "futures": {
-    "exp1": "2026-11-18",
-    "f1": 22.5309,
-    "exp2": "2026-12-16",
-    "f2": 21.1059,
-    "roll_date": "2026-11-17",
-    "date": "2026-11-16"
+    "exp1": "2026-12-16",
+    "f1": 22.6881,
+    "exp2": "2027-01-20",
+    "f2": 22.6527,
+    "roll_date": "2026-12-15",
+    "date": "2026-11-17"
   },
-  "contango_12_pct": -6.32,
-  "contango_23_pct": 0.84,
-  "est_ratio": -21.5,
-  "est_yen_per_lot_day": -4.73,
+  "contango_12_pct": -0.16,
+  "contango_23_pct": 0.69,
+  "est_ratio": -0.0,
+  "est_yen_per_lot_day": -0.0,
   "carry_zone": {
     "label": "ノーポジ推奨(バックワーデーション)",
     "class": "danger"
   },
-  "spx_vs_ma50_pct": -3.2,
-  "rv20": 23.01,
-  "vix_minus_rv": -0.1,
-  "vix9d_over_vix": 1.01,
+  "spx_vs_ma50_pct": -4.11,
+  "rv20": 23.13,
+  "vix_minus_rv": 2.33,
+  "vix9d_over_vix": 1.049,
   "regime_signals": [
     {
       "name": "株は好調なのにカーブが平ら",
@@ -2345,29 +2352,25 @@
     }
   ],
   "exit": {
-    "vix_band": "20〜25",
-    "down_pt": 4.3,
-    "up_pt": 4.6,
-    "carry_pt_20d": -0.85,
-    "remaining_pt": 4.3,
+    "vix_band": "25〜",
+    "down_pt": 6.5,
+    "up_pt": 4.4,
+    "carry_pt_20d": -0.0,
+    "remaining_pt": 6.5,
     "take_profit": false
   },
   "stress_per_100lot": [
     {
-      "to": 25,
-      "loss_yen": -32395
-    },
-    {
       "to": 30,
-      "loss_yen": -109895
+      "loss_yen": -70370
     },
     {
       "to": 35,
-      "loss_yen": -187395
+      "loss_yen": -147870
     },
     {
       "to": 40,
-      "loss_yen": -264895
+      "loss_yen": -225370
     }
   ]
 }
