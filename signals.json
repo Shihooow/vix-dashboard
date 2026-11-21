@@ -1,16 +1,14 @@
 {
   "date": "2026-11-20",
-  "generated_at": "2026-11-21T11:35:58",
+  "generated_at": "2026-11-21T11:52:15",
   "closes": {
     "vix": 35.89,
     "vix3m": 30.94,
     "vix9d": 40.72,
     "skew": 138.84,
-    "spx": 7175.83
+    "spx": 6910.39
   },
-  "stale": {
-    "S&P500": "2026-11-19"
-  },
+  "stale": {},
   "history_tail": [
     {
       "date": "2025-08-01",
@@ -2344,9 +2342,9 @@
     "label": "ノーポジ推奨(バックワーデーション)",
     "class": "danger"
   },
-  "spx_vs_ma50_pct": -6.08,
-  "rv20": 23.55,
-  "vix_minus_rv": 12.34,
+  "spx_vs_ma50_pct": -9.37,
+  "rv20": 26.53,
+  "vix_minus_rv": 9.36,
   "vix9d_over_vix": 1.135,
   "regime_signals": [
     {

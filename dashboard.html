@@ -187,10 +187,10 @@
 <body>
   <h1>VIXショート運用ダッシュボード</h1>
   <div class="updated">
-    <span class="upd-main">ページ更新 11/21(土) 11:35</span>
+    <span class="upd-main">ページ更新 11/21(土) 11:52</span>
     <span class="upd-data">データ: 米国 11/20(金) 終値</span>
     <span id="stale-badge" class="badge warn" style="display:none"></span>
-    <span class="upd-note">※Cboeの反映待ちのため一部前日値: S&P500は11/19(木)の値</span>
+    
   </div>
 
   
@@ -262,7 +262,7 @@
   <section>
     <h2>地合いシグナル(2013〜2026年の検証)</h2>
     <table class="regime"><tbody><tr class=""><td style="width:64px"><span class="badge normal">—</span></td><td>株は好調なのにカーブが平ら<div class="sub muted">S&P500が50日線+2%超、コンタンゴ5%未満、VIX18未満</div></td><td class="muted">20営業日以内にVIX20超え 48%(平時32%)</td></tr><tr class=""><td style="width:64px"><span class="badge normal">—</span></td><td>VIXが低いのにオプションが割高<div class="sub muted">VIX15未満、VIX − 実現ボラ20日 > 6pt</div></td><td class="muted">2週間以内に+30% 30%(平時18%)</td></tr><tr class=""><td style="width:64px"><span class="badge normal">—</span></td><td>静けさが極端(参考・該当日少)<div class="sub muted">VIX15未満、SKEW145超、VIX9D÷VIX 0.86未満</div></td><td class="muted">20営業日以内にVIX20超え 41%</td></tr><tr class=""><td style="width:64px"><span class="badge normal">—</span></td><td>カーブが平らでVIXも低め<div class="sub muted">コンタンゴ5%未満、VIX17未満</div></td><td class="muted">20営業日以内にVIX20超え 35%(平時28%)</td></tr></tbody></table>
-    <div class="sub muted" style="margin-top:8px">根拠: S&amp;P500 50日線乖離 -6.08% / VIX − 実現ボラ20日 12.34pt / VIX9D÷VIX 1.135 / 期近 28.4582(2026-12-16満期)・次限月 26.2462</div>
+    <div class="sub muted" style="margin-top:8px">根拠: S&amp;P500 50日線乖離 -9.37% / VIX − 実現ボラ20日 9.36pt / VIX9D÷VIX 1.135 / 期近 28.4582(2026-12-16満期)・次限月 26.2462</div>
     <div class="sub" style="margin-top:10px"><b>ノーポジ時に該当したら</b>: VIX20前後にアラートを入れて、証拠金の余力を空けて待つ。</div>
     <div class="sub"><b>保有中に該当したら</b>: 積み増しは止める。2つ以上該当したら、下のストレステストの金額とロット数を見比べて縮小を検討する。</div>
     <div class="sub muted">急騰が来やすい地合いかどうかの目安で、タイミングの予測ではない。</div>
@@ -295,12 +295,12 @@
       <div class="card">
         <div class="label">ドル円・BTC</div>
         <div class="sub">ドル円 159.71: 20日で+2.0%(円高サインなし)</div>
-        <div class="sub">BTC: 高値から-32.3%。VIX30以上でUSDC10万円分を現物買い</div>
+        <div class="sub">BTC: 高値から-32.5%。VIX30以上でUSDC10万円分を現物買い</div>
       </div>
     </div>
     <table>
       <thead><tr><th>指数</th><th>終値</th><th>前日比</th><th>5日</th><th>52週高値から</th></tr></thead>
-      <tbody><tr><td>S&P500</td><td>6,910</td><td><span style="color:var(--danger)">-3.7%</span></td><td><span style="color:var(--danger)">-8.6%</span></td><td><span style="color:var(--danger)">-11.6%</span></td></tr><tr><td>ナスダック100</td><td>25,029</td><td><span style="color:var(--danger)">-5.6%</span></td><td><span style="color:var(--danger)">-10.4%</span></td><td><span style="color:var(--danger)">-19.8%</span></td></tr><tr><td>半導体(SOX)</td><td>8,409</td><td><span style="color:var(--danger)">-10.7%</span></td><td><span style="color:var(--danger)">-17.1%</span></td><td><span style="color:var(--danger)">-42.5%</span></td></tr><tr><td>FANG+</td><td>15,331</td><td><span style="color:var(--danger)">-6.4%</span></td><td><span style="color:var(--danger)">-11.9%</span></td><td><span style="color:var(--danger)">-22.0%</span></td></tr><tr class="hit-row"><td>日経半導体 <span class="badge warn">拾う候補</span></td><td>2,839</td><td><span style="color:var(--danger)">-7.7%</span></td><td><span style="color:var(--danger)">-14.4%</span></td><td><span style="color:var(--danger)">-56.6%</span></td></tr><tr><td>ビットコイン</td><td>58,652</td><td><span style="color:var(--danger)">-5.2%</span></td><td><span style="color:var(--danger)">-10.2%</span></td><td><span style="color:var(--danger)">-32.3%</span></td></tr><tr><td>ドル円</td><td>159.71</td><td><span style="color:var(--normal)">+0.2%</span></td><td><span style="color:var(--danger)">-0.1%</span></td><td><span style="color:var(--danger)">-2.5%</span></td></tr></tbody>
+      <tbody><tr><td>S&P500</td><td>6,910</td><td><span style="color:var(--danger)">-3.7%</span></td><td><span style="color:var(--danger)">-8.6%</span></td><td><span style="color:var(--danger)">-11.6%</span></td></tr><tr><td>ナスダック100</td><td>25,029</td><td><span style="color:var(--danger)">-5.6%</span></td><td><span style="color:var(--danger)">-10.4%</span></td><td><span style="color:var(--danger)">-19.8%</span></td></tr><tr><td>半導体(SOX)</td><td>8,409</td><td><span style="color:var(--danger)">-10.7%</span></td><td><span style="color:var(--danger)">-17.1%</span></td><td><span style="color:var(--danger)">-42.5%</span></td></tr><tr><td>FANG+</td><td>15,331</td><td><span style="color:var(--danger)">-6.4%</span></td><td><span style="color:var(--danger)">-11.9%</span></td><td><span style="color:var(--danger)">-22.0%</span></td></tr><tr class="hit-row"><td>日経半導体 <span class="badge warn">拾う候補</span></td><td>2,839</td><td><span style="color:var(--danger)">-7.7%</span></td><td><span style="color:var(--danger)">-14.4%</span></td><td><span style="color:var(--danger)">-56.6%</span></td></tr><tr><td>ビットコイン</td><td>58,504</td><td><span style="color:var(--danger)">-5.5%</span></td><td><span style="color:var(--danger)">-10.4%</span></td><td><span style="color:var(--danger)">-32.5%</span></td></tr><tr><td>ドル円</td><td>159.71</td><td><span style="color:var(--normal)">+0.2%</span></td><td><span style="color:var(--danger)">-0.1%</span></td><td><span style="color:var(--danger)">-2.5%</span></td></tr></tbody>
     </table>
     
   </section>
