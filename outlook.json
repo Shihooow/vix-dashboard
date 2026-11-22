@@ -1,50 +1,47 @@
 {
-  "updated": "2026-11-16",
+  "updated": "2026-11-23",
   "changes_since_last": [
-    "10月CPI(11/10発表)は総合前月比+0.4%(予想+0.3%)、コア+0.3%(予想+0.2%)と上振れ。10月PPIは前月比+0.3%(予想+0.4%)と下振れたが前年比は6.5%。",
-    "12月FOMCの織り込みは「据え置き」がほぼ消え、25bp利上げ約87%・50bp利上げ約13%に(前回は25bp利上げ約80%)。ウォラー理事は50bp利上げの検討に言及。",
-    "VIXは25.64(11/6)→19.30(11/13)へ低下し、20を下回って待機ゾーンへ。先物1〜2限月も逆鞘(-6.38%)からコンタンゴ+1.73%に戻った。",
-    "S&P500は週間+2.5%の7,561.67(52週高値から-3.3%)まで戻したが、エヌビディアのCEO辞任報道を受けて同社株は週間-12.75%、11/13はSOXが-3.4%と半導体が再び下落。"
+    "相場が急変:S&P500は11/20に-3.70%の6,910.39で7日続落、週間-8.6%で52週高値から-11.6%の調整局面入り。ナスダック総合は-5.28%で年初来マイナスに転落。",
+    "半導体が主導して下落:11/20はSOXが-10.7%、エヌビディアは決算(11/17、売上1,158億ドルで予想超え)後も週間約-23%。日経半導体株指数も-7.7%で高値から約57%安。",
+    "VIXは19.30(11/13)→35.89(11/20)へ急上昇(日中一時40)。先物1〜2限月はコンタンゴ+1.73%から-7.77%の逆鞘(バックワーデーション)に転じた。",
+    "12月FOMCの織り込みは25bp利上げ約92%・据え置き約8%に。前週は50bp利上げも約10〜13%あったが、株安を受けて後退し、据え置きの可能性が再び出てきた。",
+    "10年債利回りは週間で5.15%→4.92%へ低下(安全資産への資金移動)。"
   ],
-  "fed_funds_rate": "3.75〜4.00%(9月に25bp利上げ、10/28は据え置き)。10月CPIの上振れ後、市場は12月の利上げをほぼ確実視しており、焦点は利上げ幅(25bpか50bpか)に移っています。",
+  "fed_funds_rate": "3.75〜4.00%(9月に25bp利上げ、10月は据え置き)。インフレ指標の上振れを受けて12月の追加利上げが有力視されていますが、急速な株安で利上げ後の継続には慎重論も出ています。",
   "next_fomc": {
     "date": "2026-12-09",
-    "view": "12/8〜9開催(日本時間12/10未明に声明)。CPI後の織り込みは25bp利上げ約87%・50bp利上げ約13%で、据え置きはほぼ織り込まれていません。11/25のPCE物価指数と12/4の雇用統計が、利上げ幅を左右する材料として注目されています。"
+    "view": "12/8〜9開催(日本時間12/10未明に声明)。CME FedWatchでは11/20時点で25bp利上げ約92%・据え置き約8%で、前週見られた50bp利上げの織り込みは後退しました。ウォラー理事・クック理事は利上げに前向きな発言をしている一方、市場では今回の株安が12月以降の利上げを抑えるとの見方もあり、11/25のPCEと12/4の雇用統計が判断材料になります。"
   },
   "next_cpi": {
     "date": "2026-12-10",
-    "consensus": "11月分の市場予想は未定(FOMC声明の翌日に発表)。直近の10月分(11/10発表)は総合前月比+0.4%(予想+0.3%、前回+0.6%)、コア前月比+0.3%(予想+0.2%、3カ月連続+0.3%)。2025年10月分が政府閉鎖で欠けているため前年比は非公表(9月分は総合+3.7%)。"
+    "consensus": "11月分の市場予想は未定(FOMC声明の翌日に発表)。直近の10月分(11/10発表)は総合前月比+0.4%(予想+0.3%)、コア前月比+0.3%(予想+0.2%)と上振れ。前年比は2025年10月分の欠落により非公表。"
   },
   "next_jobs": {
     "date": "2026-12-04",
     "consensus": "11月分の市場予想は未定。直近の10月分(11/6発表)は非農業部門雇用者数+16.5万人(予想+6.5万人前後)、失業率4.1%。"
   },
-  "market_view": "S&P500は11/13終値7,561.67で週間約+2.5%と反発し、52週高値(7,818.93)から約3.3%下まで戻しています。ナスダック100は高値から約10.5%下で、ハイテク株の戻りは相対的に弱い状態です。インフレ指標の上振れで12月利上げがほぼ確実視され、10年債利回りは11/13に一時5.17%まで上昇しており、割高なAI関連株には逆風です。加えて、エヌビディアはCEO辞任(暫定CEOはクレスCFO)とHSBCの格下げで時価総額が4兆ドルを割り込み、今週(11/17予定)の決算がAI投資の見通しを確かめる材料になります。半導体はSOXが週間+8.1%と戻したものの高値から約31%安、日経半導体株指数は週間+10.3%でも高値から約49%安と、半導体に偏った下げ(急落の種類:半導体だけの急落)がまだ解消していません。",
-  "vix_view": "VIXは11/13終値19.30で、前回(25.64)から大きく低下し、ルール上は「VIX20未満=待機」の段階です。1段階目のVIX20まで約0.7ポイント、2段階目のVIX25まで約5.7ポイントで、11/13は日中に一時20を上回っており、境目付近にいます。先物1〜2限月はコンタンゴ率+1.73%(11/13清算値)と順鞘に戻ったものの、推定調整金は1lotあたり1日約1.4円と小さく、ダッシュボードの目安(5.6%未満は新規・積み増し見送り)を下回っています。今週はエヌビディア決算(11/17予定)、11/25のPCE、12/4の雇用統計と変動要因が続き、上振れ・利上げ幅拡大観測が出ればVIX20〜25への再上昇もありうるため、既存ポジションがある場合は含み損−60万円の決済ラインまでの余裕を確認しておく局面です。本内容は公開情報の要約であり、投資助言ではありません。",
+  "market_view": "S&P500は11/20終値6,910.39で7日続落し、10/6の最高値7,818.93から約11.6%下と調整局面(10%超の下落)に入りました。きっかけはAI関連株の売りで、エヌビディアは好決算でもCEO交代や会計調査の報道などを嫌気して週間約-23%となり、アンソロピックの大型IPO後の需給悪化、利上げ継続への警戒も重なりました。一方、10年債利回りは4.92%まで低下しており、株安が続けばFRBの利上げ姿勢が和らぐとの見方もあるため、今週は11/25のPCE・GDP改定値と、感謝祭(11/26休場・11/27短縮取引)前後の薄商いでの値動きが焦点です。半導体はSOXが11/20に-10.7%で高値から約43%安、日経半導体株指数は高値から約57%安で、下げは半導体だけでなく市場全体に広がっています(ダッシュボードの急落の種類:全体の急落)。",
+  "vix_view": "VIXは11/20終値35.89で、ルールの段階ではVIX20・25・30を超えており、最大3単位(300lot)まで建てられる水準です。最後の4段階目(VIX40)まではあと約4.1ポイントで、11/20は日中に一時40をつけているため、届く可能性は十分にあります。先物1〜2限月はコンタンゴ率-7.77%(11/20清算値)の逆鞘で、推定調整金は1lotあたり1日約-5.8円とショートに不利なため、ダッシュボードの目安は「ノーポジ推奨(バックワーデーション)」です。ダッシュボードの試算ではVIX40までの上昇で100lotあたり約-6.4万円の評価損が出るため、保有量に応じて含み損−60万円の決済ラインまでの余裕を確認しておく局面です。本内容は公開情報の要約であり、投資助言ではありません。",
   "sources": [
     {
-      "label": "Yahoo Finance: Stock market today (Nov. 13, 2026)(11/13終値・エヌビディア・PPI・VIX)",
-      "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-13-dow-sp-500-nasdaq-nvidia-ppi-141451558.html"
+      "label": "Yahoo Finance: Stock market today(11/20、S&P500・ダウが調整入り、ナスダック-5%、VIX・FedWatch)",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-19-dow-sp-500-nasdaq-anthropic-nvidia-141644188.html"
     },
     {
-      "label": "TheStreet: Stock Market Today (Nov. 13, 2026)",
-      "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-nov-13-2026"
+      "label": "The Closing Print: Post-Market & Weekly Summary(2026-11-20、週間騰落・SOX・金利・今週の予定)",
+      "url": "https://www.theclosingprint.net/2026/11/post-market-and-weekly-summary-2026-11-20/"
     },
     {
-      "label": "Motley Fool: A Larger-Than-Normal Fed Rate Hike in December Now Looks More Likely(11/14)",
-      "url": "https://www.fool.com/investing/2026/11/14/a-larger-than-normal-fed-rate-hike-in-december-now-looks-more-likely-here-s-why/"
+      "label": "24/7 Wall St.: This Stock Market Selloff Could Block the Fed's Rate Hikes(11/21)",
+      "url": "https://247wallst.com/investing/2026/11/21/this-stock-market-selloff-could-block-the-feds-rate-hikes/"
     },
     {
-      "label": "Investing.com: Fed rate hike odds in December at 88% after hot CPI(CME FedWatch、11/10)",
-      "url": "https://www.investing.com/news/economy-news/fed-rate-hike-odds-in-december-at-88-after-hot-cpi-cme-fedwatch-5017585"
+      "label": "Yahoo Finance: Nvidia earnings live(Q3決算、11/17)",
+      "url": "https://finance.yahoo.com/technology/live/nvidia-earnings-live-nvidia-posts-q3-beat-board-says-it-will-not-reinstate-jensen-huang-as-ceo-221428433.html"
     },
     {
-      "label": "StockAnalysis: US consumer prices rise 0.4% in October(10月CPI)",
-      "url": "https://stockanalysis.com/news/us-cpi-rises-october-2026/"
-    },
-    {
-      "label": "BigGo Finance: PCE Inflation Report Due Nov. 25",
-      "url": "https://finance.biggo.com/news/cf9bd428-94f8-4ecf-9bc8-4147c6153e08"
+      "label": "Seoul Economic Daily: Fed's Waller Signals Possible Half-Point Hike(11/20)",
+      "url": "https://en.sedaily.com/economy/2026/11/20/feds-waller-signals-possible-half-point-hike-lifting"
     },
     {
       "label": "Cboe / Yahoo Finance(VIX・先物清算値・各指数、ダッシュボード取得データ)",
